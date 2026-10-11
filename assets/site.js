@@ -51,19 +51,29 @@
         setTimeout(function () { tv.classList.add('off'); tv.classList.remove('shutting'); }, calm ? 0 : 400);
       }
     }
+    var voiceDone;
+    function stopVoice() { clearInterval(typeT); clearTimeout(voiceDone); search.classList.remove('on'); }
     function voice() {
       var q = S.voice, i = 0, box = search.querySelector('.q');
-      clearInterval(typeT); box.textContent = ''; search.classList.add('on');
+      stopVoice(); closeApp(); box.textContent = ''; search.classList.add('on');
       typeT = setInterval(function () {
         box.textContent = q.slice(0, ++i);
         if (i >= q.length) {
           clearInterval(typeT);
-          setTimeout(function () { search.classList.remove('on'); focusTile(0); say(S.o_ok + ' ' + q); }, 900);
+          // A busca falada abre o resultado, como na TV de verdade.
+          voiceDone = setTimeout(function () {
+            search.classList.remove('on'); focusTile(0);
+            app.style.background = getComputedStyle(tiles[0]).backgroundImage;
+            app.querySelector('b').textContent = q.charAt(0).toUpperCase() + q.slice(1);
+            app.querySelector('span').textContent = S.app_sub;
+            app.classList.add('on'); opened = true;
+          }, 700);
         }
       }, calm ? 0 : 55);
     }
 
     function press(k) {
+      if (k !== 'mic') stopVoice();
       if (k === 'power') { power(); return; }
       if (!on) { if (k !== 'chip') power(true); return; }
       var r = Math.floor(idx / cols), c = idx % cols, rows = Math.ceil(tiles.length / cols);

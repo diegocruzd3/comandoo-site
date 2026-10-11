@@ -3,38 +3,124 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Comandoo — Controle remoto para Smart TV</title>
-<meta name="description" content="Comandoo transforma o celular em controle remoto para Smart TV pelo Wi-Fi. Grátis, sem anúncios e sem cadastro.">
-<style>
-  :root { --bg:#101511; --ink:#eef3ec; --muted:#a8b3a5; --accent:#A9ED87; }
-  * { box-sizing:border-box; }
-  body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
-  main { max-width:680px; margin:0 auto; padding:64px 16px; }
-  h1 { font-size:40px; line-height:1.1; margin:0 0 8px; }
-  h1 span { color:var(--accent); }
-  p.lead { font-size:19px; color:var(--muted); margin:0 0 32px; }
-  ul { padding-left:20px; color:var(--muted); }
-  .soon { display:inline-block; margin:24px 0; padding:12px 18px; border:1px solid var(--accent); border-radius:12px; color:var(--accent); }
-  footer { margin-top:48px; font-size:14px; color:var(--muted); }
-  a { color:var(--accent); }
-</style>
+<title>Comandoo — Controle remoto para Smart TV no celular</title>
+<meta name="description" content="Use o celular como controle remoto da Smart TV pelo Wi-Fi. LG webOS, Samsung, Roku, Android TV e mais. Sem anúncios e sem cadastro.">
+<link rel="canonical" href="https://comandoo.online/">
+<link rel="alternate" hreflang="pt" href="https://comandoo.online/"><link rel="alternate" hreflang="en" href="https://comandoo.online/en/"><link rel="alternate" hreflang="es" href="https://comandoo.online/es/"><link rel="alternate" hreflang="x-default" href="https://comandoo.online/">
+<meta name="theme-color" content="#101511">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/assets/bricolage.woff2" as="font" type="font/woff2" crossorigin>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Comandoo">
+<meta property="og:title" content="Comandoo — Controle remoto para Smart TV no celular">
+<meta property="og:description" content="Use o celular como controle remoto da Smart TV pelo Wi-Fi. LG webOS, Samsung, Roku, Android TV e mais. Sem anúncios e sem cadastro.">
+<meta property="og:url" content="https://comandoo.online/">
+<meta property="og:image" content="https://comandoo.online/assets/og-pt.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="/assets/site.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "Comandoo", "operatingSystem": "Android", "applicationCategory": "UtilitiesApplication", "inLanguage": ["pt-BR", "en", "es"], "description": "Use o celular como controle remoto da Smart TV pelo Wi-Fi. LG webOS, Samsung, Roku, Android TV e mais. Sem anúncios e sem cadastro.", "url": "https://comandoo.online/", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "BRL"}, "publisher": {"@type": "Organization", "name": "Agência D3"}}</script>
 </head>
 <body>
-<main>
-  <h1><span>Comandoo</span><br>Controle remoto para Smart TV</h1>
-  <p class="lead">Seu celular vira o controle da TV pelo Wi-Fi de casa. Grátis, sem anúncios e sem cadastro.</p>
-  <ul>
-    <li>Direcional, touchpad, volume, canais e teclas coloridas</li>
-    <li>Teclado do celular na TV e comandos de voz</li>
-    <li>Apps da TV com um toque, widget e botão flutuante</li>
-    <li>LG webOS testado; Samsung, Roku, Android TV, Fire TV, Sony e Panasonic em fase beta</li>
-  </ul>
-  <div class="soon">Em breve no Google Play</div>
-  <footer>
-    <p><a href="/privacidade">Política de privacidade</a> · <a href="/privacidade/en">Privacy policy</a> · <a href="/privacidade/es">Política de privacidad</a></p>
-    <p>Contato: <a href="mailto:suporte@comandoo.online">suporte@comandoo.online</a></p>
-    <p>Comandoo é um app independente, sem vínculo com fabricantes de TV.</p>
-  </footer>
+<a class="skip" href="#main">Pular para o conteúdo</a>
+<div class="wrap">
+<header class="top">
+  <a class="brand" href="/"><svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#a9ed87"/><circle cx="16" cy="16" r="9" fill="none" stroke="#0f1a0b" stroke-width="2.6"/><circle cx="16" cy="16" r="3.2" fill="#0f1a0b"/></svg>Comandoo</a>
+  <nav class="langs" aria-label="Idioma / Language"><a href="/" hreflang="pt" lang="pt" title="Português" aria-current="page">PT</a><a href="/en/" hreflang="en" lang="en" title="English">EN</a><a href="/es/" hreflang="es" lang="es" title="Español">ES</a></nav>
+</header>
+<main id="main">
+<div class="hero">
+  <div>
+    <h1>Seu celular vira o controle da TV.</h1>
+    <p class="lead">Pelo Wi-Fi de casa, sem instalar nada na TV. Sem anúncios e sem cadastro.</p>
+    <div class="cta"><span class="btn btn-soon" role="text">Em breve no Google Play</span><a class="btn btn-ghost" href="#como">Como funciona</a></div>
+    <ul class="facts"><li>Grátis e sem anúncios</li><li>Sem conta nem login</li><li>Português, inglês e espanhol</li></ul>
+  </div>
+  <div class="demo" id="demo" role="group" aria-label="Demonstração do controle: use as setas para navegar pela TV" data-open="Abrindo" data-home="Tela inicial">
+    <div class="tv"><div class="screen">
+      <div class="screen-head"><span>Início</span><span>20:30</span></div>
+      <div class="tiles"><div class="tile t1">Filmes</div><div class="tile t2">Séries</div><div class="tile t3">Música</div><div class="tile t4">Esportes</div><div class="tile t5">Fotos</div><div class="tile t6">Ajustes</div></div>
+      <div class="vol" aria-hidden="true"><i></i></div>
+      <div class="toast" role="status" aria-live="polite"></div>
+    </div></div>
+    <div class="phone">
+      <div class="phone-bar"></div>
+      <div class="pad">
+        <button class="u" data-k="up" aria-label="Para cima"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg></button>
+        <button class="l" data-k="left" aria-label="Para a esquerda"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+        <button class="ok" data-k="ok">OK</button>
+        <button class="r" data-k="right" aria-label="Para a direita"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+        <button class="d" data-k="down" aria-label="Para baixo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      </div>
+      <div class="keys">
+        <button data-k="voldown" aria-label="Diminuir volume">−</button>
+        <button data-k="home" aria-label="Início">⌂</button>
+        <button data-k="volup" aria-label="Aumentar volume">+</button>
+      </div>
+    </div>
+    <p class="demo-hint">Experimente: toque nas setas do celular.</p>
+  </div>
+</div>
+</div>
+
+<section id="como"><div class="wrap">
+  <h2>Pronto em menos de um minuto.</h2>
+  <p class="sub">Nada de cabo, receptor ou app na TV. O celular conversa com a TV pela sua própria rede.</p>
+  <ol class="steps"><li><h3>Mesma rede</h3><p>Conecte o celular no mesmo Wi-Fi em que a TV está.</p></li><li><h3>Escolha a TV</h3><p>Abra o Comandoo. Ele procura as TVs da casa e mostra a lista.</p></li><li><h3>Confirme na TV</h3><p>Aceite o pedido que aparece na tela. Algumas TVs pedem um código.</p></li></ol>
+  <p class="note">Só funciona com o celular na mesma rede da TV: pelo 4G ou fora de casa, não.</p>
+</div></section>
+
+<section><div class="wrap">
+  <h2>Tudo o que o controle faz, e um pouco mais.</h2>
+  <div class="feat">
+    <div class="feat-main"><div class="f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg><div><h3>Direcional e botão OK</h3><p>Navegue pelos menus como no controle de verdade.</p></div></div><div class="f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M12 9v6M9 12h6"/></svg><div><h3>Touchpad</h3><p>Deslize o dedo para mover o cursor nas TVs que têm ponteiro.</p></div></div><div class="f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10v4h4l5 4V6L8 10H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg><div><h3>Volume, canais e teclas coloridas</h3><p>Inclusive mudo, voltar, início e as teclas vermelha, verde, amarela e azul.</p></div></div><div class="f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="6" width="19" height="12" rx="2.5"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M7 14h10"/></svg><div><h3>Teclado do celular</h3><p>Digite senhas e buscas na TV sem catar letra por letra.</p></div></div><div class="f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><div><h3>Comando de voz</h3><p>Fale a busca em vez de digitar.</p></div></div><div class="f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/></svg><div><h3>Apps da TV com um toque</h3><p>Abra seus aplicativos da TV direto do celular.</p></div></div></div>
+    <aside class="extras"><h3>Atalhos para o dia a dia</h3><p>Estes extras vêm liberados no lançamento.</p><ul><li><strong>Botão flutuante</strong><span>O controle por cima de outros apps, sem sair do que você está fazendo.</span></li><li><strong>Widget e atalhos rápidos</strong><span>Comandos da TV na tela inicial e na barra de notificações.</span></li><li><strong>Fotos e vídeos na TV</strong><span>Mostre na tela grande o que está no celular, pela rede de casa.</span></li><li><strong>Timer para desligar</strong><span>Programe a TV para desligar sozinha.</span></li></ul></aside>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <h2>Funciona com as principais marcas.</h2>
+  <p class="sub">Testamos a fundo nas TVs LG. Nas outras marcas o Comandoo já funciona na maioria dos modelos, mas ainda pode ter limitações.</p>
+  <div class="compat"><table>
+    <thead><tr><th scope="col">Plataforma</th><th scope="col">Situação</th></tr></thead>
+    <tbody><tr><td>LG webOS</td><td><span class="st st-ok">Testado</span></td></tr><tr><td>Samsung</td><td><span class="st st-beta">Beta</span></td></tr><tr><td>Roku</td><td><span class="st st-beta">Beta</span></td></tr><tr><td>Android TV / Google TV</td><td><span class="st st-beta">Beta</span></td></tr><tr><td>Amazon Fire TV</td><td><span class="st st-beta">Beta</span></td></tr><tr><td>Sony</td><td><span class="st st-beta">Beta</span></td></tr><tr><td>Panasonic</td><td><span class="st st-beta">Beta</span></td></tr></tbody>
+  </table></div>
+  <p class="note">Encontrou um problema com a sua TV? Envie um relato pelo próprio app ou escreva para <a href="mailto:suporte@comandoo.online">suporte@comandoo.online</a>.</p>
+</div></section>
+
+<section><div class="wrap priv">
+  <div>
+    <h2>Seus dados ficam com você.</h2>
+    <p class="sub">O resumo está aqui. O texto completo, com tudo o que o app usa, está na <a href="/privacidade">política de privacidade</a>.</p>
+  </div>
+  <ul><li><strong>Os comandos ficam na sua rede</strong><span>Vão direto do celular para a TV pelo Wi-Fi, sem passar pela internet.</span></li><li><strong>Sem conta, sem anúncios</strong><span>Você não cria login, e o app não usa identificador de publicidade.</span></li><li><strong>Voz pelo próprio Android</strong><span>O comando de voz usa o reconhecimento de fala do celular. O app recebe só o texto.</span></li><li><strong>Relatos só quando você envia</strong><span>Se mandar um relato, ele vai com dados técnicos, e o app oculta IPs e e-mails antes.</span></li></ul>
+</div></section>
+
+<section><div class="wrap">
+  <h2>Perguntas frequentes</h2>
+  <div class="faq"><details><summary>Preciso instalar alguma coisa na TV?</summary><p>Não. O Comandoo usa os recursos de rede que a própria TV já tem. Basta a TV estar ligada e no mesmo Wi-Fi do celular.</p></details><details><summary>Funciona pelo 4G ou fora de casa?</summary><p>Não. O celular precisa estar na mesma rede Wi-Fi da TV, porque os comandos vão direto de um aparelho para o outro.</p></details><details><summary>Minha TV não aparece na lista. O que faço?</summary><p>Confira se a TV está ligada e se os dois aparelhos estão no mesmo Wi-Fi (alguns roteadores separam a rede de 2,4 GHz e a de 5 GHz). Se ainda não aparecer, envie um relato pelo app com a marca e o modelo da TV.</p></details><details><summary>O app é pago?</summary><p>Não. O controle é gratuito e não tem anúncios. No futuro, alguns recursos extras poderão fazer parte de um plano opcional, mas o controle básico continua grátis para sempre.</p></details><details><summary>Funciona com qualquer TV?</summary><p>Funciona com Smart TVs conectadas ao Wi-Fi das plataformas listadas acima. TVs sem conexão à rede, ou que só aceitam controle infravermelho, não funcionam.</p></details><details><summary>Quem faz o Comandoo?</summary><p>A Agência D3, de Belém do Pará. O Comandoo é um app independente, sem vínculo com fabricantes de TV.</p></details></div>
+</div></section>
+
+<section class="close"><div class="wrap">
+  <h2>Deixe o controle no sofá.</h2>
+  <p class="sub">O Comandoo chega em breve ao Google Play.</p>
+  <div class="cta"><span class="btn btn-soon" role="text">Em breve no Google Play</span></div>
+</div></section>
 </main>
+
+<footer><div class="wrap foot">
+  <div>
+    <p>Comandoo é um app independente, sem vínculo com fabricantes de TV.</p>
+    <p>Contato: <a href="mailto:suporte@comandoo.online">suporte@comandoo.online</a></p>
+    <p>© 2026 Agência D3</p>
+  </div>
+  <ul>
+    <li><a href="/privacidade">Política de privacidade</a></li>
+    <li><a href="/privacidade/en">Privacy policy</a></li>
+    <li><a href="/privacidade/es">Política de privacidad</a></li>
+  </ul>
+</div></footer>
+<script src="/assets/site.js" defer></script>
 </body>
 </html>

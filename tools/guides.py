@@ -27,7 +27,7 @@ import guides_content as C  # noqa: E402
 ROOT = B.ROOT
 SITE = B.SITE
 UPDATED = '2026-10-12'
-APP_VERSION = '1.24.6'
+APP_VERSION = '1.24.7'
 RELEASES = Path('/home/claude/diegocruzd3/controley-releases')
 RAW = 'https://raw.githubusercontent.com/diegocruzd3/controley-releases/main/'
 LI = {'pt': 0, 'en': 1, 'es': 2}
@@ -78,7 +78,7 @@ def url(aid, lang, absolute=False):
 
 
 def links(s, lang):
-    s = s.replace('{KB}', C.KEYBOARD_TAB[lang])
+    s = s.replace('{KB}', C.KEYBOARD_TAB[lang]).replace('{SEND_LG}', C.SEND_BTN_LG[lang]).replace('{SEND}', C.SEND_BTN[lang])
     for aid in C.SLUGS:
         s = s.replace('{' + aid + '}', url(aid, lang))
     return s
@@ -165,7 +165,7 @@ def brand_article(aid, lang):
            (T['faq_models'][0], '<p>' + T['faq_models'][1].format(systems=systems, status_line=status_line) + '</p>'),
            (C.FREE[lang][0], f'<p>{C.FREE[lang][1]}</p>'), (C.NO_4G[lang][0], f'<p>{C.NO_4G[lang][1]}</p>')]
     need = [T['need'][0], {'pt': 'A TV (ou o aparelho) ligada ao Wi-Fi.', 'en': 'The TV (or streaming device) connected to Wi-Fi.',
-                           'es': 'La TV (o el aparato) conectada al Wi-Fi.'}[lang], T['need'][2]]
+                           'es': 'La TV (o el dispositivo) conectada al Wi-Fi.'}[lang], T['need'][2]]
     return dict(id=aid, read=3, howto=True, time='PT5M', related=D['related'],
                 seo_title=T['seo_title'].format(label=label), desc=T['desc_tested' if tested else 'desc_initial'].format(label=label),
                 h1=T['h1'].format(label=label), answer=T['ans_tested' if tested else 'ans_initial'].format(label=label),

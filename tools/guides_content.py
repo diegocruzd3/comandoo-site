@@ -8,7 +8,10 @@ Só escreva aqui o que o app faz de verdade. Fontes: compat.json e faq.json
 LANGS = ('pt', 'en', 'es')
 
 # Nome da aba de digitar, exatamente como no botão do app (confirmar com o Comandoo Dev a cada versão).
-KEYBOARD_TAB = {'pt': 'Teclado', 'en': 'Keyboard', 'es': 'Teclado'}
+KEYBOARD_TAB = {'pt': 'Digitar', 'en': 'Type', 'es': 'Escribir'}  # en/es: confirmar com o Comandoo Dev
+# Botão que manda o texto, e o nome dele na LG.
+SEND_BTN = {'pt': 'Enviar para o aparelho', 'en': 'Send to the device', 'es': 'Enviar al dispositivo'}
+SEND_BTN_LG = {'pt': 'Buscar no YouTube do aparelho', 'en': 'Search YouTube on the device', 'es': 'Buscar en YouTube del dispositivo'}  # en/es: confirmar
 
 UI = {
  'pt': dict(
@@ -139,7 +142,7 @@ IPHONE = {
 NO_4G = {
  'pt': ('Funciona pelo 4G ou fora de casa?', 'Não. O celular precisa estar na mesma rede Wi-Fi da TV, porque os comandos vão direto de um aparelho para o outro.'),
  'en': ('Does it work over mobile data or away from home?', 'No. Your phone has to be on the same Wi-Fi as the TV, because commands go straight from one device to the other.'),
- 'es': ('¿Funciona con datos móviles o fuera de casa?', 'No. El celular tiene que estar en el mismo Wi-Fi que la TV, porque los comandos van directo de un aparato al otro.'),
+ 'es': ('¿Funciona con datos móviles o fuera de casa?', 'No. El celular tiene que estar en el mismo Wi-Fi que la TV, porque los comandos van directo de un dispositivo al otro.'),
 }
 INSTALL = {
  'pt': ('Instale o Comandoo no celular', '<p>O Comandoo é um app para Android 8.0 ou superior, grátis e sem anúncios. Ele chega em breve ao Google Play; o link aparece neste site assim que estiver disponível. Não é preciso criar conta.</p>'),
@@ -148,8 +151,8 @@ INSTALL = {
 }
 OPEN_PICK = {
  'pt': ('Abra o app e escolha a TV', '<p>Ao abrir, o Comandoo procura os aparelhos da sua rede e mostra a lista. Toque na sua TV. Se ela não aparecer, toque em <strong>Buscar aparelhos</strong> ou use <strong>Conectar pelo IP</strong>.</p>'),
- 'en': ('Open the app and pick your TV', '<p>When it opens, Comandoo looks for devices on your network and lists them. Tap your TV. If it is not there, tap <strong>Search devices</strong> or use <strong>Connect by IP</strong>.</p>'),
- 'es': ('Abre la app y elige la TV', '<p>Al abrirse, Comandoo busca los aparatos de tu red y muestra la lista. Toca tu TV. Si no aparece, toca <strong>Buscar aparatos</strong> o usa <strong>Conectar por IP</strong>.</p>'),
+ 'en': ('Open the app and pick your TV', '<p>When it opens, Comandoo looks for devices on your network and lists them. Tap your TV. If it is not there, tap <strong>Find devices</strong> or use <strong>Connect by IP</strong>.</p>'),
+ 'es': ('Abre la app y elige la TV', '<p>Al abrirse, Comandoo busca los dispositivos de tu red y muestra la lista. Toca tu TV. Si no aparece, toca <strong>Buscar dispositivos</strong> o usa <strong>Conectar por IP</strong>.</p>'),
 }
 
 # ── Artigos escritos à mão ───────────────────────────────────────────────
@@ -171,7 +174,7 @@ ARTICLES = {
     ('Confirme o pareamento na TV', '<p>Na primeira vez, a TV pede uma confirmação. O jeito muda conforme a marca: aceitar um pedido na tela ou digitar um código no app.</p>PAIR<div class="tip warn"><p><strong>Sem o controle original?</strong> Na LG e na Samsung, o primeiro pedido precisa ser aceito na própria TV. Veja <a href="{perdi}">Perdi o controle da TV: o que fazer</a>.</p></div><p>Depois disso o app reconecta sozinho nas próximas vezes.</p>', ('pedido-na-tv', 'Pedido de pareamento do Comandoo na tela de uma TV LG', 'Pedido de pareamento na tela da TV')),
     ('Use o controle', '<p>Pronto: a tela Controle tem direcional e OK, voltar, início, volume, mudo e o botão de desligar. Botões que a sua TV não aceita pelo protocolo dela aparecem apagados.</p>', ('tela-controle', 'Tela Controle do Comandoo com direcional, OK e volume', 'Tela Controle, já conectada')),
    ],
-   sections=[('O que mais dá para fazer pelo celular', '<ul><li><strong>Digitar senhas e buscas.</strong> Com um campo de texto aberto na TV, o que você digita na aba {KB} aparece na TV ao vivo. <a href="{digitar}">Ver guia</a>.</li><li><strong>Falar em vez de digitar.</strong> Segure o botão de voz e diga, por exemplo, “abrir Netflix” ou “volume 15”.</li><li><strong>Abrir os apps da TV</strong> com um toque, direto no celular.</li><li><strong>Controle por cima de outros apps.</strong> O botão flutuante abre o controle sem sair do aplicativo em que você está.</li></ul><p>Nem toda marca aceita todos os recursos. O app mostra só o que a sua TV permite.</p>')],
+   sections=[('O que mais dá para fazer pelo celular', '<ul><li><strong>Digitar senhas e buscas.</strong> Com um campo de texto aberto na TV, escreva na aba {KB} e toque em {SEND}. <a href="{digitar}">Ver guia</a>.</li><li><strong>Falar em vez de digitar.</strong> Segure o botão de voz e diga, por exemplo, “abrir Netflix” ou “volume 15”.</li><li><strong>Abrir os apps da TV</strong> com um toque, direto no celular.</li><li><strong>Controle por cima de outros apps.</strong> O botão flutuante abre o controle sem sair do aplicativo em que você está.</li></ul><p>Nem toda marca aceita todos os recursos. O app mostra só o que a sua TV permite.</p>')],
    problems=['FAQ:tv-nao-aparece', ('A TV conecta, mas não obedece aos botões', '<p>Na <strong>Roku</strong>, abra Configurações, Sistema, Configurações avançadas, Controle por apps móveis e deixe o acesso à rede como Ativado. Na <strong>LG</strong>, em Ajustes do app, toque em Refazer pareamento e aceite o pedido na TV. Na <strong>Samsung</strong> e na <strong>Panasonic</strong>, confira se o celular não está no Wi-Fi de visitantes.</p>'), 'FAQ:ligar-tv', 'FAQ:conexao-cai'],
    faq=[('O celular precisa ter infravermelho?', 'Não. O Comandoo usa o Wi-Fi de casa, então funciona em celulares Android com ou sem infravermelho.'), 'NO_4G', 'FREE', ('Funciona com qualquer TV?', 'Funciona com Smart TVs ligadas ao Wi-Fi das marcas da lista de compatíveis. A LG foi testada em TV real; as outras marcas têm suporte inicial, ainda sem teste em TV real. TVs sem Wi-Fi não funcionam.'), 'IPHONE'],
   ),
@@ -184,29 +187,29 @@ ARTICLES = {
    steps=[
     'INSTALL',
     ('Turn the TV on and check the network', '<p>Turn the TV on (standby is not enough) and make sure the phone is on the <strong>same Wi-Fi</strong>. Turn off mobile data and avoid the router’s guest network: many TVs refuse commands coming from another network.</p>', None),
-    ('Open the app and pick your TV', '<p>When it opens, Comandoo looks for devices on your network and lists them. Tap your TV. If it is not there, tap <strong>Search devices</strong>. If it still does not show up, use <strong>Connect by IP</strong> (see <a href="#problemas">Common problems</a>).</p>', ('lista-de-tvs', 'List of TVs found by Comandoo', 'Devices found on the network')),
+    ('Open the app and pick your TV', '<p>When it opens, Comandoo looks for devices on your network and lists them. Tap your TV. If it is not there, tap <strong>Find devices</strong>. If it still does not show up, use <strong>Connect by IP</strong> (see <a href="#problemas">Common problems</a>).</p>', ('lista-de-tvs', 'List of TVs found by Comandoo', 'Devices found on the network')),
     ('Confirm the pairing on the TV', '<p>The first time, the TV asks for confirmation. How depends on the brand: accept a request on screen or type a code in the app.</p>PAIR<div class="tip warn"><p><strong>No original remote?</strong> On LG and Samsung the first request has to be accepted on the TV itself. See <a href="{perdi}">Lost your TV remote: what to do</a>.</p></div><p>After that the app reconnects on its own.</p>', ('pedido-na-tv', 'Comandoo pairing request on an LG TV screen', 'Pairing request on the TV screen')),
     ('Use the remote', '<p>Done: the Remote screen has the D-pad and OK, back, home, volume, mute and the power button. Buttons your TV does not accept through its protocol are greyed out.</p>', ('tela-controle', 'Comandoo Remote screen with D-pad, OK and volume', 'Remote screen, connected')),
    ],
-   sections=[('What else you can do from your phone', '<ul><li><strong>Type passwords and searches.</strong> With a text field open on the TV, what you type in the {KB} tab shows on the TV live. <a href="{digitar}">Read the guide</a>.</li><li><strong>Speak instead of typing.</strong> Hold the voice button and say, for example, “open Netflix” or “volume 15”.</li><li><strong>Open your TV apps</strong> with one tap, right from the phone.</li><li><strong>Remote on top of other apps.</strong> The floating button opens the remote without leaving the app you are in.</li></ul><p>Not every brand accepts every feature. The app shows only what your TV allows.</p>')],
-   problems=['FAQ:tv-nao-aparece', ('The TV connects but ignores the buttons', '<p>On <strong>Roku</strong>, open Settings, System, Advanced system settings, Control by mobile apps and set network access to Enabled. On <strong>LG</strong>, tap Redo pairing in the app settings and accept the request on the TV. On <strong>Samsung</strong> and <strong>Panasonic</strong>, make sure the phone is not on a guest Wi-Fi.</p>'), 'FAQ:ligar-tv', 'FAQ:conexao-cai'],
+   sections=[('What else you can do from your phone', '<ul><li><strong>Type passwords and searches.</strong> With a text field open on the TV, write in the {KB} tab and tap {SEND}. <a href="{digitar}">Read the guide</a>.</li><li><strong>Speak instead of typing.</strong> Hold the voice button and say, for example, “open Netflix” or “volume 15”.</li><li><strong>Open your TV apps</strong> with one tap, right from the phone.</li><li><strong>Remote on top of other apps.</strong> The floating button opens the remote without leaving the app you are in.</li></ul><p>Not every brand accepts every feature. The app shows only what your TV allows.</p>')],
+   problems=['FAQ:tv-nao-aparece', ('The TV connects but ignores the buttons', '<p>On <strong>Roku</strong>, open Settings, System, Advanced system settings, Control by mobile apps and set network access to Enabled. On <strong>LG</strong>, tap Pair again in the app settings and accept the request on the TV. On <strong>Samsung</strong> and <strong>Panasonic</strong>, make sure the phone is not on a guest Wi-Fi.</p>'), 'FAQ:ligar-tv', 'FAQ:conexao-cai'],
    faq=[('Does the phone need infrared?', 'No. Comandoo uses your home Wi-Fi, so it works on Android phones with or without infrared.'), 'NO_4G', 'FREE', ('Does it work with any TV?', 'It works with Wi-Fi-connected Smart TVs from the brands on the supported list. LG was tested on a real TV; the other brands have initial support, not yet tested on a real TV. TVs without Wi-Fi will not work.'), 'IPHONE'],
   ),
   'es': dict(
    seo_title='Cómo usar el celular como control remoto de la TV | Comandoo',
    desc='Paso a paso para controlar la Smart TV desde el celular, por Wi-Fi y sin infrarrojo: qué necesitas, cómo emparejar y qué hacer si la TV no aparece.',
    h1='Cómo usar el celular como control remoto de la TV',
-   answer='Puedes usar el celular como control remoto de una Smart TV por Wi-Fi, sin infrarrojo. Necesitas una app de control en el celular, la TV encendida y los dos aparatos en la misma red de casa. Con Comandoo, que es gratis y sin anuncios, eliges la TV en la lista y confirmas el emparejamiento una sola vez.',
+   answer='Puedes usar el celular como control remoto de una Smart TV por Wi-Fi, sin infrarrojo. Necesitas una app de control en el celular, la TV encendida y los dos en la misma red de casa. Con Comandoo, que es gratis y sin anuncios, eliges la TV en la lista y confirmas el emparejamiento una sola vez.',
    need=['Un celular con Android 8.0 o superior.', 'Una Smart TV conectada al Wi-Fi, de una <a href="/es/#compat">marca compatible</a>.', 'El celular y la TV en el mismo Wi-Fi de casa.'],
    steps=[
     'INSTALL',
     ('Enciende la TV y revisa la red', '<p>Enciende la TV (no basta con que esté en espera) y verifica que el celular esté en el <strong>mismo Wi-Fi</strong>. Apaga los datos móviles y evita la red de invitados del router: muchas TV rechazan comandos que vienen de otra red.</p>', None),
-    ('Abre la app y elige tu TV', '<p>Al abrirse, Comandoo busca los aparatos de tu red y muestra la lista. Toca tu TV. Si no aparece, toca <strong>Buscar aparatos</strong>. Si aun así no aparece, usa <strong>Conectar por IP</strong> (mira <a href="#problemas">Problemas comunes</a>).</p>', ('lista-de-tvs', 'Lista de TV encontradas por Comandoo', 'Aparatos encontrados en la red')),
+    ('Abre la app y elige tu TV', '<p>Al abrirse, Comandoo busca los dispositivos de tu red y muestra la lista. Toca tu TV. Si no aparece, toca <strong>Buscar dispositivos</strong>. Si aun así no aparece, usa <strong>Conectar por IP</strong> (mira <a href="#problemas">Problemas comunes</a>).</p>', ('lista-de-tvs', 'Lista de TV encontradas por Comandoo', 'Dispositivos encontrados en la red')),
     ('Confirma el emparejamiento en la TV', '<p>La primera vez, la TV pide una confirmación. Depende de la marca: aceptar una solicitud en pantalla o escribir un código en la app.</p>PAIR<div class="tip warn"><p><strong>¿Sin el control original?</strong> En LG y Samsung la primera solicitud se acepta en la propia TV. Mira <a href="{perdi}">Perdí el control de la TV: qué hacer</a>.</p></div><p>Después la app se reconecta sola.</p>', ('pedido-na-tv', 'Solicitud de emparejamiento de Comandoo en la pantalla de una TV LG', 'Solicitud de emparejamiento en la pantalla de la TV')),
     ('Usa el control', '<p>Listo: la pantalla Control tiene cruceta y OK, atrás, inicio, volumen, silencio y el botón de apagar. Los botones que tu TV no acepta por su protocolo aparecen en gris.</p>', ('tela-controle', 'Pantalla Control de Comandoo con cruceta, OK y volumen', 'Pantalla Control, ya conectada')),
    ],
-   sections=[('Qué más puedes hacer desde el celular', '<ul><li><strong>Escribir contraseñas y búsquedas.</strong> Con un campo de texto abierto en la TV, lo que escribes en la pestaña {KB} aparece en la TV en vivo. <a href="{digitar}">Ver guía</a>.</li><li><strong>Hablar en vez de escribir.</strong> Mantén presionado el botón de voz y di, por ejemplo, “abrir Netflix” o “volumen 15”.</li><li><strong>Abrir las apps de la TV</strong> con un toque, desde el celular.</li><li><strong>Control encima de otras apps.</strong> El botón flotante abre el control sin salir de la app en la que estás.</li></ul><p>No todas las marcas aceptan todas las funciones. La app muestra solo lo que tu TV permite.</p>')],
-   problems=['FAQ:tv-nao-aparece', ('La TV se conecta pero no obedece los botones', '<p>En <strong>Roku</strong>, abre Configuración, Sistema, Configuración avanzada del sistema, Control por apps móviles y deja el acceso a la red en Habilitado. En <strong>LG</strong>, toca Rehacer emparejamiento en los ajustes de la app y acepta la solicitud en la TV. En <strong>Samsung</strong> y <strong>Panasonic</strong>, revisa que el celular no esté en el Wi-Fi de invitados.</p>'), 'FAQ:ligar-tv', 'FAQ:conexao-cai'],
+   sections=[('Qué más puedes hacer desde el celular', '<ul><li><strong>Escribir contraseñas y búsquedas.</strong> Con un campo de texto abierto en la TV, escribe en la pestaña {KB} y toca {SEND}. <a href="{digitar}">Ver guía</a>.</li><li><strong>Hablar en vez de escribir.</strong> Mantén presionado el botón de voz y di, por ejemplo, “abrir Netflix” o “volumen 15”.</li><li><strong>Abrir las apps de la TV</strong> con un toque, desde el celular.</li><li><strong>Control encima de otras apps.</strong> El botón flotante abre el control sin salir de la app en la que estás.</li></ul><p>No todas las marcas aceptan todas las funciones. La app muestra solo lo que tu TV permite.</p>')],
+   problems=['FAQ:tv-nao-aparece', ('La TV se conecta pero no obedece los botones', '<p>En <strong>Roku</strong>, abre Configuración, Sistema, Configuración avanzada del sistema, Control por apps móviles y deja el acceso a la red en Habilitado. En <strong>LG</strong>, toca Volver a emparejar en los ajustes de la app y acepta la solicitud en la TV. En <strong>Samsung</strong> y <strong>Panasonic</strong>, revisa que el celular no esté en el Wi-Fi de invitados.</p>'), 'FAQ:ligar-tv', 'FAQ:conexao-cai'],
    faq=[('¿El celular necesita infrarrojo?', 'No. Comandoo usa el Wi-Fi de casa, así que funciona en celulares Android con o sin infrarrojo.'), 'NO_4G', 'FREE', ('¿Funciona con cualquier TV?', 'Funciona con Smart TV conectadas al Wi-Fi de las marcas de la lista de compatibles. LG se probó en una TV real; las demás marcas tienen soporte inicial, aún sin prueba en TV real. Las TV sin Wi-Fi no funcionan.'), 'IPHONE'],
   ),
  },
@@ -246,14 +249,14 @@ ARTICLES = {
   ),
   'es': dict(
    seo_title='¿Se puede manejar la TV sin control remoto? | Comandoo',
-   desc='Sí: con los botones de la propia TV, con el celular por Wi-Fi o con el control de otro aparato conectado por HDMI. Mira qué funciona en cada caso.',
+   desc='Sí: con los botones de la propia TV, con el celular por Wi-Fi o con el control de otro dispositivo conectado por HDMI. Mira qué funciona en cada caso.',
    h1='¿Se puede manejar la TV sin control remoto?',
-   answer='Sí. Puedes usar los botones físicos de la TV, el celular como control por Wi-Fi o, en muchos casos, el control de otro aparato conectado a la TV por HDMI. El celular es la opción más completa, con una condición: la TV ya tiene que estar conectada al Wi-Fi.',
+   answer='Sí. Puedes usar los botones físicos de la TV, el celular como control por Wi-Fi o, en muchos casos, el control de otro dispositivo conectado a la TV por HDMI. El celular es la opción más completa, con una condición: la TV ya tiene que estar conectada al Wi-Fi.',
    need=None, steps=None,
    sections=[
     ('1. Con los botones de la propia TV', '<p>Casi todas las TV tienen al menos un botón físico, por lo general debajo de la pantalla, en el centro o detrás de una de las esquinas. En muchos modelos es un solo botón que funciona como palanca: presiónalo para encender y abrir un menú, y muévelo para cambiar volumen, canal y entrada. Sirve para encender la TV y lo básico, pero es lento para navegar por apps.</p>'),
     ('2. Con el celular, por Wi-Fi', '<p>Si la TV ya está en el Wi-Fi de casa, una app de control en el celular reemplaza casi todo el control remoto: cruceta, volumen, apps, teclado y voz. El <a href="{pillar}">paso a paso completo está en esta guía</a>.</p><p>Lo que hay que tener en cuenta es el <strong>primer emparejamiento</strong>, que depende de la marca:</p><ul><li><strong>Android TV, Google TV y Fire TV:</strong> la TV muestra un código en pantalla y lo escribes en el celular. No necesitas el control original.</li><li><strong>Roku:</strong> no hay código. Pero en las Roku más nuevas el acceso desde el celular viene en Limitado y hay que cambiarlo a Habilitado en el menú de la TV.</li><li><strong>LG y Samsung:</strong> la TV muestra una solicitud que se acepta en la propia TV. Sin el control original, intenta aceptarla con los botones físicos, si tu modelo permite navegar con ellos.</li></ul>'),
-    ('3. Con el control de otro aparato (HDMI-CEC)', '<p>Muchas TV aceptan comandos de aparatos conectados por HDMI, como un TV box, un decodificador o una consola. La función tiene un nombre distinto en cada marca (SimpLink, Anynet+, BRAVIA Sync, entre otros) y suele permitir encender, apagar y cambiar el volumen con el control del otro aparato.</p>'),
+    ('3. Con el control de otro dispositivo (HDMI-CEC)', '<p>Muchas TV aceptan comandos de dispositivos conectados por HDMI, como un TV box, un decodificador o una consola. La función tiene un nombre distinto en cada marca (SimpLink, Anynet+, BRAVIA Sync, entre otros) y suele permitir encender, apagar y cambiar el volumen con el control del otro dispositivo.</p>'),
     ('4. Un control nuevo', '<p>Para el día a día, también conviene comprar un control original o universal compatible con el modelo de la TV. Mientras llega, el celular resuelve.</p>'),
    ],
    problems=['FAQ:tv-nao-aparece', 'FAQ:codigo-pin'],
@@ -289,7 +292,7 @@ ARTICLES = {
    steps=[
     ('Turn the TV on with the physical button', '<p>Look for the button under the screen, in the middle or behind one of the corners. On many models the same button also opens a simple menu for volume and input.</p>', None),
     'INSTALL',
-    ('Open the app and pick the TV', '<p>With the phone on the same Wi-Fi as the TV, open Comandoo and tap your TV in the list. If it is not there, tap <strong>Search devices</strong>.</p>', None),
+    ('Open the app and pick the TV', '<p>With the phone on the same Wi-Fi as the TV, open Comandoo and tap your TV in the list. If it is not there, tap <strong>Find devices</strong>.</p>', None),
     ('Do the first pairing', '<p>This is where the brand matters:</p><ul><li><strong>Android TV, Google TV and Fire TV:</strong> the TV shows a code; type it on the phone. Works without the original remote.</li><li><strong>Roku:</strong> no code. If the TV does not respond, phone access may be set to Limited in the TV menu, and changing it means getting to Settings.</li><li><strong>LG and Samsung:</strong> the request shows on the TV and must be accepted there. Try with the physical buttons, if your model lets you navigate with them. If not, you will need a remote for this first step.</li></ul><p>After the first pairing, the app reconnects on its own and you no longer need the original remote.</p>', None),
    ],
    sections=[('When to buy another remote', '<p>If the TV is not on Wi-Fi, or if pairing needs a request the physical buttons cannot reach, an original or universal remote that matches your model is the way. With it in hand just once, you connect the TV to Wi-Fi, pair the phone and use both from then on.</p>')],
@@ -305,7 +308,7 @@ ARTICLES = {
    steps=[
     ('Enciende la TV con el botón físico', '<p>Busca el botón debajo de la pantalla, en el centro o detrás de una de las esquinas. En muchos modelos el mismo botón abre un menú simple para volumen y entrada.</p>', None),
     'INSTALL',
-    ('Abre la app y elige la TV', '<p>Con el celular en el mismo Wi-Fi que la TV, abre Comandoo y toca tu TV en la lista. Si no aparece, toca <strong>Buscar aparatos</strong>.</p>', None),
+    ('Abre la app y elige la TV', '<p>Con el celular en el mismo Wi-Fi que la TV, abre Comandoo y toca tu TV en la lista. Si no aparece, toca <strong>Buscar dispositivos</strong>.</p>', None),
     ('Haz el primer emparejamiento', '<p>Aquí el resultado depende de la marca:</p><ul><li><strong>Android TV, Google TV y Fire TV:</strong> la TV muestra un código; escríbelo en el celular. Funciona sin el control original.</li><li><strong>Roku:</strong> no pide código. Si la TV no obedece, el acceso desde el celular puede estar en Limitado en el menú de la TV, y cambiarlo exige llegar a Configuración.</li><li><strong>LG y Samsung:</strong> la solicitud aparece en la TV y se acepta allí. Intenta con los botones físicos, si tu modelo permite navegar con ellos. Si no, vas a necesitar un control para este primer paso.</li></ul><p>Después del primer emparejamiento, la app se reconecta sola y ya no necesitas el control original.</p>', None),
    ],
    sections=[('Cuándo conviene comprar otro control', '<p>Si la TV no está en el Wi-Fi, o si el emparejamiento depende de aceptar una solicitud que los botones físicos no alcanzan, un control original o universal compatible con el modelo es el camino. Con él en la mano una sola vez, conectas la TV al Wi-Fi, emparejas el celular y desde entonces usas los dos.</p>')],
@@ -319,51 +322,51 @@ ARTICLES = {
   'related': ['pillar', 'nao-encontra', 'androidtv', 'lg'],
   'pt': dict(
    seo_title='Como digitar senhas e buscas na TV pelo celular | Comandoo',
-   desc='Use o teclado do celular para digitar na Smart TV: senhas de Wi-Fi e de apps, buscas no YouTube e na Netflix. Também dá para ditar por voz.',
+   desc='Use o teclado do celular para escrever na Smart TV: senhas, buscas no YouTube e na Netflix. Também dá para ditar por voz.',
    h1='Como digitar senhas e buscas na TV pelo celular',
-   answer='Abra na TV o campo onde quer escrever, como a busca do YouTube ou a senha de um app, e use a aba {KB} do Comandoo: o que você digita no celular aparece na TV ao vivo. Se preferir, dite pelo botão do microfone.',
-   need=['O Comandoo já conectado à TV (veja o <a href="{pillar}">guia de primeira conexão</a>).', 'Celular e TV no mesmo Wi-Fi.'],
+   answer='Abra no aparelho o campo onde quer escrever, como a busca do YouTube ou a senha de um app. No Comandoo, abra a aba {KB}, escreva com o teclado do celular e toque em {SEND}. Se preferir, dite pelo botão do microfone.',
+   need=['O Comandoo já conectado ao aparelho (veja o <a href="{pillar}">guia de primeira conexão</a>).', 'Celular e aparelho no mesmo Wi-Fi.'],
    steps=[
-    ('Abra o campo de texto na TV', '<p>Use o direcional do app para chegar à busca ou ao campo de senha na TV e selecione com OK, até o teclado da TV aparecer.</p>', None),
-    ('Toque na aba {KB}', '<p>No Comandoo, abra a aba <strong>{KB}</strong>. O teclado do celular abre.</p>', ('aba-teclado', 'Aba {KB} do Comandoo com o teclado do celular aberto', 'Aba {KB} aberta')),
-    ('Digite no celular', '<p>O que você escreve aparece na TV ao vivo. Corrija com o apagar do próprio teclado do celular.</p>', None),
+    ('Abra o campo de texto no aparelho', '<p>Use o direcional do app para chegar à busca ou ao campo de senha e selecione com OK, até o teclado da TV aparecer.</p>', None),
+    ('Abra a aba {KB}', '<p>No Comandoo, toque na aba <strong>{KB}</strong>. O teclado do celular abre.</p>', ('aba-teclado', 'Aba {KB} do Comandoo com o teclado do celular aberto', 'Aba {KB} aberta')),
+    ('Escreva e envie', '<p>Escreva o texto no celular e toque em <strong>{SEND}</strong>. O texto vai para o campo aberto no aparelho.</p><div class="tip"><p><strong>Na LG</strong>, o botão se chama <strong>{SEND_LG}</strong>.</p></div>', None),
     ('Ou dite por voz', '<p>Toque no botão do microfone e fale o texto. Pela voz também dá para pedir direto, por exemplo “pesquisar gatos no YouTube”.</p>', None),
    ],
    sections=[('Comandos de voz que ajudam a digitar menos', '<p>Segure o botão de voz e diga, por exemplo: <em>abrir Netflix</em>, <em>pesquisar gatos no YouTube</em>, <em>volume 15</em>, <em>canal 5</em>, <em>HDMI 2</em> ou <em>digitar</em> seguido do texto. Números podem ser falados por extenso. Diga <em>ajuda</em> para ver a lista completa.</p>')],
-   problems=[('O que digito não aparece na TV', '<p>Confira se o campo de texto está aberto e selecionado na TV antes de digitar. Alguns apps de TV usam um teclado próprio que não recebe texto de fora; nesses casos, use o direcional para escolher as letras. Se o problema for em todos os apps, toque em Testar conexão na faixa verde do app.</p>'), 'FAQ:botao-desativado', 'FAQ:conexao-cai'],
-   faq=[('Funciona com qualquer app da TV?', 'Funciona com campos de texto que aceitam o teclado do sistema da TV. Alguns apps têm teclado próprio e não recebem texto de fora.'), ('Dá para colar uma senha copiada no celular?', 'Dá para colar no campo da aba {KB}, como em qualquer campo de texto do celular, e o texto vai para a TV.'), 'FREE'],
+   problems=[('O texto não aparece no aparelho', '<p>Confira se o campo de texto está aberto e selecionado no aparelho antes de enviar. Alguns apps usam um teclado próprio que não recebe texto de fora; nesses casos, use o direcional para escolher as letras. Se acontecer em todos os apps, toque em Testar conexão na faixa verde do app.</p>'), 'FAQ:botao-desativado', 'FAQ:conexao-cai'],
+   faq=[('Funciona com qualquer app?', 'Funciona com campos de texto que aceitam o teclado do sistema do aparelho. Alguns apps têm teclado próprio e não recebem texto de fora.'), ('Dá para colar uma senha copiada no celular?', 'Dá: cole no campo da aba {KB}, como em qualquer campo de texto do celular, e toque em {SEND}.'), 'FREE'],
   ),
   'en': dict(
    seo_title='How to type on your TV from your phone | Comandoo',
-   desc='Use your phone keyboard to type on your Smart TV: Wi-Fi and app passwords, YouTube and Netflix searches. You can also dictate by voice.',
+   desc='Use your phone keyboard to type on your Smart TV: passwords, YouTube and Netflix searches. You can also dictate by voice.',
    h1='How to type passwords and searches on your TV from your phone',
-   answer='Open the field you want to type in on the TV, like YouTube search or an app password, and use Comandoo’s {KB} tab: what you type on the phone shows on the TV live. If you prefer, dictate with the microphone button.',
-   need=['Comandoo already connected to the TV (see the <a href="{pillar}">first connection guide</a>).', 'The phone and the TV on the same Wi-Fi.'],
+   answer='Open the field you want to type in on the device, like YouTube search or an app password. In Comandoo, open the {KB} tab, write with the phone keyboard and tap {SEND}. If you prefer, dictate with the microphone button.',
+   need=['Comandoo already connected to the device (see the <a href="{pillar}">first connection guide</a>).', 'The phone and the device on the same Wi-Fi.'],
    steps=[
-    ('Open the text field on the TV', '<p>Use the app’s D-pad to get to the search or password field on the TV and select it with OK, until the TV keyboard shows up.</p>', None),
-    ('Tap the {KB} tab', '<p>In Comandoo, open the <strong>{KB}</strong> tab. The phone keyboard opens.</p>', ('aba-teclado', 'Comandoo {KB} tab with the phone keyboard open', '{KB} tab open')),
-    ('Type on the phone', '<p>What you write shows on the TV live. Fix mistakes with the phone keyboard’s delete key.</p>', None),
+    ('Open the text field on the device', '<p>Use the app’s D-pad to get to the search or password field and select it with OK, until the TV keyboard shows up.</p>', None),
+    ('Open the {KB} tab', '<p>In Comandoo, tap the <strong>{KB}</strong> tab. The phone keyboard opens.</p>', ('aba-teclado', 'Comandoo {KB} tab with the phone keyboard open', '{KB} tab open')),
+    ('Write and send', '<p>Write the text on the phone and tap <strong>{SEND}</strong>. The text goes to the field open on the device.</p><div class="tip"><p><strong>On LG</strong>, the button is called <strong>{SEND_LG}</strong>.</p></div>', None),
     ('Or dictate by voice', '<p>Tap the microphone button and say the text. You can also ask directly by voice, for example “search cats on YouTube”.</p>', None),
    ],
    sections=[('Voice commands that save typing', '<p>Hold the voice button and say, for example: <em>open Netflix</em>, <em>search cats on YouTube</em>, <em>volume 15</em>, <em>channel 5</em>, <em>HDMI 2</em> or <em>type</em> followed by the text. Numbers can be spoken in words. Say <em>help</em> to see the full list.</p>')],
-   problems=[('What I type does not show on the TV', '<p>Make sure the text field is open and selected on the TV before typing. Some TV apps use their own keyboard that does not accept outside text; in those, use the D-pad to pick the letters. If it happens in every app, tap Test connection on the app’s green bar.</p>'), 'FAQ:botao-desativado', 'FAQ:conexao-cai'],
-   faq=[('Does it work in every TV app?', 'It works with text fields that use the TV’s system keyboard. Some apps have their own keyboard and do not accept outside text.'), ('Can I paste a password copied on my phone?', 'Yes, paste it into the {KB} tab field like any text field on the phone, and the text goes to the TV.'), 'FREE'],
+   problems=[('The text does not show up on the device', '<p>Make sure the text field is open and selected on the device before sending. Some apps use their own keyboard that does not accept outside text; in those, use the D-pad to pick the letters. If it happens in every app, tap Test connection on the app’s green bar.</p>'), 'FAQ:botao-desativado', 'FAQ:conexao-cai'],
+   faq=[('Does it work in every app?', 'It works with text fields that use the device’s system keyboard. Some apps have their own keyboard and do not accept outside text.'), ('Can I paste a password copied on my phone?', 'Yes: paste it into the {KB} tab field like any text field on the phone, and tap {SEND}.'), 'FREE'],
   ),
   'es': dict(
    seo_title='Cómo escribir en la TV desde el celular | Comandoo',
-   desc='Usa el teclado del celular para escribir en la Smart TV: contraseñas de Wi-Fi y de apps, búsquedas en YouTube y Netflix. También puedes dictar por voz.',
+   desc='Usa el teclado del celular para escribir en la Smart TV: contraseñas, búsquedas en YouTube y Netflix. También puedes dictar por voz.',
    h1='Cómo escribir contraseñas y búsquedas en la TV desde el celular',
-   answer='Abre en la TV el campo donde quieres escribir, como la búsqueda de YouTube o la contraseña de una app, y usa la pestaña {KB} de Comandoo: lo que escribes en el celular aparece en la TV en vivo. Si prefieres, dicta con el botón del micrófono.',
-   need=['Comandoo ya conectado a la TV (mira la <a href="{pillar}">guía de primera conexión</a>).', 'El celular y la TV en el mismo Wi-Fi.'],
+   answer='Abre en el dispositivo el campo donde quieres escribir, como la búsqueda de YouTube o la contraseña de una app. En Comandoo, abre la pestaña {KB}, escribe con el teclado del celular y toca {SEND}. Si prefieres, dicta con el botón del micrófono.',
+   need=['Comandoo ya conectado al dispositivo (mira la <a href="{pillar}">guía de primera conexión</a>).', 'El celular y el dispositivo en el mismo Wi-Fi.'],
    steps=[
-    ('Abre el campo de texto en la TV', '<p>Usa la cruceta de la app para llegar a la búsqueda o al campo de contraseña en la TV y selecciónalo con OK, hasta que aparezca el teclado de la TV.</p>', None),
-    ('Toca la pestaña {KB}', '<p>En Comandoo, abre la pestaña <strong>{KB}</strong>. Se abre el teclado del celular.</p>', ('aba-teclado', 'Pestaña {KB} de Comandoo con el teclado del celular abierto', 'Pestaña {KB} abierta')),
-    ('Escribe en el celular', '<p>Lo que escribes aparece en la TV en vivo. Corrige con la tecla de borrar del teclado del celular.</p>', None),
+    ('Abre el campo de texto en el dispositivo', '<p>Usa la cruceta de la app para llegar a la búsqueda o al campo de contraseña y selecciónalo con OK, hasta que aparezca el teclado de la TV.</p>', None),
+    ('Abre la pestaña {KB}', '<p>En Comandoo, toca la pestaña <strong>{KB}</strong>. Se abre el teclado del celular.</p>', ('aba-teclado', 'Pestaña {KB} de Comandoo con el teclado del celular abierto', 'Pestaña {KB} abierta')),
+    ('Escribe y envía', '<p>Escribe el texto en el celular y toca <strong>{SEND}</strong>. El texto va al campo abierto en el dispositivo.</p><div class="tip"><p><strong>En LG</strong>, el botón se llama <strong>{SEND_LG}</strong>.</p></div>', None),
     ('O dicta por voz', '<p>Toca el botón del micrófono y di el texto. Por voz también puedes pedir directo, por ejemplo “buscar gatos en YouTube”.</p>', None),
    ],
    sections=[('Comandos de voz para escribir menos', '<p>Mantén presionado el botón de voz y di, por ejemplo: <em>abrir Netflix</em>, <em>buscar gatos en YouTube</em>, <em>volumen 15</em>, <em>canal 5</em>, <em>HDMI 2</em> o <em>escribir</em> seguido del texto. Los números se pueden decir con palabras. Di <em>ayuda</em> para ver la lista completa.</p>')],
-   problems=[('Lo que escribo no aparece en la TV', '<p>Revisa que el campo de texto esté abierto y seleccionado en la TV antes de escribir. Algunas apps de TV usan un teclado propio que no recibe texto de afuera; en esos casos, usa la cruceta para elegir las letras. Si pasa en todas las apps, toca Probar conexión en la barra verde de la app.</p>'), 'FAQ:botao-desativado', 'FAQ:conexao-cai'],
-   faq=[('¿Funciona con cualquier app de la TV?', 'Funciona con campos de texto que usan el teclado del sistema de la TV. Algunas apps tienen teclado propio y no reciben texto de afuera.'), ('¿Puedo pegar una contraseña copiada en el celular?', 'Sí, pégala en el campo de la pestaña {KB} como en cualquier campo de texto del celular, y el texto va a la TV.'), 'FREE'],
+   problems=[('El texto no aparece en el dispositivo', '<p>Revisa que el campo de texto esté abierto y seleccionado en el dispositivo antes de enviar. Algunas apps usan un teclado propio que no recibe texto de afuera; en esos casos, usa la cruceta para elegir las letras. Si pasa en todas las apps, toca Probar conexión en la barra verde de la app.</p>'), 'FAQ:botao-desativado', 'FAQ:conexao-cai'],
+   faq=[('¿Funciona con cualquier app?', 'Funciona con campos de texto que usan el teclado del sistema del dispositivo. Algunas apps tienen teclado propio y no reciben texto de afuera.'), ('¿Puedo pegar una contraseña copiada en el celular?', 'Sí: pégala en el campo de la pestaña {KB} como en cualquier campo de texto del celular, y toca {SEND}.'), 'FREE'],
   ),
  },
 
@@ -402,7 +405,7 @@ ARTICLES = {
    ],
    sections=[],
    problems=['FAQ:ip-da-tv', 'FAQ:mesma-rede', 'FAQ:conexao-cai', 'FAQ:marca-fora'],
-   faq=['NO_4G', ('The TV shows up but will not pair. Now what?', 'Make sure you accepted the request on the TV or typed the right code: the code changes on every attempt. On LG, if the TV connects but the buttons do not respond, use Redo pairing in the app settings.'), ('How do I ask for help?', 'In Settings, tap Report a problem. Tell us what happened and the TV brand and model. The answer arrives in the app.')],
+   faq=['NO_4G', ('The TV shows up but will not pair. Now what?', 'Make sure you accepted the request on the TV or typed the right code: the code changes on every attempt. On LG, if the TV connects but the buttons do not respond, use Pair again in the app settings.'), ('How do I ask for help?', 'In Settings, tap Report a problem. Tell us what happened and the TV brand and model. The answer arrives in the app.')],
   ),
   'es': dict(
    seo_title='¿El celular no encuentra la TV? Cómo resolverlo | Comandoo',
@@ -419,7 +422,7 @@ ARTICLES = {
    ],
    sections=[],
    problems=['FAQ:ip-da-tv', 'FAQ:mesma-rede', 'FAQ:conexao-cai', 'FAQ:marca-fora'],
-   faq=['NO_4G', ('La TV aparece pero no acepta el emparejamiento. ¿Y ahora?', 'Revisa que aceptaste la solicitud en la TV o escribiste el código correcto: el código cambia en cada intento. En LG, si la TV se conecta pero los botones no responden, usa Rehacer emparejamiento en los ajustes de la app.'), ('¿Cómo pido ayuda?', 'En Ajustes, toca Reportar un problema. Cuenta qué pasó y la marca y el modelo de la TV. La respuesta llega en la app.')],
+   faq=['NO_4G', ('La TV aparece pero no acepta el emparejamiento. ¿Y ahora?', 'Revisa que aceptaste la solicitud en la TV o escribiste el código correcto: el código cambia en cada intento. En LG, si la TV se conecta pero los botones no responden, usa Volver a emparejar en los ajustes de la app.'), ('¿Cómo pido ayuda?', 'En Ajustes, toca Reportar un problema. Cuenta qué pasó y la marca y el modelo de la TV. La respuesta llega en la app.')],
   ),
  },
 }

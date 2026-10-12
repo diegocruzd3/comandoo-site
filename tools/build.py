@@ -121,8 +121,9 @@ T = {
           ('Fotos e vídeos na TV', 'Mostre na tela grande o que está no celular, pela rede de casa.'),
           ('Timer para desligar', 'Programe a TV para desligar sozinha.')],
   comp_h='Funciona com as principais marcas.',
-  comp_sub='Testamos a fundo nas TVs LG. Nas outras marcas o Comandoo já funciona na maioria dos modelos, mas ainda pode ter limitações.',
-  list_h='TVs compatíveis', list_n='7 plataformas', ok='Testado', beta='Beta',
+  comp_sub='A LG foi testada em TV real. As outras marcas têm suporte inicial: o app foi feito com base no protocolo de cada uma, mas ainda não foi testado em TV real.',
+  list_h='TVs compatíveis', list_n='{n} plataformas', tested='Testado', initial='Suporte inicial', unsupported='Ainda não funciona',
+  guides_label='Guias', how_more='Passo a passo completo, com dicas de cada marca', changelog_label='Novidades do app',
   comp_note='Encontrou um problema com a sua TV? Envie um relato pelo próprio app ou escreva para',
   priv_h='Seus dados ficam com você.',
   priv_sub='O resumo está aqui. O texto completo, com tudo o que o app usa, está na',
@@ -185,8 +186,9 @@ T = {
           ('Photos and videos on the TV', 'Show what’s on your phone on the big screen, over your home network.'),
           ('Sleep timer', 'Set the TV to turn itself off.')],
   comp_h='Works with the major brands.',
-  comp_sub='Fully tested on LG TVs. On other brands Comandoo already works with most models, but may still have limitations.',
-  list_h='Supported TVs', list_n='7 platforms', ok='Tested', beta='Beta',
+  comp_sub='LG was tested on a real TV. The other brands have initial support: the app was built on each one’s protocol, but has not been tested on a real TV yet.',
+  list_h='Supported TVs', list_n='{n} platforms', tested='Tested', initial='Initial support', unsupported='Not working yet',
+  guides_label='Guides', how_more='Full step by step, with tips for each brand', changelog_label='App updates',
   comp_note='Found a problem with your TV? Send a report from inside the app or write to',
   priv_h='Your data stays with you.',
   priv_sub='Here’s the short version. The full text, covering everything the app uses, is in the',
@@ -249,8 +251,9 @@ T = {
           ('Fotos y videos en la TV', 'Muestra en la pantalla grande lo que tienes en el celular, por la red de casa.'),
           ('Temporizador de apagado', 'Programa la TV para que se apague sola.')],
   comp_h='Funciona con las principales marcas.',
-  comp_sub='Lo probamos a fondo en TVs LG. En las demás marcas Comandoo ya funciona en la mayoría de los modelos, pero todavía puede tener limitaciones.',
-  list_h='TVs compatibles', list_n='7 plataformas', ok='Probado', beta='Beta',
+  comp_sub='LG se probó en una TV real. Las demás marcas tienen soporte inicial: la app se hizo con el protocolo de cada una, pero aún no se probó en una TV real.',
+  list_h='TVs compatibles', list_n='{n} plataformas', tested='Probado', initial='Soporte inicial', unsupported='Aún no funciona',
+  guides_label='Guías', how_more='Paso a paso completo, con consejos de cada marca', changelog_label='Novedades de la app',
   comp_note='¿Encontraste un problema con tu TV? Envía un reporte desde la app o escribe a',
   priv_h='Tus datos se quedan contigo.',
   priv_sub='Aquí está el resumen. El texto completo, con todo lo que usa la app, está en la',
@@ -277,9 +280,46 @@ T = {
   wake='Encender el sitio', wake_txt='Toca para encender'),
 }
 
-PLATFORMS = [('LG', 'webOS', 'ok'), ('Samsung', 'Tizen', 'beta'), ('Roku', 'Roku TV', 'beta'),
-             ('Android TV', 'Google TV', 'beta'), ('Amazon', 'Fire TV', 'beta'),
-             ('Sony', 'Android TV / Google TV', 'beta'), ('Panasonic', 'Smart TV', 'beta')]
+
+
+# Lista de compatibilidade: fonte única é o compat.json do repositório de versões.
+RELEASES = Path('/home/claude/diegocruzd3/controley-releases')
+
+
+def _compat():
+    import subprocess, urllib.request
+    try:
+        subprocess.run(['git', '-C', str(RELEASES), 'pull', '-q'], check=False, timeout=60)
+        return json.loads((RELEASES / 'compat.json').read_text(encoding='utf-8'))
+    except Exception:
+        with urllib.request.urlopen('https://raw.githubusercontent.com/diegocruzd3/controley-releases/main/compat.json', timeout=30) as r:
+            return json.loads(r.read().decode('utf-8'))
+
+
+_ORDER = {'tested': 0, 'initial': 1, 'unsupported': 2}
+COMPAT_ROWS = sorted(_compat()['brands'], key=lambda b: _ORDER.get(b['status'], 3))
+SUF = {'pt': '', 'en': '_en', 'es': '_es'}
+LI = {'pt': 0, 'en': 1, 'es': 2}
+GUIDES = {'pt': '/guias/', 'en': '/en/guides/', 'es': '/es/guias/'}
+CHANGELOG = {'pt': '/changelog/', 'en': '/en/changelog/', 'es': '/es/changelog/'}
+PILLAR = {'pt': 'celular-como-controle-remoto', 'en': 'phone-as-tv-remote', 'es': 'celular-como-control-remoto'}
+BRAND_GUIDES = {'lg': ('controle-remoto-tv-lg', 'lg-tv-remote-app', 'control-remoto-tv-lg'),
+                'samsung': ('controle-remoto-tv-samsung', 'samsung-tv-remote-app', 'control-remoto-tv-samsung'),
+                'roku': ('controle-remoto-roku', 'roku-remote-app', 'control-remoto-roku'),
+                'androidtv': ('controle-remoto-android-tv', 'android-tv-remote-app', 'control-remoto-android-tv'),
+                'firetv': ('controle-remoto-fire-tv', 'fire-tv-remote-app', 'control-remoto-fire-tv')}
+NAME_TR = {'androidtv': {'en': 'Android TV and Google TV', 'es': 'Android TV y Google TV'},
+           'vestel': {'en': 'Vestel (Panasonic, Toshiba, Telefunken and others)', 'es': 'Vestel (Panasonic, Toshiba, Telefunken y otras)'}}
+SYS_TR = {
+    'lg': {'en': 'LG Smart TVs with webOS', 'es': 'Smart TV LG con webOS'},
+    'roku': {'en': 'Roku TVs and Roku players (TCL, Philips, AOC, Semp and other brands with Roku)', 'es': 'Roku TV y reproductores Roku (TCL, Philips, AOC, Semp y otras marcas con Roku)'},
+    'samsung': {'en': 'Samsung Smart TVs with Tizen (2016 models and later)', 'es': 'Smart TV Samsung con Tizen (modelos de 2016 en adelante)'},
+    'androidtv': {'en': 'Android TV, Google TV, Android TV boxes and Chromecast with Google TV (Sony, TCL, Philips, Xiaomi, Hisense, AOC, Semp and others)', 'es': 'Android TV, Google TV, TV Box con Android TV y Chromecast con Google TV (Sony, TCL, Philips, Xiaomi, Hisense, AOC, Semp y otras)'},
+    'firetv': {'en': 'Amazon Fire TV Stick and Fire TV', 'es': 'Fire TV Stick y Fire TV de Amazon'},
+    'sony': {'en': 'Sony Bravia with IP Control', 'es': 'Sony Bravia con Control IP'},
+    'panasonic': {'en': 'Panasonic Viera: older models without a password and recent ones (around 2019 onward) with a PIN', 'es': 'Panasonic Viera: modelos antiguos sin contraseña y recientes (desde 2019 aprox.) con PIN'},
+    'hisense': {'en': 'Hisense with the VIDAA system', 'es': 'Hisense con sistema VIDAA'},
+}
 
 
 def cta(t, nav=True):
@@ -318,8 +358,15 @@ def page(lang):
     feats = ''.join(f'<div class="fk" tabindex="-1" data-nav><span class="ic">{ic(k)}</span><h3>{h}</h3><p>{p}</p></div>'
                     for k, h, p in t['feats'])
     extras = ''.join(f'<li tabindex="-1" data-nav><strong>{h}</strong><span>{p}</span></li>' for h, p in t['extras'])
-    rows = ''.join(f'<div class="row {s}" tabindex="-1" data-nav>{ic("tv")}<div><strong>{b}</strong><small>{pl}</small></div>'
-                   f'<span class="st st-{s}">{t[s]}</span></div>' for b, pl, s in PLATFORMS)
+    rows = ''
+    for b in COMPAT_ROWS:
+        st = b['status']
+        cls = {'tested': 'ok', 'initial': 'beta', 'unsupported': 'no'}[st]
+        sysm = b.get('systems' + SUF[lang]) or SYS_TR.get(b['id'], {}).get(lang) or b['systems']
+        inner = f'{ic("tv")}<div><strong>{NAME_TR.get(b["id"], {}).get(lang, b["name"])}</strong><small>{sysm}</small></div><span class="st st-{cls}">{t[st]}</span>'
+        g = BRAND_GUIDES.get(b['id'])
+        rows += (f'<a class="row {cls}" href="{GUIDES[lang]}{g[LI[lang]]}/" data-nav>{inner}</a>' if g
+                 else f'<div class="row {cls}" tabindex="-1" data-nav>{inner}</div>')
     priv = ''.join(f'<li tabindex="-1" data-nav><strong>{h}</strong><span>{p}</span></li>' for h, p in t['priv'])
     faq = ''.join(f'<details><summary data-nav>{q}</summary><p>{a}</p></details>' for q, a in t['faq'])
     strings = {k: t[k] for k in ('o_back', 'o_home', 'o_input', 'o_mute', 'o_unmute', 'o_ok', 'o_off', 'voice', 'app_sub')}
@@ -355,7 +402,7 @@ def page(lang):
 <div class="wrap">
 <header class="top">
   <a class="brand" href="{t['path']}" data-nav>{sym('#0E120F')}Comandoo</a>
-  <nav class="seg" aria-label="{t['lang_nav']}">{langs}</nav>
+  <nav class="gnav" aria-label="Site"><a class="gl" href="{GUIDES[lang]}" data-nav>{t['guides_label']}</a><span class="seg" aria-label="{t['lang_nav']}">{langs}</span></nav>
 </header>
 <div class="hero" id="main">
   <div>
@@ -413,6 +460,7 @@ def page(lang):
   <p class="sub">{t['how_sub']}</p>
   <ol class="steps">{steps}</ol>
   <p class="note">{t['how_note']}</p>
+  <p class="more"><a href="{GUIDES[lang]}{PILLAR[lang]}/" data-nav>{t['how_more']}</a></p>
 </div></section>
 
 <section><div class="wrap">
@@ -423,10 +471,10 @@ def page(lang):
   </div>
 </div></section>
 
-<section><div class="wrap">
+<section id="compat"><div class="wrap">
   <h2>{t['comp_h']}</h2>
   <p class="sub">{t['comp_sub']}</p>
-  <div class="tvlist"><div class="tvlist-head"><b>{t['list_h']}</b><span>{t['list_n']}</span></div>{rows}</div>
+  <div class="tvlist"><div class="tvlist-head"><b>{t['list_h']}</b><span>{t['list_n'].format(n=len(COMPAT_ROWS))}</span></div>{rows}</div>
   <p class="note">{t['comp_note']} <a href="mailto:{EMAIL}" data-nav>{EMAIL}</a>.</p>
 </div></section>
 
@@ -461,6 +509,8 @@ def page(lang):
     <p>© 2026 Agência D3</p>
   </div>
   <ul>
+    <li><a href="{GUIDES[lang]}" data-nav>{t['guides_label']}</a></li>
+    <li><a href="{CHANGELOG[lang]}" data-nav>{t['changelog_label']}</a></li>
     <li><a href="/privacidade" data-nav>{T['pt']['f_priv']}</a></li>
     <li><a href="/privacidade/en" data-nav>{T['en']['f_priv']}</a></li>
     <li><a href="/privacidade/es" data-nav>{T['es']['f_priv']}</a></li>

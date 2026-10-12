@@ -268,3 +268,18 @@ body.page-on main,body.page-on .band,body.page-on footer{animation:crtOn .6s cub
 }
 @media (prefers-reduced-motion:reduce){.wake,.wake-txt{opacity:1}}
 .search .mic .sym{width:6px;height:13px}
+
+/* Navegação principal (home e guias) */
+.gnav{display:flex;align-items:center;gap:6px}
+.gnav>a.gl{font-weight:700;font-size:15px;text-decoration:none;padding:8px 14px;border-radius:999px;color:inherit}
+.gnav>a.gl[aria-current]{background:rgba(14,18,15,.10)}
+.gnav>a.gl:hover{background:rgba(14,18,15,.08)}
+@media (max-width:420px){.gnav>a.gl{padding:8px 10px}.seg a{min-width:38px;padding:0 8px}}
+
+a.row{color:var(--ink);text-decoration:none}
+a.row:hover strong{text-decoration:underline}
+.row.no{background:var(--graf);opacity:.8}
+.st-no{background:rgba(255,143,132,.12);color:var(--power)}
+.row small{display:block}
+.more{margin:14px 0 0}
+.more a{font-weight:700}

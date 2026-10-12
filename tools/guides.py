@@ -1,259 +1,241 @@
 #!/usr/bin/env python3
-"""Guias do Comandoo (manual do app). Gera /guias, /en/guides e /es/guias.
+"""Manual do Comandoo: gera /guias, /en/guides, /es/guias, /changelog, sitemap.xml e robots.txt.
+
+Uso: python3 tools/guides.py   (depois de tools/build.py)
 
 Fontes de verdade, nesta ordem:
-  1. compat.json do repositório controley-releases (branch main): marcas e status.
-  2. faq.json do mesmo repositório: nomes de botões e fluxos do app.
-  3. Capturas reais do app em assets/guias/ (nunca imagem inventada).
-Regra: a cada versão nova do app, revisar os guias que citam recursos alterados.
+  1. compat.json do repositório controley-releases (branch main): marcas, status e passos.
+  2. faq.json do mesmo repositório: respostas oficiais e nomes de botões.
+  3. Capturas reais do app em assets/guias/{nome}-{pt|en|es}.png|jpg (nunca imagem inventada).
+     Captura que ainda não existe simplesmente não aparece na página.
+
+Manutenção: a cada versão nova do app, atualize APP_VERSION e UPDATED, revise os guias
+afetados em guides_content.py, acrescente a versão em tools/changelog.json e rode este script.
 """
 import html
 import json
+import re
+import subprocess
 import sys
+import urllib.request
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import build as B  # noqa: E402
+import guides_content as C  # noqa: E402
 
 ROOT = B.ROOT
 SITE = B.SITE
 UPDATED = '2026-10-12'
 APP_VERSION = '1.24.2'
+RELEASES = Path('/home/claude/diegocruzd3/controley-releases')
+RAW = 'https://raw.githubusercontent.com/diegocruzd3/controley-releases/main/'
+LI = {'pt': 0, 'en': 1, 'es': 2}
+SUF = {'pt': '', 'en': '_en', 'es': '_es'}
+MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
 
-def plain(b, n=320):
-    import re
-    t = re.sub(r'\s+', ' ', html.unescape(re.sub(r'<table.*?</table>|<div class="tip.*?</div>', ' ', b, flags=re.S)))
-    t = re.sub(r'<[^>]+>', '', t).strip()
-    t = re.sub(r'\s+([.,:])', r'\1', t)
-    return t if len(t) <= n else t[:n].rsplit('. ', 1)[0] + '.'
+# ── Fontes ────────────────────────────────────────────────────────────────
+def load(name):
+    try:
+        subprocess.run(['git', '-C', str(RELEASES), 'pull', '-q'], check=False, timeout=60)
+        return json.loads((RELEASES / name).read_text(encoding='utf-8'))
+    except Exception:
+        with urllib.request.urlopen(RAW + name, timeout=30) as r:
+            return json.loads(r.read().decode('utf-8'))
+
+
+def fix_name(s):
+    # As fontes ainda dizem Controley (nome antigo); o site usa sempre Comandoo.
+    return s.replace('Controley', 'Comandoo')
+
+
+COMPAT = load('compat.json')
+FAQ = {i['id']: i for i in load('faq.json')['items']}
+BRAND = {b['id']: b for b in COMPAT['brands']}
+
+
+def fq(fid, lang):
+    i = FAQ[fid]
+    return fix_name(i['q' + SUF[lang]]), '<p>' + html.escape(fix_name(i['a' + SUF[lang]])) + '</p>'
 
 
 def esc(s):
     return html.escape(s, quote=True)
 
 
-def shot(file, alt, caption, wide=False):
-    """Captura real do app. Se o arquivo ainda não existe, mostra o espaço reservado."""
-    if (ROOT / 'assets' / 'guias' / file).exists():
-        return (f'<figure class="shot"><img src="/assets/guias/{file}" alt="{esc(alt)}" loading="lazy" '
-                f'width="600" height="1067"><figcaption>{caption}</figcaption></figure>')
-    return f'<figure class="shot pending{" wide" if wide else ""}" role="img" aria-label="{esc(alt)}">Captura pendente<br>{caption}</figure>'
+def plain(b, n=320):
+    t = re.sub(r'<table.*?</table>|<div class="tip.*?</div>', ' ', b, flags=re.S)
+    t = html.unescape(re.sub(r'<[^>]+>', ' ', t))
+    t = re.sub(r'\s+', ' ', t).strip()
+    t = re.sub(r'\s+([.,:;])', r'\1', t)
+    return t if len(t) <= n else t[:n].rsplit(' ', 1)[0] + '…'
 
 
-def cta_box():
-    btn = (f'<a class="pill pill-dark" href="{B.PLAY_URL}" rel="noopener">{B.sym()}Baixar no Google Play</a>' if B.PLAY_URL
-           else f'<span class="pill pill-dark pill-soon">{B.sym()}Em breve no Google Play</span>')
-    return (f'<aside class="gcta">{B.sym("#0E120F")}<div><b>Comandoo: o controle remoto no celular</b>'
-            f'<p>Grátis, sem anúncios e sem cadastro. Funciona pelo Wi-Fi de casa.</p></div>{btn}</aside>')
+def url(aid, lang, absolute=False):
+    base = C.UI[lang]['guides'] + C.SLUGS[aid][LI[lang]] + '/'
+    return SITE + base if absolute else base
 
 
-# ── Modelo: guia principal (PT) ───────────────────────────────────────────
-PILLAR = dict(
-    slug='celular-como-controle-remoto',
-    title='Como usar o celular como controle remoto da TV (grátis e sem anúncios)',
-    seo_title='Como usar o celular como controle remoto da TV | Comandoo',
-    desc='Passo a passo para controlar a Smart TV pelo celular, pelo Wi-Fi e sem infravermelho: o que você precisa, como parear e o que fazer se a TV não aparecer.',
-    h1='Como usar o celular como controle remoto da TV',
-    answer=('Dá para usar o celular como controle remoto de uma Smart TV pelo Wi-Fi, sem infravermelho. '
-            'Você precisa de um app de controle no celular, da TV ligada e dos dois aparelhos na mesma rede de casa. '
-            'Com o Comandoo, que é grátis e sem anúncios, basta escolher a TV na lista e confirmar o pareamento uma vez.'),
-    time='PT5M',
-)
-
-STEPS = [
-    ('Instale o Comandoo no celular',
-     '<p>O Comandoo é um app para Android. Ele chega em breve ao Google Play; o link aparece aqui assim que estiver disponível. '
-     'Não é preciso criar conta nem fazer login.</p>', None),
-    ('Ligue a TV e confira a rede',
-     '<p>Ligue a TV (não basta estar em espera) e veja se o celular está no <strong>mesmo Wi-Fi</strong> que ela. '
-     'Desligue os dados móveis e evite a rede de visitantes do roteador: muitas TVs recusam comandos vindos de outra rede.</p>', None),
-    ('Abra o app e escolha a sua TV',
-     '<p>Ao abrir, o Comandoo procura os aparelhos da sua rede e mostra a lista. Toque na sua TV. '
-     'Se ela não aparecer, toque em <strong>Buscar aparelhos</strong>. Se mesmo assim não aparecer, use <strong>Conectar pelo IP</strong> '
-     '(veja <a href="#problemas">Problemas comuns</a>).</p>',
-     ('lista-de-tvs.png', 'Lista de TVs encontradas no Comandoo', 'Lista de aparelhos encontrados na rede')),
-    ('Confirme o pareamento na TV',
-     '<p>Na primeira vez, a TV pede uma confirmação. O jeito muda conforme a marca: aceitar um pedido na tela ou digitar um código no app.</p>'
-     '<table class="pair"><thead><tr><th scope="col">Marca</th><th scope="col">O que aparece na primeira vez</th></tr></thead><tbody>'
-     '<tr><td>LG</td><td>Um pedido na tela. Aceite com o controle da TV.</td></tr>'
-     '<tr><td>Samsung</td><td>Um aviso pedindo para permitir o app. Aceite com o controle da TV.</td></tr>'
-     '<tr><td>Android TV e Google TV</td><td>Um código de 6 letras ou números. Digite no app exatamente como aparece.</td></tr>'
-     '<tr><td>Fire TV, Panasonic e Philips</td><td>Um PIN de 4 números. Digite no app.</td></tr>'
-     '<tr><td>Roku</td><td>Nada: não há código.</td></tr>'
-     '<tr><td>Sony Bravia</td><td>A chave (PSK) que você define na TV, em Controle IP.</td></tr>'
-     '</tbody></table>'
-     '<div class="tip warn"><p><strong>Sem o controle original?</strong> Na LG e na Samsung, o primeiro pedido precisa ser aceito na própria TV. '
-     'Veja <a href="/guias/perdi-o-controle-da-tv/">Perdi o controle da TV: o que fazer</a>.</p></div>'
-     '<p>Depois disso o app reconecta sozinho nas próximas vezes.</p>',
-     ('pedido-na-tv.jpg', 'Pedido de pareamento do Comandoo na tela de uma TV LG', 'Pedido de pareamento na tela da TV (foto)', True)),
-    ('Use o controle',
-     '<p>Pronto: a tela Controle tem direcional e OK, voltar, início, volume, mudo e o botão de desligar. '
-     'Botões que a sua TV não aceita pelo protocolo dela aparecem apagados.</p>',
-     ('tela-controle.png', 'Tela Controle do Comandoo com direcional, OK e volume', 'Tela Controle, já conectada')),
-]
-
-EXTRAS = [
-    ('Digitar senhas e buscas', 'Com um campo de texto aberto na TV, o que você digita no celular aparece na TV ao vivo.',
-     '/guias/digitar-na-tv-pelo-celular/'),
-    ('Falar em vez de digitar', 'Segure o botão de voz e diga, por exemplo, “abrir Netflix” ou “volume 15”.', None),
-    ('Abrir os apps da TV', 'Seus aplicativos da TV ficam a um toque, direto no celular.', None),
-    ('Controle por cima de outros apps', 'O botão flutuante abre o controle sem sair do aplicativo em que você está.', None),
-]
-
-PROBLEMS = [
-    ('A TV não aparece na lista',
-     '<p>Confira se a TV está ligada e se os dois aparelhos estão no mesmo Wi-Fi. Alguns roteadores separam as redes de 2,4 GHz e de 5 GHz: '
-     'deixe o celular na mesma que a TV. Em algumas marcas é preciso ativar o controle pelo celular nas configurações da TV.</p>'
-     '<p>Se continuar, descubra o IP da TV (em Configurações, Rede, Status da conexão) e use <strong>Conectar pelo IP</strong>. '
-     'O guia <a href="/guias/celular-nao-encontra-a-tv/">Por que o celular não encontra a TV</a> tem o passo a passo completo.</p>'),
-    ('A TV conecta, mas não obedece aos botões',
-     '<p>Na <strong>Roku</strong>, abra Configurações, Sistema, Configurações avançadas, Controle por apps móveis e deixe o acesso à rede como Ativado. '
-     'Na <strong>LG</strong>, em Ajustes do app, toque em Refazer pareamento e aceite o pedido na TV. '
-     'Na <strong>Samsung</strong> e na <strong>Panasonic</strong>, confira se o celular não está no Wi-Fi de visitantes.</p>'),
-    ('O app não liga a TV',
-     '<p>Desligar pelo app funciona na maioria das TVs, mas ligar depende do modelo. Na LG, ative na TV a opção de ligar pela rede '
-     '(Wake on LAN nas TVs 2025 ou mais novas, Mobile TV On nas anteriores). Em várias marcas a TV só desliga pela rede.</p>'),
-    ('A conexão cai ou demora a voltar',
-     '<p>O app tenta reconectar sozinho. Se o Android estiver economizando bateria demais, deixe o Comandoo sem restrição de bateria nas configurações do celular.</p>'),
-]
-
-FAQ = [
-    ('O celular precisa ter infravermelho?', 'Não. O Comandoo usa o Wi-Fi de casa, então funciona em qualquer celular Android, com ou sem infravermelho.'),
-    ('Funciona pelo 4G ou fora de casa?', 'Não. O celular precisa estar na mesma rede Wi-Fi da TV, porque os comandos vão direto de um aparelho para o outro.'),
-    ('É grátis mesmo?', 'Sim. O controle não tem anúncios nem cadastro. No futuro, alguns recursos extras poderão fazer parte de um plano opcional, mas o controle básico continua grátis para sempre.'),
-    ('Funciona com qualquer TV?', 'Funciona com Smart TVs conectadas ao Wi-Fi das marcas da lista de compatíveis. A LG foi testada em TV real; as outras marcas têm suporte inicial, ainda sem teste em TV real. TVs sem Wi-Fi não funcionam.'),
-    ('Funciona no iPhone?', 'Ainda não. O Comandoo é um app para Android.'),
-]
-
-RELATED = [
-    ('/guias/perdi-o-controle-da-tv/', 'Perdi o controle da TV: o que fazer', 'Como parear e mexer na TV sem o controle original'),
-    ('/guias/celular-nao-encontra-a-tv/', 'Por que o celular não encontra a TV', 'Wi-Fi, rede de visitantes e conexão pelo IP'),
-    ('/guias/digitar-na-tv-pelo-celular/', 'Como digitar senhas e buscas na TV pelo celular', 'Teclado do celular e voz na TV'),
-    ('/guias/controle-remoto-tv-lg/', 'Controle remoto no celular para TV LG', 'Pareamento, ligar pela rede e dicas da LG'),
-]
+def links(s, lang):
+    for aid in C.SLUGS:
+        s = s.replace('{' + aid + '}', url(aid, lang))
+    return s
 
 
-def schema():
-    url = f'{SITE}/guias/{PILLAR["slug"]}/'
-    art = {"@context": "https://schema.org", "@type": "Article", "headline": PILLAR['h1'], "description": PILLAR['desc'],
-           "inLanguage": "pt-BR", "url": url, "datePublished": UPDATED, "dateModified": UPDATED,
-           "author": {"@type": "Organization", "name": "Agência D3"},
-           "publisher": {"@type": "Organization", "name": "Agência D3", "logo": {"@type": "ImageObject", "url": f"{SITE}/assets/icone-512.png"}},
-           "image": f"{SITE}/assets/og-pt.png", "mainEntityOfPage": url}
-    howto = {"@context": "https://schema.org", "@type": "HowTo", "name": PILLAR['h1'], "description": PILLAR['answer'],
-             "totalTime": PILLAR['time'], "inLanguage": "pt-BR",
-             "supply": [{"@type": "HowToSupply", "name": "Celular Android"}, {"@type": "HowToSupply", "name": "Smart TV no Wi-Fi"}],
-             "tool": [{"@type": "HowToTool", "name": "App Comandoo"}],
-             "step": [{"@type": "HowToStep", "position": i + 1, "name": h, "url": f"{url}#passo-{i+1}",
-                       "text": plain(b)}
-                      for i, (h, b, _) in enumerate(STEPS)]}
-    faq = {"@context": "https://schema.org", "@type": "FAQPage",
-           "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in FAQ]}
-    crumbs = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
-        {"@type": "ListItem", "position": 1, "name": "Comandoo", "item": f"{SITE}/"},
-        {"@type": "ListItem", "position": 2, "name": "Guias", "item": f"{SITE}/guias/"},
-        {"@type": "ListItem", "position": 3, "name": PILLAR['h1'], "item": url}]}
-    return ''.join(f'<script type="application/ld+json">{json.dumps(x, ensure_ascii=False)}</script>' for x in (art, howto, faq, crumbs))
+def fdate(d, lang):
+    y, m, dd = d.split('-')
+    return C.UI[lang]['date_fmt'].format(d=dd, m=m, y=y, mon=MONTHS[int(m) - 1])
 
 
-def pillar_page():
-    p = PILLAR
-    url = f'{SITE}/guias/{p["slug"]}/'
-    steps = ''.join(
-        f'<li id="passo-{i+1}"><h3>{h}</h3>{b}{shot(*s) if s else ""}</li>' for i, (h, b, s) in enumerate(STEPS))
-    extras = ''.join(f'<li><strong>{h}.</strong> {d}' + (f' <a href="{l}">Ver guia</a>.' if l else '') + '</li>' for h, d, l in EXTRAS)
-    probs = ''.join(f'<details><summary>{q}</summary><div>{a}</div></details>' for q, a in PROBLEMS)
-    faq = ''.join(f'<details><summary>{q}</summary><div><p>{a}</p></div></details>' for q, a in FAQ)
-    rel = ''.join(f'<li><a href="{u}">{t}<span>{s}</span></a></li>' for u, t, s in RELATED)
-    alts = (f'<link rel="alternate" hreflang="pt-BR" href="{url}">'
-            f'<link rel="alternate" hreflang="en" href="{SITE}/en/guides/phone-as-tv-remote/">'
-            f'<link rel="alternate" hreflang="es" href="{SITE}/es/guias/celular-como-control-remoto/">'
-            f'<link rel="alternate" hreflang="x-default" href="{url}">')
+def shot(base, alt, caption, lang):
+    for ext in ('png', 'jpg', 'webp'):
+        f = ROOT / 'assets' / 'guias' / f'{base}-{lang}.{ext}'
+        if f.exists():
+            wide = ' wide' if ext == 'jpg' else ''
+            return (f'<figure class="shot{wide}"><img src="/assets/guias/{f.name}" alt="{esc(alt)}" loading="lazy">'
+                    f'<figcaption>{caption}</figcaption></figure>')
+    return ''
+
+
+def pair_table(lang):
+    h1, h2, rows = C.PAIR[lang]
+    body = ''.join(f'<tr><td>{a}</td><td>{b}</td></tr>' for a, b in rows)
+    return f'<div class="tablewrap"><table class="pair"><thead><tr><th scope="col">{h1}</th><th scope="col">{h2}</th></tr></thead><tbody>{body}</tbody></table></div>'
+
+
+# ── Normalização de artigos ───────────────────────────────────────────────
+def norm_steps(raw, lang):
+    out = []
+    for s in raw or []:
+        if s == 'INSTALL':
+            h, b = C.INSTALL[lang]; out.append((h, b, None))
+        elif s == 'OPEN_PICK':
+            h, b = C.OPEN_PICK[lang]; out.append((h, b, None))
+        else:
+            h, b, sh = s
+            out.append((h, links(b.replace('PAIR', pair_table(lang)), lang), sh))
+    return out
+
+
+def norm_qa(raw, lang):
+    out = []
+    for x in raw or []:
+        if isinstance(x, str) and x.startswith('FAQ:'):
+            out.append(fq(x[4:], lang))
+        elif x in ('FREE', 'IPHONE', 'NO_4G'):
+            q, a = getattr(C, x)[lang]; out.append((q, f'<p>{a}</p>'))
+        else:
+            q, a = x
+            out.append((q, links(a if a.startswith('<') else f'<p>{a}</p>', lang)))
+    return out
+
+
+def article(aid, lang):
+    """Devolve o artigo pronto para renderizar, venha ele de texto à mão ou do compat.json."""
+    if aid in C.ARTICLES:
+        A = C.ARTICLES[aid]; t = A[lang]
+        return dict(id=aid, read=A['read'], howto=A.get('howto'), time=A.get('time'), related=A['related'],
+                    seo_title=t['seo_title'], desc=t['desc'], h1=t['h1'], answer=t['answer'], banner=None,
+                    need=[links(n, lang) for n in (t['need'] or [])], steps=norm_steps(t['steps'], lang),
+                    sections=[(h, links(b, lang)) for h, b in t['sections']],
+                    problems=norm_qa(t['problems'], lang), faq=norm_qa(t['faq'], lang))
+    return brand_article(aid, lang)
+
+
+def brand_article(aid, lang):
+    D, T, b = C.BRANDS[aid], C.BRAND_TXT[lang], BRAND[aid]
+    i = LI[lang]
+    label, systems = D['label'][i], D['systems'][i]
+    tested = b['status'] == 'tested'
+    note = fix_name(b['note' + SUF[lang]])
+    raw = [fix_name(s) for s in b['steps' + SUF[lang]]]
+    steps = [C.INSTALL[lang] + (None,)]
+    for n, s in enumerate(raw):
+        steps.append((None, f'<p>{html.escape(s)}</p>', None))
+        if n == 0:
+            steps.append(C.OPEN_PICK[lang] + (None,))
+    steps.append((T['use_h'], T['use_b'], None))
+    rq, ra = T['faq_remote']
+    status_line = T['status_tested' if tested else 'status_initial']
+    faq = [(rq, f'<p>{ra[0] if D["remote"][0] else ra[1]}</p>'),
+           (T['faq_models'][0], '<p>' + T['faq_models'][1].format(systems=systems, status_line=status_line) + '</p>'),
+           (C.FREE[lang][0], f'<p>{C.FREE[lang][1]}</p>'), (C.NO_4G[lang][0], f'<p>{C.NO_4G[lang][1]}</p>')]
+    need = [T['need'][0], {'pt': 'A TV (ou o aparelho) ligada ao Wi-Fi.', 'en': 'The TV (or streaming device) connected to Wi-Fi.',
+                           'es': 'La TV (o el aparato) conectada al Wi-Fi.'}[lang], T['need'][2]]
+    return dict(id=aid, read=3, howto=True, time='PT5M', related=D['related'],
+                seo_title=T['seo_title'].format(label=label), desc=T['desc_tested' if tested else 'desc_initial'].format(label=label),
+                h1=T['h1'].format(label=label), answer=T['ans_tested' if tested else 'ans_initial'].format(label=label),
+                works=T['works'].format(systems=systems),
+                banner=None if tested else C.UI[lang]['initial_banner'].format(note=html.escape(note)),
+                status=b['status'], need=need, steps=steps, sections=[],
+                problems=[fq(p, lang) for p in D['problems']], faq=faq)
+
+
+# ── Página ────────────────────────────────────────────────────────────────
+def ld(obj):
+    return f'<script type="application/ld+json">{json.dumps(obj, ensure_ascii=False)}</script>'
+
+
+def head(lang, title, desc, canonical, alternates, og_type='article'):
+    U = C.UI[lang]
+    alts = ''.join(f'<link rel="alternate" hreflang="{C.UI[l]["html_lang"]}" href="{u}">' for l, u in alternates.items())
+    alts += f'<link rel="alternate" hreflang="x-default" href="{alternates["pt"]}">'
     return f'''<!doctype html>
-<html lang="pt-BR">
+<html lang="{U['html_lang']}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>{esc(p['seo_title'])}</title>
-<meta name="description" content="{esc(p['desc'])}">
-<link rel="canonical" href="{url}">
+<title>{esc(title)}</title>
+<meta name="description" content="{esc(desc)}">
+<link rel="canonical" href="{canonical}">
 {alts}
 <meta name="theme-color" content="#A9ED87">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/icone-512.png">
 <link rel="preload" href="/assets/figtree.woff2" as="font" type="font/woff2" crossorigin>
-<meta property="og:type" content="article">
+<meta property="og:type" content="{og_type}">
 <meta property="og:site_name" content="Comandoo">
-<meta property="og:title" content="{esc(p['h1'])}">
-<meta property="og:description" content="{esc(p['desc'])}">
-<meta property="og:url" content="{url}">
-<meta property="og:image" content="{SITE}/assets/og-pt.png">
-<meta property="og:locale" content="pt_BR">
+<meta property="og:title" content="{esc(title.split(' | ')[0])}">
+<meta property="og:description" content="{esc(desc)}">
+<meta property="og:url" content="{canonical}">
+<meta property="og:image" content="{SITE}/assets/og-{lang}.png">
+<meta property="og:locale" content="{U['og_locale']}">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="/assets/site.css">
-<link rel="stylesheet" href="/assets/guide.css">
-{schema()}
-</head>
-<body>
-<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<link rel="stylesheet" href="/assets/guide.css">'''
+
+
+def topbar(lang, alternates, crumbs, current_guides=True):
+    U = C.UI[lang]
+    seg = ''.join(f'<a href="{u.replace(SITE, "")}" hreflang="{l}" lang="{l}"' + (' aria-current="page"' if l == lang else '') + f'>{l.upper()}</a>'
+                  for l, u in alternates.items())
+    cr = ' › '.join(f'<a href="{h}">{t}</a>' for t, h in crumbs)
+    return f'''<a class="skip" href="#conteudo">{U['skip']}</a>
 <div class="gtop"><div class="wrap">
 <header class="top">
-  <a class="brand" href="/">{B.sym('#0E120F')}Comandoo</a>
-  <nav class="gnav" aria-label="Site"><a class="gl" href="/guias/" aria-current="true">Guias</a>
-    <span class="seg"><a href="/guias/{p['slug']}/" aria-current="page" hreflang="pt" lang="pt">PT</a><a href="/en/guides/phone-as-tv-remote/" hreflang="en" lang="en">EN</a><a href="/es/guias/celular-como-control-remoto/" hreflang="es" lang="es">ES</a></span></nav>
+  <a class="brand" href="{U['home']}">{B.sym('#0E120F')}Comandoo</a>
+  <nav class="gnav" aria-label="Site"><a class="gl" href="{U['guides']}"{' aria-current="true"' if current_guides else ''}>{U['guides_label']}</a>
+    <span class="seg" aria-label="{U['lang_nav']}">{seg}</span></nav>
 </header>
 <div class="ghead">
-  <p class="crumbs"><a href="/">Comandoo</a> › <a href="/guias/">Guias</a></p>
-  <h1>{p['h1']}</h1>
-  <p class="answer">{p['answer']}</p>
-  <ul class="meta"><li>Leitura de 4 min</li><li>Atualizado em 12/10/2026</li><li>App versão {APP_VERSION}</li></ul>
-</div>
-</div></div>
+  <p class="crumbs">{cr}</p>'''
 
-<main id="conteudo" class="wrap">
-<article class="prose">
-  <section class="need" aria-labelledby="precisa">
-    <h2 id="precisa">O que você precisa</h2>
-    <ul>
-      <li>Um celular Android.</li>
-      <li>Uma Smart TV ligada ao Wi-Fi, de uma <a href="/#compat">marca compatível</a>.</li>
-      <li>Celular e TV no mesmo Wi-Fi de casa.</li>
-    </ul>
-  </section>
 
-  <h2 id="passo-a-passo">Passo a passo</h2>
-  <ol class="steps-g">{steps}</ol>
-
-  <h2>O que mais dá para fazer pelo celular</h2>
-  <ul>{extras}</ul>
-  <p>Nem toda marca aceita todos os recursos. O app mostra só o que a sua TV permite.</p>
-
-  <h2 id="problemas">Problemas comuns</h2>
-  <p>Antes de tudo, toque na faixa verde de conexão no app e escolha <strong>Testar conexão</strong>: em poucos segundos ele confere o Wi-Fi, a TV e o pareamento, e diz o que fazer.</p>
-  <div class="prob">{probs}</div>
-
-  <h2 id="perguntas">Perguntas frequentes</h2>
-  <div class="prob">{faq}</div>
-
-  {cta_box()}
-  <p class="updated">Este guia acompanha a versão {APP_VERSION} do Comandoo. Viu algo diferente no app? Escreva para <a href="mailto:{B.EMAIL}">{B.EMAIL}</a>.</p>
-</article>
-
-<nav class="related" aria-labelledby="rel"><h2 id="rel">Outros guias</h2><ul>{rel}</ul></nav>
-</main>
-
-<footer><div class="wrap foot">
+def footer(lang):
+    U = C.UI[lang]
+    return f'''<footer><div class="wrap foot">
   <div>
     <div class="brand">{B.sym('#A9ED87')}Comandoo</div>
-    <p>{B.T['pt']['f_indep']}</p>
-    <p>Contato: <a href="mailto:{B.EMAIL}">{B.EMAIL}</a></p>
+    <p>{U['indep']}</p>
+    <p>{U['contact']}: <a href="mailto:{B.EMAIL}">{B.EMAIL}</a></p>
     <p>© 2026 Agência D3</p>
   </div>
   <ul>
-    <li><a href="/">Início</a></li>
-    <li><a href="/guias/">Guias</a></li>
-    <li><a href="/changelog/">Novidades do app</a></li>
-    <li><a href="/privacidade">Política de privacidade</a></li>
+    <li><a href="{U['home']}">{U['home_label']}</a></li>
+    <li><a href="{U['guides']}">{U['guides_label']}</a></li>
+    <li><a href="{U['changelog']}">{U['changelog_label']}</a></li>
+    <li><a href="{U['privacy']}">{U['privacy_label']}</a></li>
   </ul>
 </div></footer>
 </body>
@@ -261,11 +243,164 @@ def pillar_page():
 '''
 
 
+def cta_box(lang):
+    U = C.UI[lang]
+    btn = (f'<a class="pill pill-dark" href="{B.PLAY_URL}" rel="noopener">{B.sym()}{U["play"]}</a>' if B.PLAY_URL
+           else f'<span class="pill pill-dark pill-soon">{B.sym()}{U["soon"]}</span>')
+    return f'<aside class="gcta">{B.sym("#0E120F")}<div><b>{U["cta_t"]}</b><p>{U["cta_s"]}</p></div>{btn}</aside>'
+
+
+def details(items):
+    return ''.join(f'<details><summary>{q}</summary><div>{a}</div></details>' for q, a in items)
+
+
+def render(aid, lang):
+    U, a = C.UI[lang], article(aid, lang)
+    canon = url(aid, lang, True)
+    alternates = {l: url(aid, l, True) for l in C.LANGS}
+    steps_html = ''
+    for n, (h, b, sh) in enumerate(a['steps']):
+        img = shot(sh[0], sh[1], sh[2], lang) if sh else ''
+        steps_html += f'<li id="passo-{n+1}">' + (f'<h3>{h}</h3>' if h else '') + b + img + '</li>'
+    need = (f'<section class="need" aria-labelledby="need"><h2 id="need">{U["need_h"]}</h2><ul>'
+            + ''.join(f'<li>{x}</li>' for x in a['need']) + '</ul>'
+            + (f'<p class="works">{a["works"]}</p>' if a.get('works') else '') + '</section>') if a['need'] else ''
+    banner = f'<div class="tip warn"><p>{a["banner"]} <a href="mailto:{B.EMAIL}">{B.EMAIL}</a>.</p></div>' if a.get('banner') else ''
+    secs = ''.join(f'<h2>{h}</h2>{b}' for h, b in a['sections'])
+    steps_block = f'<h2 id="passo-a-passo">{U["steps_h"]}</h2><ol class="steps-g">{steps_html}</ol>' if a['steps'] else ''
+    rel = ''.join(f'<li><a href="{url(r, lang)}">{article(r, lang)["h1"]}<span>{U["read"].format(n=article(r, lang)["read"])}</span></a></li>'
+                  for r in a['related'])
+    status_chip = f'<li>{U["status"][a["status"]]}</li>' if a.get('status') else ''
+
+    schema = [{"@context": "https://schema.org", "@type": "Article", "headline": a['h1'], "description": a['desc'],
+               "inLanguage": U['html_lang'], "url": canon, "datePublished": UPDATED, "dateModified": UPDATED,
+               "author": {"@type": "Organization", "name": "Agência D3"},
+               "publisher": {"@type": "Organization", "name": "Agência D3", "logo": {"@type": "ImageObject", "url": f"{SITE}/assets/icone-512.png"}},
+               "image": f"{SITE}/assets/og-{lang}.png", "mainEntityOfPage": canon}]
+    if a['howto'] and a['steps']:
+        schema.append({"@context": "https://schema.org", "@type": "HowTo", "name": a['h1'], "description": a['answer'],
+                       "inLanguage": U['html_lang'], "totalTime": a.get('time') or 'PT5M',
+                       "step": [{"@type": "HowToStep", "position": n + 1, "url": f"{canon}#passo-{n+1}",
+                                 "name": h or plain(b, 70), "text": plain(b)} for n, (h, b, _) in enumerate(a['steps'])]})
+    if a['faq']:
+        schema.append({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
+            {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": plain(x, 1000)}} for q, x in a['faq']]})
+    schema.append({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Comandoo", "item": SITE + U['home']},
+        {"@type": "ListItem", "position": 2, "name": U['guides_label'], "item": SITE + U['guides']},
+        {"@type": "ListItem", "position": 3, "name": a['h1'], "item": canon}]})
+
+    return (head(lang, a['seo_title'], a['desc'], canon, alternates) + ''.join(ld(s) for s in schema) + '\n</head>\n<body>\n'
+            + topbar(lang, alternates, [('Comandoo', U['home']), (U['guides_label'], U['guides'])]) + f'''
+  <h1>{a['h1']}</h1>
+  <p class="answer">{a['answer']}</p>
+  <ul class="meta">{status_chip}<li>{U['read'].format(n=a['read'])}</li><li>{U['updated'].format(d=fdate(UPDATED, lang))}</li><li>{U['version'].format(v=APP_VERSION)}</li></ul>
+</div>
+</div></div>
+
+<main id="conteudo" class="wrap">
+<article class="prose">
+  {banner}{need}
+  {steps_block}
+  {secs}
+  <h2 id="problemas">{U['problems_h']}</h2>
+  <p>{U['test_conn']}</p>
+  <div class="prob">{details(a['problems'])}</div>
+  <h2 id="perguntas">{U['faq_h']}</h2>
+  <div class="prob">{details(a['faq'])}</div>
+  {cta_box(lang)}
+  <p class="updated">{U['footnote'].format(v=APP_VERSION)} <a href="mailto:{B.EMAIL}">{B.EMAIL}</a>.</p>
+</article>
+<nav class="related" aria-labelledby="rel"><h2 id="rel">{U['related_h']}</h2><ul>{rel}</ul></nav>
+</main>
+''' + footer(lang))
+
+
+def render_index(lang):
+    U = C.UI[lang]
+    canon = SITE + U['guides']
+    alternates = {l: SITE + C.UI[l]['guides'] for l in C.LANGS}
+    groups, items = '', []
+    for g, ids in U['groups']:
+        cards = ''
+        for aid in ids:
+            a = article(aid, lang)
+            items.append((a['h1'], url(aid, lang, True)))
+            chip = f'<em>{U["status"][a["status"]]}</em>' if a.get('status') else ''
+            cards += f'<li><a href="{url(aid, lang)}">{a["h1"]}<span>{a["desc"]}</span>{chip}</a></li>'
+        groups += f'<section class="gsec"><h2>{g}</h2><ul class="cards">{cards}</ul></section>'
+    schema = {"@context": "https://schema.org", "@type": "CollectionPage", "name": U['idx_h1'], "description": U['idx_desc'],
+              "inLanguage": U['html_lang'], "url": canon,
+              "mainEntity": {"@type": "ItemList", "itemListElement": [
+                  {"@type": "ListItem", "position": n + 1, "name": t, "url": u} for n, (t, u) in enumerate(items)]}}
+    return (head(lang, U['idx_title'], U['idx_desc'], canon, alternates, 'website') + ld(schema) + '\n</head>\n<body>\n'
+            + topbar(lang, alternates, [('Comandoo', U['home'])]) + f'''
+  <h1>{U['idx_h1']}</h1>
+  <p class="answer">{U['idx_lead']}</p>
+</div>
+</div></div>
+<main id="conteudo" class="wrap gindex">{groups}{cta_box(lang)}</main>
+''' + footer(lang))
+
+
+def render_changelog(lang, entries):
+    U = C.UI[lang]
+    canon = SITE + U['changelog']
+    alternates = {l: SITE + C.UI[l]['changelog'] for l in C.LANGS}
+    body = ''
+    for e in entries:
+        notes = ''.join(f'<li>{html.escape(n)}</li>' for n in e['notes'][lang])
+        guides = ''.join(f'<li><a href="{url(g, lang)}">{article(g, lang)["h1"]}</a></li>' for g in e.get('guides', []))
+        body += (f'<section class="ver" id="v{e["version"]}"><h2>{e["version"]}</h2><p class="when">{fdate(e["date"], lang)}</p>'
+                 f'<ul>{notes}</ul>' + (f'<h3>{U["cl_guides"]}</h3><ul>{guides}</ul>' if guides else '') + '</section>')
+    if not entries:
+        body = f'<p>{U["cl_pre"].format(v=APP_VERSION)}</p>'
+    return (head(lang, U['cl_title'], U['cl_desc'], canon, alternates, 'website') + '\n</head>\n<body>\n'
+            + topbar(lang, alternates, [('Comandoo', U['home'])], current_guides=False) + f'''
+  <h1>{U['cl_h1']}</h1>
+  <p class="answer">{U['cl_lead']}</p>
+</div>
+</div></div>
+<main id="conteudo" class="wrap"><article class="prose">{body}{cta_box(lang)}</article></main>
+''' + footer(lang))
+
+
+def write(path, text):
+    p = ROOT / path
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text(text, encoding='utf-8')
+    return path
+
+
+def sitemap(pages):
+    rows = []
+    for group in pages:
+        alt = ''.join(f'<xhtml:link rel="alternate" hreflang="{C.UI[l]["html_lang"]}" href="{u}"/>' for l, u in group.items())
+        alt += f'<xhtml:link rel="alternate" hreflang="x-default" href="{group["pt"]}"/>'
+        for l, u in group.items():
+            rows.append(f'<url><loc>{u}</loc><lastmod>{UPDATED}</lastmod>{alt}</url>')
+    return ('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" '
+            'xmlns:xhtml="http://www.w3.org/1999/xhtml">\n' + '\n'.join(rows) + '\n</urlset>\n')
+
+
 def main():
-    out = ROOT / 'guias' / PILLAR['slug'] / 'index.html'
-    out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(pillar_page(), encoding='utf-8')
-    print('ok', out.relative_to(ROOT))
+    n = 0
+    pages = [{l: SITE + C.UI[l]['home'] for l in C.LANGS}]
+    for lang in C.LANGS:
+        write(C.UI[lang]['guides'].strip('/') + '/index.html', render_index(lang)); n += 1
+    pages.append({l: SITE + C.UI[l]['guides'] for l in C.LANGS})
+    for aid in C.SLUGS:
+        for lang in C.LANGS:
+            write(url(aid, lang).strip('/') + '/index.html', render(aid, lang)); n += 1
+        pages.append({l: url(aid, l, True) for l in C.LANGS})
+    entries = json.loads((ROOT / 'tools' / 'changelog.json').read_text(encoding='utf-8'))
+    for lang in C.LANGS:
+        write(C.UI[lang]['changelog'].strip('/') + '/index.html', render_changelog(lang, entries)); n += 1
+    pages.append({l: SITE + C.UI[l]['changelog'] for l in C.LANGS})
+    pages.append({'pt': f'{SITE}/privacidade', 'en': f'{SITE}/privacidade/en', 'es': f'{SITE}/privacidade/es'})
+    write('sitemap.xml', sitemap(pages))
+    write('robots.txt', f'User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n')
+    print(n, 'páginas; sitemap com', sum(len(g) for g in pages), 'URLs')
 
 
 if __name__ == '__main__':

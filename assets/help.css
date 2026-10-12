@@ -28,3 +28,4 @@
 .faqall summary:hover .anchor,.faqall .anchor:focus{opacity:1}
 .faqall details:target{outline:2px solid var(--lima);outline-offset:2px}
 .hchip span{min-width:0;overflow-wrap:anywhere}
+.faqall .prob+p{margin-top:16px}

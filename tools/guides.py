@@ -27,7 +27,7 @@ import guides_content as C  # noqa: E402
 ROOT = B.ROOT
 SITE = B.SITE
 UPDATED = '2026-10-12'
-APP_VERSION = '1.24.7'
+APP_VERSION = '1.24.8'
 RELEASES = Path('/home/claude/diegocruzd3/controley-releases')
 RAW = 'https://raw.githubusercontent.com/diegocruzd3/controley-releases/main/'
 LI = {'pt': 0, 'en': 1, 'es': 2}
@@ -56,12 +56,22 @@ BRAND = {b['id']: b for b in COMPAT['brands']}
 
 
 # O FAQ do app ainda usa nomes antigos de botões; o site usa o texto que aparece na tela (capturas 1.24.6).
-LABEL_FIX = {'pt': [('Conectar pelo IP', 'Usar IP')], 'en': [('Connect by IP', 'Use IP')], 'es': [('Conectar por IP', 'Usar IP')]}
+# Caminhos corrigidos conforme o código da 1.24.8 (respostas do Grok, 12/10/2026): Ajuda e suporte fica na aba Mais.
+LABEL_FIX = {
+    'pt': [('Conectar pelo IP', 'Usar IP'), ('(ou em Ajustes, Ajuda e suporte)', '(ou na aba Mais, em Ajuda e suporte)'),
+           ('Em Ajustes, toque em Relatar um problema', 'Na aba Mais, abra Ajuda e suporte e toque em Relatar um problema')],
+    'en': [('Connect by IP', 'Use IP'), ('(or Settings, Help and support)', '(or the More tab, Help and support)'),
+           ('In Settings, tap Report a problem', 'In the More tab, open Help and support and tap Report a problem')],
+    'es': [('Conectar por IP', 'Usar IP'), ('(o Ajustes, Ayuda y soporte)', '(o la pestaña Más, Ayuda y soporte)'),
+           ('En Ajustes, toca Reportar un problema', 'En la pestaña Más, abre Ayuda y soporte y toca Reportar un problema')],
+}
 
 
 def fq(fid, lang):
     i = FAQ[fid]
-    q, a = fix_name(i['q' + SUF[lang]]), fix_name(i['a' + SUF[lang]])
+    play = i.get('play') or {}  # a versão Play mostra a variante "play" quando existe
+    q = fix_name(play.get('q' + SUF[lang]) or i['q' + SUF[lang]])
+    a = fix_name(play.get('a' + SUF[lang]) or i['a' + SUF[lang]])
     for old, new in LABEL_FIX[lang]:
         q, a = q.replace(old, new), a.replace(old, new)
     return q, '<p>' + html.escape(a) + '</p>'

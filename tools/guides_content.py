@@ -390,7 +390,7 @@ ARTICLES = {
    ],
    sections=[],
    problems=['FAQ:ip-da-tv', 'FAQ:mesma-rede', 'FAQ:conexao-cai', 'FAQ:marca-fora'],
-   faq=['NO_4G', ('A TV aparece, mas não aceita o pareamento. E agora?', 'Confira se você aceitou o pedido na TV ou digitou o código certo: o código muda a cada tentativa. Na LG, se a TV conecta mas os botões não respondem, use Refazer pareamento nos Ajustes do app.'), ('Como peço ajuda?', 'Em Ajustes, toque em Relatar um problema. Conte o que aconteceu, a marca e o modelo da TV. A resposta chega no próprio app.')],
+   faq=['NO_4G', ('A TV aparece, mas não aceita o pareamento. E agora?', 'Confira se você aceitou o pedido na TV ou digitou o código certo: o código muda a cada tentativa. Na LG, se a TV conecta mas os botões não respondem, use Refazer pareamento nos Ajustes do app.'), ('Como peço ajuda?', 'Na aba Mais, abra Ajuda e suporte e toque em Relatar um problema. Conte o que aconteceu, a marca e o modelo da TV. A resposta chega no próprio app.')],
   ),
   'en': dict(
    seo_title='Phone can’t find your TV? How to fix it | Comandoo',
@@ -407,7 +407,7 @@ ARTICLES = {
    ],
    sections=[],
    problems=['FAQ:ip-da-tv', 'FAQ:mesma-rede', 'FAQ:conexao-cai', 'FAQ:marca-fora'],
-   faq=['NO_4G', ('The TV shows up but will not pair. Now what?', 'Make sure you accepted the request on the TV or typed the right code: the code changes on every attempt. On LG, if the TV connects but the buttons do not respond, use Pair again in the app settings.'), ('How do I ask for help?', 'In Settings, tap Report a problem. Tell us what happened and the TV brand and model. The answer arrives in the app.')],
+   faq=['NO_4G', ('The TV shows up but will not pair. Now what?', 'Make sure you accepted the request on the TV or typed the right code: the code changes on every attempt. On LG, if the TV connects but the buttons do not respond, use Pair again in the app settings.'), ('How do I ask for help?', 'In the More tab, open Help and support and tap Report a problem. Tell us what happened and the TV brand and model. The answer arrives in the app.')],
   ),
   'es': dict(
    seo_title='¿El celular no encuentra la TV? Cómo resolverlo | Comandoo',
@@ -424,7 +424,7 @@ ARTICLES = {
    ],
    sections=[],
    problems=['FAQ:ip-da-tv', 'FAQ:mesma-rede', 'FAQ:conexao-cai', 'FAQ:marca-fora'],
-   faq=['NO_4G', ('La TV aparece pero no acepta el emparejamiento. ¿Y ahora?', 'Revisa que aceptaste la solicitud en la TV o escribiste el código correcto: el código cambia en cada intento. En LG, si la TV se conecta pero los botones no responden, usa Volver a emparejar en los ajustes de la app.'), ('¿Cómo pido ayuda?', 'En Ajustes, toca Reportar un problema. Cuenta qué pasó y la marca y el modelo de la TV. La respuesta llega en la app.')],
+   faq=['NO_4G', ('La TV aparece pero no acepta el emparejamiento. ¿Y ahora?', 'Revisa que aceptaste la solicitud en la TV o escribiste el código correcto: el código cambia en cada intento. En LG, si la TV se conecta pero los botones no responden, usa Volver a emparejar en los ajustes de la app.'), ('¿Cómo pido ayuda?', 'En la pestaña Más, abre Ayuda y soporte y toca Reportar un problema. Cuenta qué pasó y la marca y el modelo de la TV. La respuesta llega en la app.')],
   ),
  },
 }

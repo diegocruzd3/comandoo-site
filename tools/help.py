@@ -93,6 +93,57 @@ BRAND_STEPS_FOR = {'nao-aparece', 'codigo'}       # problemas em que entra o pas
 POWER_KEYS = ('Para ligar', 'Para o app ligar')   # passos do compat.json sobre ligar pela rede (texto em pt)
 
 
+# Resultados do Testar conexão (código da 1.24.8: Diagnostics.java / L.java, via Grok em 12/10/2026).
+# id da âncora = etapa-status. Título e detalhe = texto exato da tela do app.
+TEST_RESULTS = [
+ ('wifi-fail', 'nao-aparece',
+  {'pt': ('Sem Wi-Fi', 'O celular não está no Wi-Fi. O controle precisa estar na mesma rede do aparelho, e dados móveis não servem.', 'Toque em Abrir ajustes de Wi-Fi e conecte o celular à mesma rede do aparelho.'),
+   'en': ('No Wi-Fi', 'The phone is not on Wi-Fi. The remote needs the same network as the device, and mobile data will not do.', 'Tap Open Wi-Fi settings and connect the phone to the same network as the device.'),
+   'es': ('Sin Wi-Fi', 'El celular no está en Wi-Fi. El control necesita la misma red que el dispositivo, y los datos móviles no sirven.', 'Toca Abrir ajustes de Wi-Fi y conecta el celular a la misma red que el dispositivo.')}),
+ ('local-fail', 'nao-aparece',
+  {'pt': ('Acesso à rede local bloqueado', 'O Android bloqueia o app de falar com o aparelho. Em Ajustes do Android, abra Apps, este app, Permissões, e libere Dispositivos por perto.', 'Siga o caminho do aviso nos ajustes do Android e rode o teste de novo. Só acontece no Android 17 ou superior.'),
+   'en': ('Local network access blocked', 'Android is blocking the app from talking to the device. In Android Settings, open Apps, this app, Permissions, and allow Nearby devices.', 'Follow that path in Android settings and run the test again. Only happens on Android 17 or later.'),
+   'es': ('Acceso a la red local bloqueado', 'Android bloquea la app para hablar con el dispositivo. En Ajustes de Android, abre Apps, esta app, Permisos, y permite Dispositivos cercanos.', 'Sigue esa ruta en los ajustes de Android y vuelve a probar. Solo pasa en Android 17 o superior.')}),
+ ('host-fail', 'nao-aparece',
+  {'pt': ('Nenhum aparelho salvo', 'Ainda não há um aparelho conectado neste celular.', 'Toque em Buscar aparelhos e escolha o seu na lista.'),
+   'en': ('No saved device', 'There is no device connected on this phone yet.', 'Tap Find devices and pick yours from the list.'),
+   'es': ('Ningún dispositivo guardado', 'Todavía no hay un dispositivo conectado en este celular.', 'Toca Buscar dispositivos y elige el tuyo en la lista.')}),
+ ('net-warn', 'nao-aparece',
+  {'pt': ('Celular e aparelho parecem estar em redes diferentes', 'Isso acontece com Wi-Fi de visitantes, repetidores ou quando o aparelho está em outra faixa do roteador. Ligue os dois na mesma rede.', 'Deixe o celular no mesmo Wi-Fi do aparelho (mesmo nome de rede e mesma faixa, 2,4 ou 5 GHz) e toque em Buscar aparelhos.'),
+   'en': ('Phone and device seem to be on different networks', 'This happens with guest Wi-Fi, repeaters or when the device is on another band of the router. Put both on the same network.', 'Put the phone on the same Wi-Fi as the device (same network name and band, 2.4 or 5 GHz) and tap Find devices.'),
+   'es': ('Celular y dispositivo parecen estar en redes distintas', 'Esto pasa con Wi-Fi de invitados, repetidores o cuando el dispositivo está en otra banda del router. Conecta ambos a la misma red.', 'Deja el celular en el mismo Wi-Fi que el dispositivo (mismo nombre de red y misma banda, 2,4 o 5 GHz) y toca Buscar dispositivos.')}),
+ ('port-fail', 'nao-aparece',
+  {'pt': ('O aparelho não respondeu', 'Nenhuma porta de controle do aparelho abriu. Confira se o aparelho está ligado (não em espera) e no mesmo Wi-Fi. Se o roteador mudou o endereço dele, Buscar aparelhos o encontra de novo.', 'Ligue a tela do aparelho e toque em Buscar aparelhos. Em algumas marcas é preciso ativar o controle pela rede nas configurações do aparelho.'),
+   'en': ('The device did not answer', 'No control port of the device opened. Check that the device is on (not on standby) and on the same Wi-Fi. If the router changed its address, Find devices finds it again.', 'Turn the device screen on and tap Find devices. Some brands need network control turned on in the device settings.'),
+   'es': ('El dispositivo no respondió', 'Ningún puerto de control del dispositivo se abrió. Comprueba que el dispositivo esté encendido (no en espera) y en el mismo Wi-Fi. Si el router cambió su dirección, Buscar dispositivos lo encuentra de nuevo.', 'Enciende la pantalla del dispositivo y toca Buscar dispositivos. Algunas marcas piden activar el control por red en los ajustes del dispositivo.')}),
+ ('pair-warn', 'codigo',
+  {'pt': ('Sem pareamento salvo', 'O aparelho ainda não autorizou este celular. Toque no aparelho na lista e aceite o pedido que aparece na tela dele.', 'Toque em Buscar aparelhos, escolha o aparelho e aceite o pedido ou digite o código que aparece na tela dele.'),
+   'en': ('No saved pairing', 'The device has not authorized this phone yet. Tap the device in the list and accept the request that appears on its screen.', 'Tap Find devices, pick the device and accept the request or type the code shown on its screen.'),
+   'es': ('Sin emparejamiento guardado', 'El dispositivo todavía no autorizó este celular. Toca el dispositivo en la lista y acepta la solicitud que aparece en su pantalla.', 'Toca Buscar dispositivos, elige el dispositivo y acepta la solicitud o escribe el código que aparece en su pantalla.')}),
+ ('speed-warn', 'cai',
+  {'pt': ('Resposta lenta', 'Os botões podem demorar. Aproximar o roteador do aparelho ou usar a faixa de 5 GHz costuma ajudar.', 'Se puder, aproxime o roteador do aparelho ou conecte os dois na faixa de 5 GHz.'),
+   'en': ('Slow answer', 'Buttons may lag. Moving the router closer to the device or using the 5 GHz band usually helps.', 'If you can, move the router closer to the device or put both on the 5 GHz band.'),
+   'es': ('Respuesta lenta', 'Los botones pueden tardar. Acercar el router al dispositivo o usar la banda de 5 GHz suele ayudar.', 'Si puedes, acerca el router al dispositivo o conecta los dos en la banda de 5 GHz.')}),
+ ('ok', None,
+  {'pt': ('Tudo certo: o celular e o aparelho estão se falando.', 'A rede, o aparelho, o pareamento e a velocidade passaram.', 'Se ainda assim um botão não funciona, faça o diagnóstico guiado com o problema "Conecta, mas não obedece".'),
+   'en': ('All good: the phone and the device are talking.', 'Network, device, pairing and speed all passed.', 'If a button still does not work, run the guided check with the problem "Connects but doesn’t respond".'),
+   'es': ('Todo bien: el celular y el dispositivo se están comunicando.', 'La red, el dispositivo, el emparejamiento y la velocidad pasaron.', 'Si aun así un botón no funciona, haz el diagnóstico guiado con el problema "Se conecta pero no responde".')}),
+]
+TEST_TXT = {
+ 'pt': dict(h='Entenda o resultado do Testar conexão', lead='O Testar conexão (na faixa verde de conexão, ou na aba Mais, em Ajuda e suporte) confere em ordem: Wi-Fi, aparelho salvo, mesma rede, resposta do aparelho, pareamento e velocidade. O título mostra o primeiro problema encontrado. Procure abaixo o título que apareceu no seu celular.',
+           todo='O que fazer', diag='Abrir o diagnóstico guiado', more='Abaixo do resultado ficam sempre Testar de novo e Enviar com relato, que manda o resultado junto com o seu relato. Linhas que dizem "Não testado porque uma etapa anterior falhou" somem quando o primeiro problema é resolvido. As linhas sobre as portas 6466 e 5555 são só informação para o suporte.'),
+ 'en': dict(h='Understand the Test connection result', lead='Test connection (on the green connection bar, or in the More tab, under Help and support) checks in order: Wi-Fi, saved device, same network, device answer, pairing and speed. The title shows the first problem found. Find the title you saw on your phone below.',
+           todo='What to do', diag='Open the guided check', more='Under the result you always see Test again and Send with a report, which attaches the result to your report. Lines saying "Not tested because an earlier step failed" go away once the first problem is fixed. Lines about ports 6466 and 5555 are information for support only.'),
+ 'es': dict(h='Entiende el resultado de Probar conexión', lead='Probar conexión (en la barra verde de conexión, o en la pestaña Más, en Ayuda y soporte) revisa en orden: Wi-Fi, dispositivo guardado, misma red, respuesta del dispositivo, emparejamiento y velocidad. El título muestra el primer problema encontrado. Busca abajo el título que viste en tu celular.',
+           todo='Qué hacer', diag='Abrir el diagnóstico guiado', more='Debajo del resultado siempre aparecen Probar de nuevo y Enviar con un informe, que adjunta el resultado a tu reporte. Las líneas que dicen "No probado porque falló un paso anterior" desaparecen cuando se resuelve el primer problema. Las líneas sobre los puertos 6466 y 5555 son solo información para soporte.'),
+}
+# Assunto do Relatar por problema (Reports.java, via Grok).
+REPORT_SUBJECT = {'nao-aparece': 'connect', 'codigo': 'connect', 'cai': 'connect', 'nao-obedece': 'button', 'nao-liga': 'button', 'texto': 'button'}
+SUBJECT_TXT = {'connect': {'pt': 'Não consigo conectar o aparelho', 'en': 'I cannot connect the device', 'es': 'No puedo conectar el dispositivo'},
+               'button': {'pt': 'Um botão ou função não funciona', 'en': 'A button or function does not work', 'es': 'Un botón o función no funciona'}}
+SUBJECT_LINE = {'pt': 'No formulário, escolha o assunto “{s}” e informe a marca e o modelo.', 'en': 'In the form, choose the subject “{s}” and give the brand and model.', 'es': 'En el formulario, elige el asunto “{s}” e indica la marca y el modelo.'}
+
+
 def esc(s):
     return html.escape(s, quote=True)
 
@@ -128,10 +179,25 @@ def diagnosis(lang):
                     for i, s in enumerate(steps_pt):
                         if s.startswith(POWER_KEYS) and i < len(steps_raw):
                             out.append({'t': U['power_step'], 'h': '<p>' + esc(steps_raw[i]) + '</p>'})
-            out.append(dict(faq_step('relatar', lang), t=U['last']))
+            rel = faq_step('relatar', lang)
+            subj = SUBJECT_TXT[REPORT_SUBJECT[sid]][lang]
+            rel['h'] += '<p>' + esc(SUBJECT_LINE[lang].format(s=subj)) + '</p>'
+            out.append(dict(rel, t=U['last']))
             per[sid] = out
         data[b['id']] = per
     return data
+
+
+def test_section(lang):
+    X, UI = TEST_TXT[lang], C.UI[lang]
+    rows = ''
+    for tid, sym, txt in TEST_RESULTS:
+        title, detail, todo = txt[lang]
+        link = (f'<p><a href="{UI["help"]}?problema={sym}#diagnostico">{X["diag"]}</a></p>' if sym else '')
+        rows += (f'<details id="teste-{tid}"><summary>“{esc(title)}”<a class="anchor" href="#teste-{tid}" aria-label="Link">#</a></summary>'
+                 f'<div><p>{esc(detail)}</p><p><strong>{X["todo"]}:</strong> {esc(todo)}</p>{link}</div></details>')
+    return (f'<section class="prose faqall" id="testar-conexao" aria-labelledby="th"><h2 id="th">{X["h"]}</h2><p>{X["lead"]}</p>'
+            f'<div class="prob">{rows}</div><p>{X["more"]}</p></section>')
 
 
 def render(lang):
@@ -182,6 +248,7 @@ def render(lang):
   <div id="resultado" class="result" aria-live="polite"><p class="hint-r">{U['pick']}</p></div>
   <noscript><p class="hint-r">{U['noscript']}</p></noscript>
 </section>
+{test_section(lang)}
 <section class="prose faqall" id="perguntas" aria-labelledby="fh">
   <h2 id="fh">{U['faq_h']}</h2>
   <p>{U['faq_lead']}</p>

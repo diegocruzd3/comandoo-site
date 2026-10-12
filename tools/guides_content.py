@@ -8,12 +8,12 @@ Só escreva aqui o que o app faz de verdade. Fontes: compat.json e faq.json
 LANGS = ('pt', 'en', 'es')
 
 # Nome da aba de digitar, exatamente como no botão do app (confirmar com o Comandoo Dev a cada versão).
-KEYBOARD_TAB = {'pt': 'Digitar', 'en': 'Type', 'es': 'Escribir'}  # en/es: confirmar com o Comandoo Dev
+KEYBOARD_TAB = {'pt': 'Digitar', 'en': 'Type', 'es': 'Escribir'}  # conferido nas capturas 1.24.6
 # Botão que manda o texto, e o nome dele na LG.
 # Botão que abre a conexão manual (tela inicial do app).
 IP_BTN = {'pt': 'Usar IP', 'en': 'Use IP', 'es': 'Usar IP'}
 SEND_BTN = {'pt': 'Enviar para o aparelho', 'en': 'Send to the device', 'es': 'Enviar al dispositivo'}
-SEND_BTN_LG = {'pt': 'Buscar no YouTube do aparelho', 'en': 'Search YouTube on the device', 'es': 'Buscar en YouTube del dispositivo'}  # en/es: confirmar
+SEND_BTN_LG = {'pt': 'Buscar no YouTube do aparelho', 'en': 'Search YouTube on the device', 'es': 'Buscar en el YouTube del dispositivo'}  # conferido no faq.json rev 17
 
 UI = {
  'pt': dict(
@@ -331,7 +331,7 @@ ARTICLES = {
    steps=[
     ('Abra o campo de texto no aparelho', '<p>Use o direcional do app para chegar à busca ou ao campo de senha e selecione com OK, até o teclado da TV aparecer.</p>', None),
     ('Abra a aba {KB}', '<p>No Comandoo, toque na aba <strong>{KB}</strong>. O teclado do celular abre.</p>', ('aba-teclado', 'Aba {KB} do Comandoo com o teclado do celular aberto', 'Aba {KB} aberta')),
-    ('Escreva e envie', '<p>Escreva o texto no celular e toque em <strong>{SEND}</strong>. O texto vai para o campo aberto no aparelho.</p><div class="tip"><p><strong>Na LG</strong>, o botão se chama <strong>{SEND_LG}</strong>.</p></div>', None),
+    ('Escreva e envie', '<p>Escreva o texto no celular e toque em <strong>{SEND}</strong>. O texto vai para o campo aberto no aparelho.</p><div class="tip"><p><strong>Na LG</strong> é diferente: com um campo de texto aberto na TV, o que você digita aparece lá ao vivo, sem precisar enviar. Sem campo aberto, toque em <strong>{SEND_LG}</strong> para abrir o YouTube já com a pesquisa.</p></div>', None),
     ('Ou dite por voz', '<p>Toque no botão do microfone e fale o texto. Pela voz também dá para pedir direto, por exemplo “pesquisar gatos no YouTube”.</p>', None),
    ],
    sections=[('Comandos de voz que ajudam a digitar menos', '<p>Segure o botão de voz e diga, por exemplo: <em>abrir Netflix</em>, <em>pesquisar gatos no YouTube</em>, <em>volume 15</em>, <em>canal 5</em>, <em>HDMI 2</em> ou <em>digitar</em> seguido do texto. Números podem ser falados por extenso. Diga <em>ajuda</em> para ver a lista completa.</p>')],
@@ -347,7 +347,7 @@ ARTICLES = {
    steps=[
     ('Open the text field on the device', '<p>Use the app’s D-pad to get to the search or password field and select it with OK, until the TV keyboard shows up.</p>', None),
     ('Open the {KB} tab', '<p>In Comandoo, tap the <strong>{KB}</strong> tab. The phone keyboard opens.</p>', ('aba-teclado', 'Comandoo {KB} tab with the phone keyboard open', '{KB} tab open')),
-    ('Write and send', '<p>Write the text on the phone and tap <strong>{SEND}</strong>. The text goes to the field open on the device.</p><div class="tip"><p><strong>On LG</strong>, the button is called <strong>{SEND_LG}</strong>.</p></div>', None),
+    ('Write and send', '<p>Write the text on the phone and tap <strong>{SEND}</strong>. The text goes to the field open on the device.</p><div class="tip"><p><strong>On LG</strong> it works differently: with a text field open on the TV, what you type shows there live, with no need to send. With no field open, tap <strong>{SEND_LG}</strong> to open YouTube with the search.</p></div>', None),
     ('Or dictate by voice', '<p>Tap the microphone button and say the text. You can also ask directly by voice, for example “search cats on YouTube”.</p>', None),
    ],
    sections=[('Voice commands that save typing', '<p>Hold the voice button and say, for example: <em>open Netflix</em>, <em>search cats on YouTube</em>, <em>volume 15</em>, <em>channel 5</em>, <em>HDMI 2</em> or <em>type</em> followed by the text. Numbers can be spoken in words. Say <em>help</em> to see the full list.</p>')],
@@ -363,7 +363,7 @@ ARTICLES = {
    steps=[
     ('Abre el campo de texto en el dispositivo', '<p>Usa la cruceta de la app para llegar a la búsqueda o al campo de contraseña y selecciónalo con OK, hasta que aparezca el teclado de la TV.</p>', None),
     ('Abre la pestaña {KB}', '<p>En Comandoo, toca la pestaña <strong>{KB}</strong>. Se abre el teclado del celular.</p>', ('aba-teclado', 'Pestaña {KB} de Comandoo con el teclado del celular abierto', 'Pestaña {KB} abierta')),
-    ('Escribe y envía', '<p>Escribe el texto en el celular y toca <strong>{SEND}</strong>. El texto va al campo abierto en el dispositivo.</p><div class="tip"><p><strong>En LG</strong>, el botón se llama <strong>{SEND_LG}</strong>.</p></div>', None),
+    ('Escribe y envía', '<p>Escribe el texto en el celular y toca <strong>{SEND}</strong>. El texto va al campo abierto en el dispositivo.</p><div class="tip"><p><strong>En LG</strong> es distinto: con un campo de texto abierto en la TV, lo que escribes aparece allí en vivo, sin enviar. Sin campo abierto, toca <strong>{SEND_LG}</strong> para abrir YouTube con la búsqueda.</p></div>', None),
     ('O dicta por voz', '<p>Toca el botón del micrófono y di el texto. Por voz también puedes pedir directo, por ejemplo “buscar gatos en YouTube”.</p>', None),
    ],
    sections=[('Comandos de voz para escribir menos', '<p>Mantén presionado el botón de voz y di, por ejemplo: <em>abrir Netflix</em>, <em>buscar gatos en YouTube</em>, <em>volumen 15</em>, <em>canal 5</em>, <em>HDMI 2</em> o <em>escribir</em> seguido del texto. Los números se pueden decir con palabras. Di <em>ayuda</em> para ver la lista completa.</p>')],

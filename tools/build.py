@@ -102,7 +102,7 @@ T = {
   k_up='Para cima', k_down='Para baixo', k_left='Para a esquerda', k_right='Para a direita',
   k_back='Voltar', k_home='Início', k_input='Entradas', k_mute='Mudo', k_vdown='Diminuir volume', k_vup='Aumentar volume',
   k_mic='Falar com a TV', k_power='Ligar ou desligar a TV', k_chip='TV conectada',
-  how_h='Pronto em menos de um minuto.',
+  how_h='Na maioria das TVs, pronto em um minuto.',
   how_sub='Nada de cabo, receptor ou app no aparelho. O celular conversa com ele pela sua própria rede.',
   steps=[('Mesma rede', 'Conecte o celular no mesmo Wi-Fi do aparelho.', 'wifi', 'Wi-Fi de casa'),
          ('Escolha o aparelho', 'Abra o Comandoo. Ele procura os aparelhos da casa e mostra a lista.', 'chip', 'LG · UQ7500PSF'),
@@ -167,7 +167,7 @@ T = {
   k_up='Up', k_down='Down', k_left='Left', k_right='Right',
   k_back='Back', k_home='Home', k_input='Inputs', k_mute='Mute', k_vdown='Volume down', k_vup='Volume up',
   k_mic='Talk to the TV', k_power='Turn the TV on or off', k_chip='Connected TV',
-  how_h='Ready in under a minute.',
+  how_h='On most TVs, ready in a minute.',
   how_sub='No cables, no receiver, no app on the device. Your phone talks to it over your own network.',
   steps=[('Same network', 'Connect your phone to the same Wi-Fi as the device.', 'wifi', 'Home Wi-Fi'),
          ('Pick the device', 'Open Comandoo. It finds the devices in your home and lists them.', 'chip', 'LG · UQ7500PSF'),
@@ -232,7 +232,7 @@ T = {
   k_up='Arriba', k_down='Abajo', k_left='Izquierda', k_right='Derecha',
   k_back='Atrás', k_home='Inicio', k_input='Entradas', k_mute='Silencio', k_vdown='Bajar volumen', k_vup='Subir volumen',
   k_mic='Hablar con la TV', k_power='Encender o apagar la TV', k_chip='TV conectada',
-  how_h='Listo en menos de un minuto.',
+  how_h='En la mayoría de las TV, listo en un minuto.',
   how_sub='Sin cables, sin receptor y sin app en el dispositivo. El celular habla con él por tu propia red.',
   steps=[('Misma red', 'Conecta el celular al mismo Wi-Fi que el dispositivo.', 'wifi', 'Wi-Fi de casa'),
          ('Elige el dispositivo', 'Abre Comandoo. Busca los dispositivos de tu casa y te muestra la lista.', 'chip', 'LG · UQ7500PSF'),
@@ -364,7 +364,10 @@ def page(lang):
         st = b['status']
         cls = {'tested': 'ok', 'initial': 'beta', 'unsupported': 'no'}[st]
         sysm = b.get('systems' + SUF[lang]) or SYS_TR.get(b['id'], {}).get(lang) or b['systems']
-        inner = f'{ic("tv")}<div><strong>{NAME_TR.get(b["id"], {}).get(lang, b["name"])}</strong><small>{sysm}</small></div><span class="st st-{cls}">{t[st]}</span>'
+        g0 = BRAND_GUIDES.get(b['id'])
+        arrow = ('<svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" '
+                 'stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>') if g0 else ''
+        inner = f'{ic("tv")}<div><strong>{NAME_TR.get(b["id"], {}).get(lang, b["name"])}</strong><small>{sysm}</small></div><span class="st st-{cls}">{t[st]}</span>{arrow}'
         g = BRAND_GUIDES.get(b['id'])
         rows += (f'<a class="row {cls}" href="{GUIDES[lang]}{g[LI[lang]]}/" data-nav>{inner}</a>' if g
                  else f'<div class="row {cls}" tabindex="-1" data-nav>{inner}</div>')
@@ -513,9 +516,7 @@ def page(lang):
     <li><a href="{GUIDES[lang]}" data-nav>{t['guides_label']}</a></li>
     <li><a href="{HELP[lang]}" data-nav>{t['help_label']}</a></li>
     <li><a href="{CHANGELOG[lang]}" data-nav>{t['changelog_label']}</a></li>
-    <li><a href="/privacidade" data-nav>{T['pt']['f_priv']}</a></li>
-    <li><a href="/privacidade/en" data-nav>{T['en']['f_priv']}</a></li>
-    <li><a href="/privacidade/es" data-nav>{T['es']['f_priv']}</a></li>
+    <li><a href="{t['priv_url']}" data-nav>{t['f_priv']}</a></li>
   </ul>
 </div></footer>
 

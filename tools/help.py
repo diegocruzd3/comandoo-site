@@ -144,13 +144,32 @@ SUBJECT_TXT = {'connect': {'pt': 'Não consigo conectar o aparelho', 'en': 'I ca
 SUBJECT_LINE = {'pt': 'No formulário, escolha o assunto “{s}” e informe a marca e o modelo.', 'en': 'In the form, choose the subject “{s}” and give the brand and model.', 'es': 'En el formulario, elige el asunto “{s}” e indica la marca y el modelo.'}
 
 
+# Títulos de ação para os passos do diagnóstico (o texto embaixo continua vindo do FAQ do app).
+ACTION_TITLE = {
+ 'tv-nao-aparece': ('Confira se o aparelho está ligado e na mesma rede', 'Check that the device is on and on the same network', 'Comprueba que el dispositivo esté encendido y en la misma red'),
+ 'ip-da-tv': ('Conecte pelo IP do aparelho (botão Usar IP)', 'Connect with the device’s IP (Use IP button)', 'Conecta con la IP del dispositivo (botón Usar IP)'),
+ 'marca-fora': ('Veja se o aparelho usa Roku ou Android TV por dentro', 'Check whether the device runs Roku or Android TV inside', 'Mira si el dispositivo usa Roku o Android TV por dentro'),
+ 'vestel': ('Tente como Vestel, pelo IP', 'Try it as Vestel, by IP', 'Prueba como Vestel, por IP'),
+ 'codigo-pin': ('Digite o código exatamente como aparece no aparelho', 'Type the code exactly as it shows on the device', 'Escribe el código tal como aparece en el dispositivo'),
+ 'samsung-permissao': ('Faça a Samsung pedir permissão só na primeira vez', 'Make the Samsung ask for permission only the first time', 'Haz que la Samsung pida permiso solo la primera vez'),
+ 'lg-permissao': ('Refaça o pareamento com a LG', 'Pair the LG again', 'Vuelve a emparejar la LG'),
+ 'mesma-rede': ('Tire o celular da rede de visitantes ou dos dados móveis', 'Move the phone off the guest network or mobile data', 'Saca el celular de la red de invitados o de los datos móviles'),
+ 'botao-desativado': ('Entenda os botões apagados', 'Understand greyed-out buttons', 'Entiende los botones en gris'),
+ 'roku-limitado': ('Libere o controle por apps na Roku', 'Allow control by mobile apps on the Roku', 'Habilita el control por apps en la Roku'),
+ 'conexao-cai': ('Deixe o app sem restrição de bateria', 'Remove battery restrictions for the app', 'Quita las restricciones de batería de la app'),
+ 'ligar-tv': ('Ative a opção de ligar pela rede', 'Turn on the power-on-over-network option', 'Activa la opción de encender por la red'),
+ 'digitar': ('Use a aba Digitar com o campo aberto no aparelho', 'Use the Type tab with the field open on the device', 'Usa la pestaña Escribir con el campo abierto en el dispositivo'),
+}
+
+
 def esc(s):
     return html.escape(s, quote=True)
 
 
 def faq_step(fid, lang):
     q, a = G.fq(fid, lang)
-    return {'t': q, 'h': a}
+    t = ACTION_TITLE.get(fid)
+    return {'t': t[LI[lang]] if t else q, 'h': a}
 
 
 def brand_name(b, lang):
@@ -261,9 +280,55 @@ def render(lang):
 ''' + G.footer(lang))
 
 
+NOT_FOUND = {
+ 'pt': ('Esta página não existe', 'O endereço pode ter mudado ou ter um erro de digitação. Estes caminhos levam ao que você procura:', 'Início', 'Guias', 'Central de ajuda'),
+ 'en': ('This page doesn’t exist', 'The address may have changed or have a typo. These links take you where you need to go:', 'Home', 'Guides', 'Help center'),
+ 'es': ('Esta página no existe', 'La dirección pudo cambiar o tener un error. Estos enlaces te llevan a lo que buscas:', 'Inicio', 'Guías', 'Centro de ayuda'),
+}
+
+
+def render_404():
+    blocks = ''
+    for lang in LANGS:
+        h, p, a, b, c = NOT_FOUND[lang]
+        UI = C.UI[lang]
+        blocks += (f'<section class="nf" lang="{UI["html_lang"]}" data-l="{lang}"{"" if lang == "pt" else " hidden"}><h1>{h}</h1><p class="answer">{p}</p>'
+                   f'<div class="cta"><a class="pill pill-dark" href="{UI["home"]}">{a}</a><a class="pill pill-soft" href="{UI["guides"]}">{b}</a>'
+                   f'<a class="pill pill-soft" href="{UI["help"]}">{c}</a></div></section>')
+    switch = ''.join(f'<a href="#" data-to="{l}" hreflang="{l}" lang="{l}">{l.upper()}</a>' for l in LANGS)
+    js = """<script>(function(){var p=location.pathname,l=p.indexOf('/en/')===0?'en':p.indexOf('/es/')===0?'es':'';
+if(!l){var n=(navigator.language||'pt').slice(0,2);l=(n==='en'||n==='es')?n:'pt';}
+function show(x){document.querySelectorAll('.nf').forEach(function(s){s.hidden=s.getAttribute('data-l')!==x;});
+document.querySelectorAll('[data-to]').forEach(function(a){if(a.getAttribute('data-to')===x)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
+document.documentElement.lang=x==='pt'?'pt-BR':x;}
+document.querySelectorAll('[data-to]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();show(a.getAttribute('data-to'));});});show(l);})();</script>"""
+    return f"""<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Página não encontrada · Comandoo</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#A9ED87">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/guide.css">
+</head>
+<body>
+<div class="gtop"><div class="wrap">
+<header class="top"><a class="brand" href="/">{B.sym('#0E120F')}Comandoo</a><nav class="gnav" aria-label="Idioma / Language"><span class="seg">{switch}</span></nav></header>
+<div class="ghead">{blocks}</div>
+</div></div>
+{js}
+</body>
+</html>
+"""
+
+
 def main():
     for lang in LANGS:
         G.write(C.UI[lang]['help'].strip('/') + '/index.html', render(lang))
+    G.write('404.html', render_404())
     G.main(extra=[{l: SITE + C.UI[l]['help'] for l in LANGS}])
     print('ajuda ok')
 

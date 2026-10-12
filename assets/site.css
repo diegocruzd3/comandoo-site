@@ -297,3 +297,13 @@ a.row:hover strong{text-decoration:underline}
   .gnav>a.gl{padding:8px 6px}
   .seg a{min-width:30px;padding:0 5px}
 }
+
+/* Polimento fase 1 */
+.row .go{width:18px;height:18px;flex:none;color:var(--lima)}
+@media (max-width:700px){
+  .row{min-height:56px;padding:12px 14px}
+  .row small{display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+  .tvlist{padding:12px}
+}
+.seg a{position:relative}
+.seg a::after{content:"";position:absolute;left:-2px;right:-2px;top:-4px;bottom:-4px}

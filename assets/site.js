@@ -133,16 +133,23 @@
   var bandEl = document.querySelector('.band');
 
   // Aparece quando o topo sai da tela (como o botão flutuante do app, que fica por cima de tudo).
+  // No celular: só depois da metade da página e sem balão automático, para não cobrir o conteúdo.
+  var narrow = window.matchMedia && matchMedia('(max-width: 759px)').matches;
+  var heroAway = false;
+  function updateFab() {
+    var half = (document.documentElement.scrollHeight - innerHeight) * 0.5;
+    var show = isOpen || (heroAway && (!narrow || scrollY > half));
+    fab.classList.toggle('show', show);
+    if (show && !bubbled && !narrow) {
+      bubbled = true;
+      bubble.classList.add('on');
+      setTimeout(function () { bubble.classList.remove('on'); }, 6000);
+    }
+  }
   if ('IntersectionObserver' in window) {
-    new IntersectionObserver(function (es) {
-      var away = !es[0].isIntersecting;
-      fab.classList.toggle('show', away || isOpen);
-      if (away && !bubbled) {
-        bubbled = true;
-        bubble.classList.add('on');
-        setTimeout(function () { bubble.classList.remove('on'); }, 6000);
-      }
-    }, { threshold: 0.05 }).observe(document.querySelector('.hero'));
+    new IntersectionObserver(function (es) { heroAway = !es[0].isIntersecting; updateFab(); },
+      { threshold: 0.05 }).observe(document.querySelector('.hero'));
+    if (narrow) addEventListener('scroll', updateFab, { passive: true });
   } else { fab.classList.add('show'); }
 
   function setOpen(v) {

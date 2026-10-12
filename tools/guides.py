@@ -120,7 +120,7 @@ def shot(base, alt, caption, lang):
             wide = ' wide' if ext == 'jpg' else ''
             from PIL import Image
             w, h = Image.open(f).size
-            return (f'<figure class="shot{wide}"><img src="/assets/guias/{f.name}" alt="{esc(alt)}" width="{w}" height="{h}" loading="lazy" decoding="async">'
+            return (f'<figure class="shot{wide}"><a href="/assets/guias/{f.name}" target="_blank" rel="noopener"><img src="/assets/guias/{f.name}" alt="{esc(alt)}" width="{w}" height="{h}" loading="lazy" decoding="async"></a>'
                     f'<figcaption>{caption}</figcaption></figure>')
     return ''
 

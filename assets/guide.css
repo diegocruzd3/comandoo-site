@@ -78,3 +78,21 @@
 .ver h2{margin:0!important}
 .ver .when{color:var(--dim);margin:4px 0 12px}
 .gindex .gcta{max-width:760px}
+
+/* Polimento fase 1: tabela em cartões e capturas menores no celular */
+@media (max-width:600px){
+  .tablewrap{overflow:visible}
+  .tablewrap .pair{min-width:0}
+  .pair thead{display:none}
+  .pair,.pair tbody,.pair tr,.pair td{display:block;width:100%}
+  .pair tr{background:var(--key);border-radius:14px;padding:12px 14px;margin:0 0 8px}
+  .pair td{border:0;padding:0}
+  .pair td:first-child{white-space:normal;margin-bottom:4px}
+  .shot{max-width:220px}
+}
+.shot a{display:block;border-radius:22px}
+@media (min-width:900px){
+  .steps-g>li{display:flow-root}
+  .steps-g .shot{float:right;width:220px;margin:4px 0 12px 28px}
+}
+.nf .cta{margin-top:24px}

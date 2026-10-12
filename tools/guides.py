@@ -96,7 +96,14 @@ def fdate(d, lang):
     return C.UI[lang]['date_fmt'].format(d=dd, m=m, y=y, mon=MONTHS[int(m) - 1])
 
 
+# Capturas feitas em simulação (aparelho de exemplo): levam a marcação de imagem ilustrativa.
+ILLUSTRATIVE = {'lista-de-tvs', 'tela-controle'}
+ILLU_LABEL = {'pt': 'Imagem ilustrativa', 'en': 'Illustrative image', 'es': 'Imagen ilustrativa'}
+
+
 def shot(base, alt, caption, lang):
+    if base in ILLUSTRATIVE:
+        caption = f'{caption} · {ILLU_LABEL[lang]}'
     for ext in ('png', 'jpg', 'webp'):
         f = ROOT / 'assets' / 'guias' / f'{base}-{lang}.{ext}'
         if f.exists():
@@ -218,7 +225,7 @@ def head(lang, title, desc, canonical, alternates, og_type='article'):
 <link rel="stylesheet" href="/assets/guide.css">'''
 
 
-def topbar(lang, alternates, crumbs, current_guides=True):
+def topbar(lang, alternates, crumbs, current_guides=True, current_help=False):
     U = C.UI[lang]
     seg = ''.join(f'<a href="{u.replace(SITE, "")}" hreflang="{l}" lang="{l}"' + (' aria-current="page"' if l == lang else '') + f'>{l.upper()}</a>'
                   for l, u in alternates.items())
@@ -227,7 +234,7 @@ def topbar(lang, alternates, crumbs, current_guides=True):
 <div class="gtop"><div class="wrap">
 <header class="top">
   <a class="brand" href="{U['home']}">{B.sym('#0E120F')}Comandoo</a>
-  <nav class="gnav" aria-label="Site"><a class="gl" href="{U['guides']}"{' aria-current="true"' if current_guides else ''}>{U['guides_label']}</a>
+  <nav class="gnav" aria-label="Site"><a class="gl" href="{U['guides']}"{' aria-current="true"' if current_guides else ''}>{U['guides_label']}</a><a class="gl" href="{U['help']}"{' aria-current="true"' if current_help else ''}>{U['help_label']}</a>
     <span class="seg" aria-label="{U['lang_nav']}">{seg}</span></nav>
 </header>
 <div class="ghead">
@@ -246,6 +253,7 @@ def footer(lang):
   <ul>
     <li><a href="{U['home']}">{U['home_label']}</a></li>
     <li><a href="{U['guides']}">{U['guides_label']}</a></li>
+    <li><a href="{U['help']}">{U['help_label']}</a></li>
     <li><a href="{U['changelog']}">{U['changelog_label']}</a></li>
     <li><a href="{U['privacy']}">{U['privacy_label']}</a></li>
   </ul>
@@ -318,6 +326,7 @@ def render(aid, lang):
   <h2 id="problemas">{U['problems_h']}</h2>
   <p>{U['test_conn']}</p>
   <div class="prob">{details(a['problems'])}</div>
+  <p class="more"><a href="{U['help']}">{U['help_more']}</a></p>
   <h2 id="perguntas">{U['faq_h']}</h2>
   <div class="prob">{details(a['faq'])}</div>
   {cta_box(lang)}
@@ -395,7 +404,7 @@ def sitemap(pages):
             'xmlns:xhtml="http://www.w3.org/1999/xhtml">\n' + '\n'.join(rows) + '\n</urlset>\n')
 
 
-def main():
+def main(extra=()):
     n = 0
     pages = [{l: SITE + C.UI[l]['home'] for l in C.LANGS}]
     for lang in C.LANGS:
@@ -410,6 +419,7 @@ def main():
         write(C.UI[lang]['changelog'].strip('/') + '/index.html', render_changelog(lang, entries)); n += 1
     pages.append({l: SITE + C.UI[l]['changelog'] for l in C.LANGS})
     pages.append({'pt': f'{SITE}/privacidade', 'en': f'{SITE}/privacidade/en', 'es': f'{SITE}/privacidade/es'})
+    pages.extend(extra)
     write('sitemap.xml', sitemap(pages))
     write('robots.txt', f'User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n')
     print(n, 'páginas; sitemap com', sum(len(g) for g in pages), 'URLs')

@@ -1,0 +1,30 @@
+/* Central de ajuda */
+.diag{max-width:820px;padding:56px 0 24px}
+.diag h2{font-size:clamp(26px,3.4vw,34px);margin:0 0 20px}
+.diag fieldset{border:0;padding:0;margin:0 0 22px;min-width:0}
+.diag legend{font-weight:700;font-size:17px;margin:0 0 12px;padding:0}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.hchip{position:relative;cursor:pointer;max-width:100%;flex:0 1 auto;display:flex;min-width:0}
+.hchip input{position:absolute;opacity:0;width:1px;height:1px}
+.hchip span{display:inline-flex;align-items:center;min-height:44px;padding:8px 16px;border-radius:999px;background:var(--key);color:var(--ink);font-weight:600;font-size:15px;border:1.5px solid transparent;transition:background .15s,border-color .15s}
+.hchip:hover span{border-color:#3a473b}
+.hchip input:checked+span{background:var(--lima);color:var(--graf)}
+.hchip input:focus-visible+span{outline:3px solid var(--lima);outline-offset:3px}
+.result{background:var(--body);border-radius:28px;padding:24px;margin-top:8px}
+.result h3{font-size:22px;margin:0 0 4px;letter-spacing:-.02em}
+.result .ctx{color:var(--muted);margin:0 0 18px;font-size:15px}
+.hint-r{margin:0;color:var(--muted)}
+.rsteps{list-style:none;margin:0;padding:0;counter-reset:r}
+.rsteps>li{counter-increment:r;position:relative;padding:0 0 22px 52px}
+.rsteps>li::before{content:counter(r);position:absolute;left:0;top:0;width:34px;height:34px;border-radius:50%;background:var(--lima);color:var(--graf);font-weight:800;display:grid;place-items:center}
+.rsteps>li:last-child{padding-bottom:0}
+.rsteps b{display:block;font-size:17px;margin:4px 0 6px}
+.rsteps p,.rsteps li li{color:#d5ddd3;margin:0 0 8px}
+.rsteps ol{padding-left:20px;margin:0}
+.rcopy{margin-top:18px;background:transparent;border:1.5px solid var(--lima);color:var(--lima);border-radius:999px;min-height:44px;padding:0 18px;font-weight:700;cursor:pointer}
+.faqall{padding-top:40px}
+.fsec h3{font-size:20px;margin:32px 0 12px}
+.faqall .anchor{margin-left:10px;color:var(--dim);text-decoration:none;font-weight:600;opacity:0}
+.faqall summary:hover .anchor,.faqall .anchor:focus{opacity:1}
+.faqall details:target{outline:2px solid var(--lima);outline-offset:2px}
+.hchip span{min-width:0;overflow-wrap:anywhere}

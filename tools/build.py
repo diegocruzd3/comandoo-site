@@ -123,7 +123,7 @@ T = {
   comp_h='Funciona com as principais marcas.',
   comp_sub='A LG foi testada em TV real. As outras marcas têm suporte inicial: o app foi feito com base no protocolo de cada uma, mas ainda não foi testado em TV real.',
   list_h='Aparelhos compatíveis', list_n='{n} plataformas', tested='Testado', initial='Suporte inicial', unsupported='Ainda não funciona',
-  guides_label='Guias', how_more='Passo a passo completo, com dicas de cada marca', changelog_label='Novidades do app',
+  guides_label='Guias', help_label='Ajuda', how_more='Passo a passo completo, com dicas de cada marca', changelog_label='Novidades do app',
   comp_note='Encontrou um problema com o seu aparelho? Envie um relato pelo próprio app ou escreva para',
   priv_h='Seus dados ficam com você.',
   priv_sub='O resumo está aqui. O texto completo, com tudo o que o app usa, está na',
@@ -188,7 +188,7 @@ T = {
   comp_h='Works with the major brands.',
   comp_sub='LG was tested on a real TV. The other brands have initial support: the app was built on each one’s protocol, but has not been tested on a real TV yet.',
   list_h='Supported devices', list_n='{n} platforms', tested='Tested', initial='Initial support', unsupported='Not working yet',
-  guides_label='Guides', how_more='Full step by step, with tips for each brand', changelog_label='App updates',
+  guides_label='Guides', help_label='Help', how_more='Full step by step, with tips for each brand', changelog_label='App updates',
   comp_note='Found a problem with your device? Send a report from inside the app or write to',
   priv_h='Your data stays with you.',
   priv_sub='Here’s the short version. The full text, covering everything the app uses, is in the',
@@ -253,7 +253,7 @@ T = {
   comp_h='Funciona con las principales marcas.',
   comp_sub='LG se probó en una TV real. Las demás marcas tienen soporte inicial: la app se hizo con el protocolo de cada una, pero aún no se probó en una TV real.',
   list_h='Dispositivos compatibles', list_n='{n} plataformas', tested='Probado', initial='Soporte inicial', unsupported='Aún no funciona',
-  guides_label='Guías', how_more='Paso a paso completo, con consejos de cada marca', changelog_label='Novedades de la app',
+  guides_label='Guías', help_label='Ayuda', how_more='Paso a paso completo, con consejos de cada marca', changelog_label='Novedades de la app',
   comp_note='¿Encontraste un problema con tu dispositivo? Envía un reporte desde la app o escribe a',
   priv_h='Tus datos se quedan contigo.',
   priv_sub='Aquí está el resumen. El texto completo, con todo lo que usa la app, está en la',
@@ -301,6 +301,7 @@ COMPAT_ROWS = sorted(_compat()['brands'], key=lambda b: _ORDER.get(b['status'], 
 SUF = {'pt': '', 'en': '_en', 'es': '_es'}
 LI = {'pt': 0, 'en': 1, 'es': 2}
 GUIDES = {'pt': '/guias/', 'en': '/en/guides/', 'es': '/es/guias/'}
+HELP = {'pt': '/ajuda/', 'en': '/en/help/', 'es': '/es/ayuda/'}
 CHANGELOG = {'pt': '/changelog/', 'en': '/en/changelog/', 'es': '/es/changelog/'}
 PILLAR = {'pt': 'celular-como-controle-remoto', 'en': 'phone-as-tv-remote', 'es': 'celular-como-control-remoto'}
 BRAND_GUIDES = {'lg': ('controle-remoto-tv-lg', 'lg-tv-remote-app', 'control-remoto-tv-lg'),
@@ -402,7 +403,7 @@ def page(lang):
 <div class="wrap">
 <header class="top">
   <a class="brand" href="{t['path']}" data-nav>{sym('#0E120F')}Comandoo</a>
-  <nav class="gnav" aria-label="Site"><a class="gl" href="{GUIDES[lang]}" data-nav>{t['guides_label']}</a><span class="seg" aria-label="{t['lang_nav']}">{langs}</span></nav>
+  <nav class="gnav" aria-label="Site"><a class="gl" href="{GUIDES[lang]}" data-nav>{t['guides_label']}</a><a class="gl" href="{HELP[lang]}" data-nav>{t['help_label']}</a><span class="seg" aria-label="{t['lang_nav']}">{langs}</span></nav>
 </header>
 <div class="hero" id="main">
   <div>
@@ -510,6 +511,7 @@ def page(lang):
   </div>
   <ul>
     <li><a href="{GUIDES[lang]}" data-nav>{t['guides_label']}</a></li>
+    <li><a href="{HELP[lang]}" data-nav>{t['help_label']}</a></li>
     <li><a href="{CHANGELOG[lang]}" data-nav>{t['changelog_label']}</a></li>
     <li><a href="/privacidade" data-nav>{T['pt']['f_priv']}</a></li>
     <li><a href="/privacidade/en" data-nav>{T['en']['f_priv']}</a></li>

@@ -17,7 +17,7 @@ SEND_BTN_LG = {'pt': 'Buscar no YouTube do aparelho', 'en': 'Search YouTube on t
 
 UI = {
  'pt': dict(
-  html_lang='pt-BR', og_locale='pt_BR', home='/', guides='/guias/', guides_label='Guias', changelog='/changelog/',
+  html_lang='pt-BR', help='/ajuda/', help_label='Ajuda', help_more='Não resolveu? Faça o diagnóstico guiado na central de ajuda', og_locale='pt_BR', home='/', guides='/guias/', guides_label='Guias', changelog='/changelog/',
   changelog_label='Novidades do app', privacy='/privacidade', privacy_label='Política de privacidade',
   skip='Pular para o conteúdo', read='Leitura de {n} min', updated='Atualizado em {d}', version='App versão {v}',
   date_fmt='{d}/{m}/{y}', need_h='O que você precisa', steps_h='Passo a passo', problems_h='Problemas comuns',
@@ -42,7 +42,7 @@ UI = {
   cl_guides='Guias revisados',
  ),
  'en': dict(
-  html_lang='en', og_locale='en_US', home='/en/', guides='/en/guides/', guides_label='Guides', changelog='/en/changelog/',
+  html_lang='en', help='/en/help/', help_label='Help', help_more='Still stuck? Run the guided check in the help center', og_locale='en_US', home='/en/', guides='/en/guides/', guides_label='Guides', changelog='/en/changelog/',
   changelog_label='App updates', privacy='/privacidade/en', privacy_label='Privacy policy',
   skip='Skip to content', read='{n} min read', updated='Updated {d}', version='App version {v}',
   date_fmt='{mon} {d}, {y}', need_h='What you need', steps_h='Step by step', problems_h='Common problems',
@@ -67,7 +67,7 @@ UI = {
   cl_guides='Guides reviewed',
  ),
  'es': dict(
-  html_lang='es', og_locale='es_ES', home='/es/', guides='/es/guias/', guides_label='Guías', changelog='/es/changelog/',
+  html_lang='es', help='/es/ayuda/', help_label='Ayuda', help_more='¿No se resolvió? Haz el diagnóstico guiado en el centro de ayuda', og_locale='es_ES', home='/es/', guides='/es/guias/', guides_label='Guías', changelog='/es/changelog/',
   changelog_label='Novedades de la app', privacy='/privacidade/es', privacy_label='Política de privacidad',
   skip='Saltar al contenido', read='Lectura de {n} min', updated='Actualizado el {d}', version='App versión {v}',
   date_fmt='{d}/{m}/{y}', need_h='Lo que necesitas', steps_h='Paso a paso', problems_h='Problemas comunes',

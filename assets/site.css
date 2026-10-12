@@ -283,3 +283,17 @@ a.row:hover strong{text-decoration:underline}
 .row small{display:block}
 .more{margin:14px 0 0}
 .more a{font-weight:700}
+@media (max-width:460px){
+  .top{gap:8px}
+  .brand{font-size:21px;gap:8px}
+  .brand .sym{width:14px;height:31px}
+  .gnav{gap:2px}
+  .gnav>a.gl{padding:8px 8px;font-size:14px}
+  .seg{padding:3px}
+  .seg a{min-width:32px;height:32px;padding:0 6px;font-size:13px}
+}
+@media (max-width:380px){
+  .brand{font-size:19px}
+  .gnav>a.gl{padding:8px 6px}
+  .seg a{min-width:30px;padding:0 5px}
+}

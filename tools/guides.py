@@ -398,6 +398,32 @@ def render_index(lang):
 ''' + footer(lang))
 
 
+LAUNCH_TXT = {'pt': ('O que vem no lançamento', 'Grátis, sem anúncios', 'Aparelhos', 'Testado em aparelho real', 'Suporte inicial',
+                     'Suporte inicial quer dizer que o app foi feito com base no protocolo da marca, mas ainda não foi testado em aparelho real.',
+                     'Veja a lista completa', 'os guias de cada marca'),
+              'en': ('What’s coming at launch', 'Free, no ads', 'Devices', 'Tested on a real device', 'Initial support',
+                     'Initial support means the app was built from the brand’s protocol but hasn’t been tested on a real device yet.',
+                     'See the full list', 'the guide for each brand'),
+              'es': ('Lo que llega con el lanzamiento', 'Gratis, sin anuncios', 'Dispositivos', 'Probado en un dispositivo real', 'Soporte inicial',
+                     'Soporte inicial significa que la app se hizo con base en el protocolo de la marca, pero todavía no se probó en un dispositivo real.',
+                     'Mira la lista completa', 'las guías de cada marca')}
+
+
+def launch_preview(lang):
+    """Antes do lançamento: o que o app já faz, com os mesmos textos da home e a lista do compat.json."""
+    t, L = B.T[lang], LAUNCH_TXT[lang]
+    feats = ''.join(f'<li><strong>{h}.</strong> {d}</li>' for _, h, d in t['feats'])
+    extras = ''.join(f'<li><strong>{h}.</strong> {re.split(r"(?<=[.!]) ", d)[0]}</li>' for h, d in t['extras'])
+    names = lambda st: ', '.join(b['name'] for b in COMPAT['brands'] if b['status'] == st)
+    tested, initial = names('tested'), names('initial')
+    dev = (f'<ul>' + (f'<li><strong>{L[3]}:</strong> {tested}.</li>' if tested else '')
+           + (f'<li><strong>{L[4]}:</strong> {initial}.</li>' if initial else '') + '</ul>'
+           + f'<p>{L[5]} <a href="{t["path"]}#compat">{L[6]}</a> · <a href="{C.UI[lang]["guides"]}">{L[7]}</a>.</p>')
+    return (f'<h2>{L[0]}</h2><h3>{L[1]}</h3><ul>{feats}</ul>'
+            f'<h3>{t["ex_h"]}</h3><p>{t["ex_sub"]}</p><ul>{extras}</ul>'
+            f'<h3>{L[2]}</h3>{dev}')
+
+
 def render_changelog(lang, entries):
     U = C.UI[lang]
     canon = SITE + U['changelog']
@@ -409,7 +435,7 @@ def render_changelog(lang, entries):
         body += (f'<section class="ver" id="v{e["version"]}"><h2>{e["version"]}</h2><p class="when">{fdate(e["date"], lang)}</p>'
                  f'<ul>{notes}</ul>' + (f'<h3>{U["cl_guides"]}</h3><ul>{guides}</ul>' if guides else '') + '</section>')
     if not entries:
-        body = f'<p>{U["cl_pre"].format(v=APP_VERSION)}</p>'
+        body = f'<p>{U["cl_pre"].format(v=APP_VERSION)}</p>' + launch_preview(lang)
     return (head(lang, U['cl_title'], U['cl_desc'], canon, alternates, 'website') + '\n</head>\n<body>\n'
             + topbar(lang, alternates, [('Comandoo', U['home'])], current_guides=False) + f'''
   <h1>{U['cl_h1']}</h1>

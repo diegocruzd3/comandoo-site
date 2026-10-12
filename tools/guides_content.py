@@ -10,6 +10,8 @@ LANGS = ('pt', 'en', 'es')
 # Nome da aba de digitar, exatamente como no botão do app (confirmar com o Comandoo Dev a cada versão).
 KEYBOARD_TAB = {'pt': 'Digitar', 'en': 'Type', 'es': 'Escribir'}  # en/es: confirmar com o Comandoo Dev
 # Botão que manda o texto, e o nome dele na LG.
+# Botão que abre a conexão manual (tela inicial do app).
+IP_BTN = {'pt': 'Usar IP', 'en': 'Use IP', 'es': 'Usar IP'}
 SEND_BTN = {'pt': 'Enviar para o aparelho', 'en': 'Send to the device', 'es': 'Enviar al dispositivo'}
 SEND_BTN_LG = {'pt': 'Buscar no YouTube do aparelho', 'en': 'Search YouTube on the device', 'es': 'Buscar en YouTube del dispositivo'}  # en/es: confirmar
 
@@ -150,9 +152,9 @@ INSTALL = {
  'es': ('Instala Comandoo en el celular', '<p>Comandoo es una app para Android 8.0 o superior, gratis y sin anuncios. Llega pronto a Google Play; el enlace aparecerá en este sitio en cuanto esté disponible. No hace falta crear una cuenta.</p>'),
 }
 OPEN_PICK = {
- 'pt': ('Abra o app e escolha a TV', '<p>Ao abrir, o Comandoo procura os aparelhos da sua rede e mostra a lista. Toque na sua TV. Se ela não aparecer, toque em <strong>Buscar aparelhos</strong> ou use <strong>Conectar pelo IP</strong>.</p>'),
- 'en': ('Open the app and pick your TV', '<p>When it opens, Comandoo looks for devices on your network and lists them. Tap your TV. If it is not there, tap <strong>Find devices</strong> or use <strong>Connect by IP</strong>.</p>'),
- 'es': ('Abre la app y elige la TV', '<p>Al abrirse, Comandoo busca los dispositivos de tu red y muestra la lista. Toca tu TV. Si no aparece, toca <strong>Buscar dispositivos</strong> o usa <strong>Conectar por IP</strong>.</p>'),
+ 'pt': ('Abra o app e escolha a TV', '<p>Ao abrir, o Comandoo procura os aparelhos da sua rede e mostra a lista. Toque na sua TV. Se ela não aparecer, toque em <strong>Buscar aparelhos</strong> ou use <strong>Usar IP</strong>.</p>'),
+ 'en': ('Open the app and pick your TV', '<p>When it opens, Comandoo looks for devices on your network and lists them. Tap your TV. If it is not there, tap <strong>Find devices</strong> or use <strong>Use IP</strong>.</p>'),
+ 'es': ('Abre la app y elige la TV', '<p>Al abrirse, Comandoo busca los dispositivos de tu red y muestra la lista. Toca tu TV. Si no aparece, toca <strong>Buscar dispositivos</strong> o usa <strong>Usar IP</strong>.</p>'),
 }
 
 # ── Artigos escritos à mão ───────────────────────────────────────────────
@@ -170,7 +172,7 @@ ARTICLES = {
    steps=[
     'INSTALL',
     ('Ligue a TV e confira a rede', '<p>Ligue a TV (não basta estar em espera) e veja se o celular está no <strong>mesmo Wi-Fi</strong> que ela. Desligue os dados móveis e evite a rede de visitantes do roteador: muitas TVs recusam comandos vindos de outra rede.</p>', None),
-    ('Abra o app e escolha a sua TV', '<p>Ao abrir, o Comandoo procura os aparelhos da sua rede e mostra a lista. Toque na sua TV. Se ela não aparecer, toque em <strong>Buscar aparelhos</strong>. Se mesmo assim não aparecer, use <strong>Conectar pelo IP</strong> (veja <a href="#problemas">Problemas comuns</a>).</p>', ('lista-de-tvs', 'Lista de TVs encontradas no Comandoo', 'Lista de aparelhos encontrados na rede')),
+    ('Abra o app e escolha a sua TV', '<p>Ao abrir, o Comandoo procura os aparelhos da sua rede e mostra a lista. Toque na sua TV. Se ela não aparecer, toque em <strong>Buscar aparelhos</strong>. Se mesmo assim não aparecer, use <strong>Usar IP</strong> (veja <a href="#problemas">Problemas comuns</a>).</p>', ('lista-de-tvs', 'Lista de TVs encontradas no Comandoo', 'Lista de aparelhos encontrados na rede')),
     ('Confirme o pareamento na TV', '<p>Na primeira vez, a TV pede uma confirmação. O jeito muda conforme a marca: aceitar um pedido na tela ou digitar um código no app.</p>PAIR<div class="tip warn"><p><strong>Sem o controle original?</strong> Na LG e na Samsung, o primeiro pedido precisa ser aceito na própria TV. Veja <a href="{perdi}">Perdi o controle da TV: o que fazer</a>.</p></div><p>Depois disso o app reconecta sozinho nas próximas vezes.</p>', ('pedido-na-tv', 'Pedido de pareamento do Comandoo na tela de uma TV LG', 'Pedido de pareamento na tela da TV')),
     ('Use o controle', '<p>Pronto: a tela Controle tem direcional e OK, voltar, início, volume, mudo e o botão de desligar. Botões que a sua TV não aceita pelo protocolo dela aparecem apagados.</p>', ('tela-controle', 'Tela Controle do Comandoo com direcional, OK e volume', 'Tela Controle, já conectada')),
    ],
@@ -187,7 +189,7 @@ ARTICLES = {
    steps=[
     'INSTALL',
     ('Turn the TV on and check the network', '<p>Turn the TV on (standby is not enough) and make sure the phone is on the <strong>same Wi-Fi</strong>. Turn off mobile data and avoid the router’s guest network: many TVs refuse commands coming from another network.</p>', None),
-    ('Open the app and pick your TV', '<p>When it opens, Comandoo looks for devices on your network and lists them. Tap your TV. If it is not there, tap <strong>Find devices</strong>. If it still does not show up, use <strong>Connect by IP</strong> (see <a href="#problemas">Common problems</a>).</p>', ('lista-de-tvs', 'List of TVs found by Comandoo', 'Devices found on the network')),
+    ('Open the app and pick your TV', '<p>When it opens, Comandoo looks for devices on your network and lists them. Tap your TV. If it is not there, tap <strong>Find devices</strong>. If it still does not show up, use <strong>Use IP</strong> (see <a href="#problemas">Common problems</a>).</p>', ('lista-de-tvs', 'List of TVs found by Comandoo', 'Devices found on the network')),
     ('Confirm the pairing on the TV', '<p>The first time, the TV asks for confirmation. How depends on the brand: accept a request on screen or type a code in the app.</p>PAIR<div class="tip warn"><p><strong>No original remote?</strong> On LG and Samsung the first request has to be accepted on the TV itself. See <a href="{perdi}">Lost your TV remote: what to do</a>.</p></div><p>After that the app reconnects on its own.</p>', ('pedido-na-tv', 'Comandoo pairing request on an LG TV screen', 'Pairing request on the TV screen')),
     ('Use the remote', '<p>Done: the Remote screen has the D-pad and OK, back, home, volume, mute and the power button. Buttons your TV does not accept through its protocol are greyed out.</p>', ('tela-controle', 'Comandoo Remote screen with D-pad, OK and volume', 'Remote screen, connected')),
    ],
@@ -204,9 +206,9 @@ ARTICLES = {
    steps=[
     'INSTALL',
     ('Enciende la TV y revisa la red', '<p>Enciende la TV (no basta con que esté en espera) y verifica que el celular esté en el <strong>mismo Wi-Fi</strong>. Apaga los datos móviles y evita la red de invitados del router: muchas TV rechazan comandos que vienen de otra red.</p>', None),
-    ('Abre la app y elige tu TV', '<p>Al abrirse, Comandoo busca los dispositivos de tu red y muestra la lista. Toca tu TV. Si no aparece, toca <strong>Buscar dispositivos</strong>. Si aun así no aparece, usa <strong>Conectar por IP</strong> (mira <a href="#problemas">Problemas comunes</a>).</p>', ('lista-de-tvs', 'Lista de TV encontradas por Comandoo', 'Dispositivos encontrados en la red')),
+    ('Abre la app y elige tu TV', '<p>Al abrirse, Comandoo busca los dispositivos de tu red y muestra la lista. Toca tu TV. Si no aparece, toca <strong>Buscar dispositivos</strong>. Si aun así no aparece, usa <strong>Usar IP</strong> (mira <a href="#problemas">Problemas comunes</a>).</p>', ('lista-de-tvs', 'Lista de TV encontradas por Comandoo', 'Dispositivos encontrados en la red')),
     ('Confirma el emparejamiento en la TV', '<p>La primera vez, la TV pide una confirmación. Depende de la marca: aceptar una solicitud en pantalla o escribir un código en la app.</p>PAIR<div class="tip warn"><p><strong>¿Sin el control original?</strong> En LG y Samsung la primera solicitud se acepta en la propia TV. Mira <a href="{perdi}">Perdí el control de la TV: qué hacer</a>.</p></div><p>Después la app se reconecta sola.</p>', ('pedido-na-tv', 'Solicitud de emparejamiento de Comandoo en la pantalla de una TV LG', 'Solicitud de emparejamiento en la pantalla de la TV')),
-    ('Usa el control', '<p>Listo: la pantalla Control tiene cruceta y OK, atrás, inicio, volumen, silencio y el botón de apagar. Los botones que tu TV no acepta por su protocolo aparecen en gris.</p>', ('tela-controle', 'Pantalla Control de Comandoo con cruceta, OK y volumen', 'Pantalla Control, ya conectada')),
+    ('Usa el control', '<p>Listo: la pantalla Control tiene cruceta y OK, Volver, Inicio, volumen, silencio y el botón de apagar. Los botones que tu TV no acepta por su protocolo aparecen en gris.</p>', ('tela-controle', 'Pantalla Control de Comandoo con cruceta, OK y volumen', 'Pantalla Control, ya conectada')),
    ],
    sections=[('Qué más puedes hacer desde el celular', '<ul><li><strong>Escribir contraseñas y búsquedas.</strong> Con un campo de texto abierto en la TV, escribe en la pestaña {KB} y toca {SEND}. <a href="{digitar}">Ver guía</a>.</li><li><strong>Hablar en vez de escribir.</strong> Mantén presionado el botón de voz y di, por ejemplo, “abrir Netflix” o “volumen 15”.</li><li><strong>Abrir las apps de la TV</strong> con un toque, desde el celular.</li><li><strong>Control encima de otras apps.</strong> El botón flotante abre el control sin salir de la app en la que estás.</li></ul><p>No todas las marcas aceptan todas las funciones. La app muestra solo lo que tu TV permite.</p>')],
    problems=['FAQ:tv-nao-aparece', ('La TV se conecta pero no obedece los botones', '<p>En <strong>Roku</strong>, abre Configuración, Sistema, Configuración avanzada del sistema, Control por apps móviles y deja el acceso a la red en Habilitado. En <strong>LG</strong>, toca Volver a emparejar en los ajustes de la app y acepta la solicitud en la TV. En <strong>Samsung</strong> y <strong>Panasonic</strong>, revisa que el celular no esté en el Wi-Fi de invitados.</p>'), 'FAQ:ligar-tv', 'FAQ:conexao-cai'],
@@ -384,7 +386,7 @@ ARTICLES = {
     ('Coloque os dois no mesmo Wi-Fi', '<p>Confira o nome da rede no celular e na TV. Desligue os dados móveis do celular e saia da rede de visitantes. Se o roteador tem redes separadas de 2,4 GHz e 5 GHz, deixe o celular na mesma que a TV.</p>', None),
     ('Ative o controle pelo celular na TV', '<p>Algumas marcas pedem uma opção ligada nas configurações da TV:</p><ul><li><strong>LG:</strong> a opção de conexão com celular nas configurações de rede (como LG Connect Apps).</li><li><strong>Roku:</strong> Configurações, Sistema, Configurações avançadas, Controle por apps móveis, com o acesso à rede em Ativado.</li><li><strong>Samsung:</strong> o gerenciador de dispositivos externos, com a notificação de acesso ativada.</li><li><strong>Panasonic:</strong> o app de controle remoto (TV Remote) nas configurações de rede.</li><li><strong>Sony Bravia:</strong> Controle IP, em Configuração de rede doméstica.</li></ul>', None),
     ('Rode o Testar conexão', '<p>No app, toque na faixa verde de conexão e escolha <strong>Testar conexão</strong>. Ele confere o Wi-Fi, a TV salva, se os dois estão na mesma rede, se a TV responde e o pareamento, e diz o que fazer.</p>', ('testar-conexao', 'Resultado do Testar conexão no Comandoo', 'Resultado do Testar conexão')),
-    ('Conecte pelo IP', '<p>Se a TV ainda não aparecer, descubra o IP dela e use <strong>Conectar pelo IP</strong> no app.</p>', ('conectar-ip', 'Tela Conectar pelo IP no Comandoo', 'Conectar pelo IP')),
+    ('Conecte pelo IP da TV', '<p>Se a TV ainda não aparecer, descubra o IP dela e use <strong>Usar IP</strong> no app.</p>', ('conectar-ip', 'Janela Conectar ao aparelho, aberta pelo botão Usar IP', 'Botão Usar IP: digite o IP do aparelho')),
    ],
    sections=[],
    problems=['FAQ:ip-da-tv', 'FAQ:mesma-rede', 'FAQ:conexao-cai', 'FAQ:marca-fora'],
@@ -401,7 +403,7 @@ ARTICLES = {
     ('Put both on the same Wi-Fi', '<p>Check the network name on the phone and on the TV. Turn off the phone’s mobile data and leave the guest network. If your router has separate 2.4 GHz and 5 GHz networks, keep the phone on the same one as the TV.</p>', None),
     ('Turn on phone control on the TV', '<p>Some brands need an option turned on in the TV settings:</p><ul><li><strong>LG:</strong> the phone connection option in the network settings (such as LG Connect Apps).</li><li><strong>Roku:</strong> Settings, System, Advanced system settings, Control by mobile apps, with network access set to Enabled.</li><li><strong>Samsung:</strong> the external device manager, with access notifications on.</li><li><strong>Panasonic:</strong> the remote control app (TV Remote) in the network settings.</li><li><strong>Sony Bravia:</strong> IP Control, under Home network setup.</li></ul>', None),
     ('Run Test connection', '<p>In the app, tap the green connection bar and choose <strong>Test connection</strong>. It checks the Wi-Fi, the saved TV, whether both share a network, whether the TV answers and the pairing, and tells you what to do.</p>', ('testar-conexao', 'Comandoo Test connection result', 'Test connection result')),
-    ('Connect by IP', '<p>If the TV still does not show up, find its IP and use <strong>Connect by IP</strong> in the app.</p>', ('conectar-ip', 'Comandoo Connect by IP screen', 'Connect by IP')),
+    ('Connect with the TV’s IP', '<p>If the TV still does not show up, find its IP and use <strong>Use IP</strong> in the app.</p>', ('conectar-ip', 'Connect to the device dialog, opened by the Use IP button', 'Use IP: type the device’s IP')),
    ],
    sections=[],
    problems=['FAQ:ip-da-tv', 'FAQ:mesma-rede', 'FAQ:conexao-cai', 'FAQ:marca-fora'],
@@ -418,7 +420,7 @@ ARTICLES = {
     ('Pon los dos en el mismo Wi-Fi', '<p>Revisa el nombre de la red en el celular y en la TV. Apaga los datos móviles del celular y sal de la red de invitados. Si el router tiene redes separadas de 2,4 GHz y 5 GHz, deja el celular en la misma que la TV.</p>', None),
     ('Activa el control desde el celular en la TV', '<p>Algunas marcas piden una opción activada en los ajustes de la TV:</p><ul><li><strong>LG:</strong> la opción de conexión con el celular en los ajustes de red (como LG Connect Apps).</li><li><strong>Roku:</strong> Configuración, Sistema, Configuración avanzada del sistema, Control por apps móviles, con el acceso a la red en Habilitado.</li><li><strong>Samsung:</strong> el administrador de dispositivos externos, con la notificación de acceso activada.</li><li><strong>Panasonic:</strong> la app de control remoto (TV Remote) en los ajustes de red.</li><li><strong>Sony Bravia:</strong> Control IP, en Configuración de red doméstica.</li></ul>', None),
     ('Usa Probar conexión', '<p>En la app, toca la barra verde de conexión y elige <strong>Probar conexión</strong>. Revisa el Wi-Fi, la TV guardada, si los dos están en la misma red, si la TV responde y el emparejamiento, y te dice qué hacer.</p>', ('testar-conexao', 'Resultado de Probar conexión en Comandoo', 'Resultado de Probar conexión')),
-    ('Conecta por IP', '<p>Si la TV sigue sin aparecer, averigua su IP y usa <strong>Conectar por IP</strong> en la app.</p>', ('conectar-ip', 'Pantalla Conectar por IP en Comandoo', 'Conectar por IP')),
+    ('Conecta con la IP de la TV', '<p>Si la TV sigue sin aparecer, averigua su IP y usa <strong>Usar IP</strong> en la app.</p>', ('conectar-ip', 'Ventana Conectar al dispositivo, abierta con el botón Usar IP', 'Usar IP: escribe la IP del dispositivo')),
    ],
    sections=[],
    problems=['FAQ:ip-da-tv', 'FAQ:mesma-rede', 'FAQ:conexao-cai', 'FAQ:marca-fora'],
@@ -484,7 +486,7 @@ BRAND_TXT = {
   ans_initial='Comandoo tiene soporte inicial para {label}: puedes usar el celular como control por el Wi-Fi de casa, pero esta marca aún no se probó en una TV real. Abajo están los pasos y qué configurar en la TV si no responde.',
   works='Funciona con: {systems}.',
   need=['Un celular con Android 8.0 o superior.', 'Una {label} conectada al Wi-Fi.', 'El celular y la TV en el mismo Wi-Fi de casa.'],
-  use_h='Usa el control', use_b='<p>Listo: cruceta y OK, atrás, inicio, volumen, silencio y apagar están en la pantalla Control. Los botones que la TV no acepta aparecen en gris.</p>',
+  use_h='Usa el control', use_b='<p>Listo: cruceta y OK, Volver, Inicio, volumen, silencio y apagar están en la pantalla Control. Los botones que la TV no acepta aparecen en gris.</p>',
   faq_remote=('¿Necesito el control original?', ('Solo para el primer emparejamiento: la solicitud que aparece en la TV se acepta allí. Después, la app se reconecta sola.', 'No para emparejar: el código, o la falta de él, aparece en pantalla y solo usas el celular. La TV tiene que estar encendida y en el Wi-Fi.')),
   faq_models=('¿Funciona con mi modelo?', '{systems}. {status_line}'),
   status_tested='LG se probó en una TV real (LG UQ7500, webOS).', status_initial='El soporte es inicial y aún no se probó en una TV real; si algo no funciona, usa Reportar en la app.',

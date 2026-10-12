@@ -55,9 +55,16 @@ FAQ = {i['id']: i for i in load('faq.json')['items']}
 BRAND = {b['id']: b for b in COMPAT['brands']}
 
 
+# O FAQ do app ainda usa nomes antigos de botões; o site usa o texto que aparece na tela (capturas 1.24.6).
+LABEL_FIX = {'pt': [('Conectar pelo IP', 'Usar IP')], 'en': [('Connect by IP', 'Use IP')], 'es': [('Conectar por IP', 'Usar IP')]}
+
+
 def fq(fid, lang):
     i = FAQ[fid]
-    return fix_name(i['q' + SUF[lang]]), '<p>' + html.escape(fix_name(i['a' + SUF[lang]])) + '</p>'
+    q, a = fix_name(i['q' + SUF[lang]]), fix_name(i['a' + SUF[lang]])
+    for old, new in LABEL_FIX[lang]:
+        q, a = q.replace(old, new), a.replace(old, new)
+    return q, '<p>' + html.escape(a) + '</p>'
 
 
 def esc(s):
@@ -94,7 +101,9 @@ def shot(base, alt, caption, lang):
         f = ROOT / 'assets' / 'guias' / f'{base}-{lang}.{ext}'
         if f.exists():
             wide = ' wide' if ext == 'jpg' else ''
-            return (f'<figure class="shot{wide}"><img src="/assets/guias/{f.name}" alt="{esc(alt)}" loading="lazy">'
+            from PIL import Image
+            w, h = Image.open(f).size
+            return (f'<figure class="shot{wide}"><img src="/assets/guias/{f.name}" alt="{esc(alt)}" width="{w}" height="{h}" loading="lazy" decoding="async">'
                     f'<figcaption>{caption}</figcaption></figure>')
     return ''
 

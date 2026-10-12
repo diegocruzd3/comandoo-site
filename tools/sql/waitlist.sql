@@ -10,6 +10,7 @@ create table if not exists public.comandoo_waitlist (
   constraint comandoo_waitlist_email_key unique (email)
 );
 alter table public.comandoo_waitlist enable row level security;
+revoke all on table public.comandoo_waitlist from anon, authenticated;
 
 create or replace function public.comandoo_waitlist_join(p_email text, p_lang text default 'pt', p_source text default null)
 returns boolean

@@ -1,0 +1,18 @@
+/* Política de privacidade no modelo do site (o texto é mantido pela sessão da política) */
+.ghead .muted{color:var(--deep);font-weight:500;margin:16px 0 0}
+.ppol h2{font-size:clamp(22px,2.8vw,28px);margin:44px 0 12px}
+.ppol a{color:var(--lima)}
+.ppol em{color:var(--ink)}
+.ppol code{background:rgba(169,237,135,.1);padding:1px 6px;border-radius:6px;word-break:break-all}
+.ppol .todo{background:var(--warn);color:var(--graf);padding:0 4px;border-radius:4px}
+.ptab{width:100%;border-collapse:collapse;margin:8px 0 20px;font-size:15px}
+.ptab th,.ptab td{text-align:left;padding:12px;border-bottom:1px solid var(--line);vertical-align:top;color:#d5ddd3}
+.ptab th{color:var(--dim);font-weight:600;font-size:13px}
+.ptab td:first-child{color:var(--ink);font-weight:600;width:48%}
+@media (max-width:600px){
+  .ptab thead{display:none}
+  .ptab,.ptab tbody,.ptab tr,.ptab td{display:block;width:100%!important}
+  .ptab tr{background:var(--key);border-radius:16px;padding:14px 16px;margin:0 0 10px}
+  .ptab td{border:0;padding:0}
+  .ptab td:first-child{margin-bottom:8px}
+}

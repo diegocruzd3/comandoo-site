@@ -323,6 +323,38 @@ SYS_TR = {
 }
 
 
+# Aviso de lançamento: enquanto não há link do Google Play, o botão principal vira um cadastro de e-mail.
+# Os e-mails vão para o Supabase do app (função comandoo_waitlist_join, ver tools/sql/waitlist.sql).
+WL_API = 'https://xjdbntpjlwsclmtnkeqn.supabase.co/rest/v1/rpc/comandoo_waitlist_join'
+WL_KEY = 'sb_publishable_ss40YBjhkxivAO_yM-jfAQ_wwexvZRN'  # chave pública (a mesma que o app usa); só executa a função
+WL = {
+ 'pt': dict(label='Quer saber quando chegar ao Google Play? Deixe seu e-mail:', ph='seu@email.com', btn='Avise-me', note='Usamos seu e-mail só para avisar do lançamento.',
+            priv='Privacidade', priv_url='/privacidade', ok='Pronto! Vamos avisar {e} quando o Comandoo chegar ao Google Play.', bad='Confira o e-mail digitado.',
+            err='Não deu para cadastrar agora. Tente de novo em instantes ou escreva para suporte@comandoo.online.', wait='Enviando…'),
+ 'en': dict(label='Want to know when it reaches Google Play? Leave your email:', ph='you@email.com', btn='Notify me', note='We only use your email to tell you when it launches.',
+            priv='Privacy', priv_url='/privacidade/en', ok='Done! We’ll email {e} when Comandoo reaches Google Play.', bad='Check the email you typed.',
+            err='We couldn’t sign you up right now. Try again shortly or email suporte@comandoo.online.', wait='Sending…'),
+ 'es': dict(label='¿Quieres saber cuándo llega a Google Play? Deja tu correo:', ph='tu@correo.com', btn='Avísame', note='Solo usamos tu correo para avisarte del lanzamiento.',
+            priv='Privacidad', priv_url='/privacidade/es', ok='¡Listo! Avisaremos a {e} cuando Comandoo llegue a Google Play.', bad='Revisa el correo que escribiste.',
+            err='No pudimos registrarte ahora. Inténtalo de nuevo en un momento o escribe a suporte@comandoo.online.', wait='Enviando…'),
+}
+_wl_n = [0]
+
+
+def waitlist(lang, extra_cls=''):
+    w = WL[lang]
+    _wl_n[0] += 1
+    i = f'wl{_wl_n[0]}'
+    msgs = json.dumps({k: w[k] for k in ('ok', 'bad', 'err', 'wait')}, ensure_ascii=False).replace("'", '&#39;')
+    return (f'<form class="wl {extra_cls}" action="#" novalidate data-api="{WL_API}" data-key="{WL_KEY}" data-lang="{lang}" data-m=\'{msgs}\'>'
+            f'<label class="wl-l" for="{i}">{w["label"]}</label>'
+            f'<div class="wl-row"><input id="{i}" name="email" type="email" inputmode="email" autocomplete="email" placeholder="{w["ph"]}" required maxlength="254">'
+            f'<input class="wl-hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">'
+            f'<button type="submit">{sym()}{w["btn"]}</button></div>'
+            f'<p class="wl-note">{w["note"]} <a href="{w["priv_url"]}">{w["priv"]}</a></p>'
+            f'<p class="wl-msg" role="status" aria-live="polite"></p></form>')
+
+
 def cta(t, nav=True):
     n = ' data-nav' if nav else ''
     if PLAY_URL:
@@ -412,7 +444,7 @@ def page(lang):
   <div>
     <h1>{t['h1']}</h1>
     <p class="lead">{t['lead']}</p>
-    <div class="cta">{cta(t)}<a class="pill pill-soft" href="#como" data-nav>{t['how_link']}</a></div>
+    {f'<div class="cta">{cta(t)}<a class="pill pill-soft" href="#como" data-nav>{t["how_link"]}</a></div>' if PLAY_URL else waitlist(lang, 'wl-hero')}
     <ul class="facts">{''.join(f'<li>{f}</li>' for f in t['facts'])}</ul>
   </div>
   <div class="stage" id="stage" role="group" aria-label="{t['stage_label']}" data-s='{json.dumps(strings, ensure_ascii=False)}'>
@@ -500,8 +532,7 @@ def page(lang):
   {pointing()}
   <div>
     <h2>{t['close_h']}</h2>
-    <p>{t['close_sub_live'] if PLAY_URL else t['close_sub']}</p>
-    <div class="cta">{cta(t)}</div>
+    {f'<p>{t["close_sub_live"]}</p><div class="cta">{cta(t)}</div>' if PLAY_URL else waitlist(lang)}
   </div>
 </div></div>
 
@@ -535,6 +566,8 @@ def page(lang):
 </div>
 <div class="blackout" id="blackout"><div class="line"></div><button class="wake" id="wake" aria-label="{t['wake']}">{ic('power', 2.2)}</button><span class="wake-txt">{t['wake_txt']}</span></div>
 <script src="/assets/site.js" defer></script>
+<script src="/assets/lang.js" defer></script>
+<script src="/assets/waitlist.js" defer></script>
 </body>
 </html>
 '''

@@ -76,6 +76,25 @@ T = {
 
 # Itens do FAQ que ainda não valem para a versão do Play (aguardando confirmação do Grok).
 FAQ_HIDE = {'atualizar'}
+# Fase 2: busca nas respostas e "Resolveu?"
+EXTRA = {
+ 'pt': dict(search_h='Buscar nas respostas', search_label='Palavra ou frase', search_ph='Ex.: código, PIN, Wi-Fi, Roku',
+            search_none='Nenhuma resposta para “{q}”. Tente o diagnóstico guiado acima ou relate no app.', search_n='{n} respostas encontradas', search_1='1 resposta encontrada',
+            solved_q='Resolveu?', yes='Sim', no='Não', solved_yes='Que bom que deu certo!',
+            solved_no='Então relate no app, como no último passo. Se não conseguir abrir o app, escreva para {mail} e cole o link deste diagnóstico.',
+            mail_subj='Diagnóstico: {b} · {p}'),
+ 'en': dict(search_h='Search the answers', search_label='Word or phrase', search_ph='E.g. code, PIN, Wi-Fi, Roku',
+            search_none='No answers for “{q}”. Try the guided check above or report it in the app.', search_n='{n} answers found', search_1='1 answer found',
+            solved_q='Did this fix it?', yes='Yes', no='No', solved_yes='Great, glad it worked!',
+            solved_no='Then report it in the app, as in the last step. If you can’t open the app, email {mail} and paste the link to this check.',
+            mail_subj='Guided check: {b} · {p}'),
+ 'es': dict(search_h='Buscar en las respuestas', search_label='Palabra o frase', search_ph='Ej.: código, PIN, Wi-Fi, Roku',
+            search_none='No hay respuestas para “{q}”. Prueba el diagnóstico guiado de arriba o repórtalo en la app.', search_n='{n} respuestas encontradas', search_1='1 respuesta encontrada',
+            solved_q='¿Se resolvió?', yes='Sí', no='No', solved_yes='¡Qué bien que funcionó!',
+            solved_no='Entonces repórtalo en la app, como en el último paso. Si no puedes abrir la app, escribe a {mail} y pega el enlace de este diagnóstico.',
+            mail_subj='Diagnóstico: {b} · {p}'),
+}
+
 SECTION_ORDER = ['start', 'connect', 'use', 'share', 'app', 'privacy']
 
 # Respostas do FAQ por problema; '*' vale para todas as marcas.
@@ -249,7 +268,11 @@ def render(lang):
               {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
                   {"@type": "ListItem", "position": 1, "name": "Comandoo", "item": SITE + UI['home']},
                   {"@type": "ListItem", "position": 2, "name": U['h1'], "item": canon}]}]
-    payload = {'d': diagnosis(lang), 's': {k: U[k] for k in ('pick', 'result_h', 'copy', 'copied')},
+    X = EXTRA[lang]
+    s_txt = {k: U[k] for k in ('pick', 'result_h', 'copy', 'copied')}
+    s_txt.update({k: X[k] for k in ('search_none', 'search_n', 'search_1', 'solved_q', 'yes', 'no', 'solved_yes', 'solved_no', 'mail_subj')})
+    s_txt['mail'] = B.EMAIL
+    payload = {'d': diagnosis(lang), 's': s_txt,
                'n': {b['id']: brand_name(b, lang) for b in G.COMPAT['brands']}, 'p': dict(U['symptoms'])}
     data_json = json.dumps(payload, ensure_ascii=False).replace('</', '<\\/')
     return (G.head(lang, U['title'], U['desc'], canon, alternates, 'website') + ''.join(G.ld(s) for s in schema)
@@ -266,6 +289,12 @@ def render(lang):
   <fieldset><legend>{U['q2']}</legend><div class="chips">{syms}</div></fieldset>
   <div id="resultado" class="result" aria-live="polite"><p class="hint-r">{U['pick']}</p></div>
   <noscript><p class="hint-r">{U['noscript']}</p></noscript>
+</section>
+<section class="hsearch" id="buscar" aria-labelledby="sh" hidden>
+  <h2 id="sh">{X['search_h']}</h2>
+  <label for="q" class="sr">{X['search_label']}</label>
+  <input id="q" type="search" placeholder="{X['search_ph']}" autocomplete="off" enterkeyhint="search">
+  <p id="qstatus" class="qstatus" aria-live="polite"></p>
 </section>
 {test_section(lang)}
 <section class="prose faqall" id="perguntas" aria-labelledby="fh">

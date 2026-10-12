@@ -268,6 +268,8 @@ def footer(lang):
     <li><a href="{U['privacy']}">{U['privacy_label']}</a></li>
   </ul>
 </div></footer>
+<script src="/assets/lang.js" defer></script>
+<script src="/assets/waitlist.js" defer></script>
 </body>
 </html>
 '''
@@ -275,13 +277,25 @@ def footer(lang):
 
 def cta_box(lang):
     U = C.UI[lang]
-    btn = (f'<a class="pill pill-dark" href="{B.PLAY_URL}" rel="noopener">{B.sym()}{U["play"]}</a>' if B.PLAY_URL
-           else f'<span class="pill pill-dark pill-soon">{B.sym()}{U["soon"]}</span>')
-    return f'<aside class="gcta">{B.sym("#0E120F")}<div><b>{U["cta_t"]}</b><p>{U["cta_s"]}</p></div>{btn}</aside>'
+    if B.PLAY_URL:
+        btn = f'<a class="pill pill-dark" href="{B.PLAY_URL}" rel="noopener">{B.sym()}{U["play"]}</a>'
+        return f'<aside class="gcta">{B.sym("#0E120F")}<div><b>{U["cta_t"]}</b><p>{U["cta_s"]}</p></div>{btn}</aside>'
+    return f'<aside class="gcta gcta-wl">{B.sym("#0E120F")}<div><b>{U["cta_t"]}</b><p>{U["cta_s"]}</p></div>{B.waitlist(lang)}</aside>'
 
 
 def details(items):
     return ''.join(f'<details><summary>{q}</summary><div>{a}</div></details>' for q, a in items)
+
+
+TOC_TXT = {'pt': ('Nesta página', 'Não conectou?', 'Faça o diagnóstico guiado para a sua marca'),
+           'en': ('On this page', 'Can’t connect?', 'Run the guided check for your brand'),
+           'es': ('En esta página', '¿No se conecta?', 'Haz el diagnóstico guiado para tu marca')}
+
+
+def slug(h):
+    import unicodedata
+    t = unicodedata.normalize('NFKD', re.sub('<[^>]+>', '', h)).encode('ascii', 'ignore').decode().lower()
+    return re.sub('[^a-z0-9]+', '-', t).strip('-')[:48] or 'secao'
 
 
 def render(aid, lang):
@@ -296,7 +310,15 @@ def render(aid, lang):
             + ''.join(f'<li>{x}</li>' for x in a['need']) + '</ul>'
             + (f'<p class="works">{a["works"]}</p>' if a.get('works') else '') + '</section>') if a['need'] else ''
     banner = f'<div class="tip warn"><p>{a["banner"]} <a href="mailto:{B.EMAIL}">{B.EMAIL}</a>.</p></div>' if a.get('banner') else ''
-    secs = ''.join(f'<h2>{h}</h2>{b}' for h, b in a['sections'])
+    sec_ids = [slug(h) for h, _ in a['sections']]
+    secs = ''.join(f'<h2 id="{i}">{h}</h2>{b}' for i, (h, b) in zip(sec_ids, a['sections']))
+    toc = ([('need', U['need_h'])] if a['need'] else []) + ([('passo-a-passo', U['steps_h'])] if a['steps'] else []) \
+        + [(i, re.sub('<[^>]+>', '', h)) for i, (h, _) in zip(sec_ids, a['sections'])] \
+        + [('problemas', U['problems_h']), ('perguntas', U['faq_h'])]
+    T = TOC_TXT[lang]
+    side = (f'<aside class="gside" aria-label="{T[0]}"><div class="gside-in"><p class="gside-h">{T[0]}</p><ol>'
+            + ''.join(f'<li><a href="#{i}">{esc(t)}</a></li>' for i, t in toc)
+            + f'</ol><a class="gside-card" href="{U["help"]}"><b>{T[1]}</b><span>{T[2]}</span></a></div></aside>')
     steps_block = f'<h2 id="passo-a-passo">{U["steps_h"]}</h2><ol class="steps-g">{steps_html}</ol>' if a['steps'] else ''
     rel = ''.join(f'<li><a href="{url(r, lang)}">{article(r, lang)["h1"]}<span>{U["read"].format(n=article(r, lang)["read"])}</span></a></li>'
                   for r in a['related'])
@@ -328,7 +350,7 @@ def render(aid, lang):
 </div>
 </div></div>
 
-<main id="conteudo" class="wrap">
+<main id="conteudo" class="wrap gmain">
 <article class="prose">
   {banner}{need}
   {steps_block}
@@ -343,7 +365,9 @@ def render(aid, lang):
   <p class="updated">{U['footnote'].format(v=APP_VERSION)} <a href="mailto:{B.EMAIL}">{B.EMAIL}</a>.</p>
 </article>
 <nav class="related" aria-labelledby="rel"><h2 id="rel">{U['related_h']}</h2><ul>{rel}</ul></nav>
+{side}
 </main>
+<script src="/assets/guide.js" defer></script>
 ''' + footer(lang))
 
 

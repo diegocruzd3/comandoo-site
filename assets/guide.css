@@ -96,3 +96,22 @@
   .steps-g .shot{float:right;width:220px;margin:4px 0 12px 28px}
 }
 .nf .cta{margin-top:24px}
+
+/* Polimento fase 2: índice lateral no computador */
+.gside{display:none}
+@media (min-width:1100px){
+  .gmain{display:grid;grid-template-columns:minmax(0,720px) 260px;column-gap:72px;align-items:start}
+  .gmain>.prose,.gmain>.related{grid-column:1}
+  .gside{display:block;grid-column:2;grid-row:1 / span 2;padding-top:56px;height:100%}
+  .gside-in{position:sticky;top:24px}
+}
+.gside-h{font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--dim);margin:0 0 10px}
+.gside ol{list-style:none;margin:0 0 20px;padding:0;border-left:2px solid var(--line)}
+.gside ol a{display:block;padding:7px 0 7px 14px;margin-left:-2px;border-left:2px solid transparent;color:var(--muted);text-decoration:none;font-size:15px;line-height:1.35}
+.gside ol a:hover{color:var(--ink)}
+.gside ol a[aria-current]{color:var(--lima);border-left-color:var(--lima);font-weight:600}
+.gside-card{display:block;background:var(--key);border-radius:20px;padding:16px 18px;text-decoration:none;color:var(--ink)}
+.gside-card b{display:block;font-size:16px}
+.gside-card span{display:block;color:var(--muted);font-size:14px;margin-top:4px}
+.gside-card:hover{background:#1c241d}
+.prose h2[id]{scroll-margin-top:16px}

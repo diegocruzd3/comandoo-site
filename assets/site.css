@@ -307,3 +307,30 @@ a.row:hover strong{text-decoration:underline}
 }
 .seg a{position:relative}
 .seg a::after{content:"";position:absolute;left:-2px;right:-2px;top:-4px;bottom:-4px}
+
+/* Faixa de idioma (lang.js) */
+.langbar{display:flex;align-items:center;flex-wrap:wrap;gap:6px 14px;padding:8px 16px;background:var(--graf);color:var(--ink);font-size:14px;justify-content:center}
+.langbar a{color:var(--lima);font-weight:700}
+.langbar button{background:transparent;border:0;color:var(--muted);font-size:22px;line-height:1;width:44px;height:44px;cursor:pointer;margin:-10px -10px -10px 0}
+
+/* Aviso de lançamento (waitlist.js) */
+.wl{margin:28px 0 0;max-width:520px}
+.wl-l{display:block;font-weight:700;font-size:15px;margin:0 0 8px}
+.wl-row{display:flex;gap:8px;flex-wrap:wrap}
+.wl-row input[type=email]{flex:1 1 220px;min-width:0;height:56px;border-radius:999px;border:2px solid var(--graf);background:#fff;color:var(--graf);font:inherit;font-size:16px;padding:0 22px}
+.wl-row input[type=email]::placeholder{color:#6b766d}
+.wl-row input[type=email]:focus{outline:3px solid var(--graf);outline-offset:2px}
+.wl-row input[aria-invalid=true]{border-color:#b3261e}
+.wl-row button{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:56px;padding:0 26px;border-radius:999px;border:0;background:var(--graf);color:var(--lima);font:inherit;font-weight:700;font-size:16px;cursor:pointer;flex:0 0 auto}
+.wl-row button .sym{width:10px;height:22px}
+.wl-row button:disabled{opacity:.7;cursor:progress}
+.wl-hp{position:absolute!important;left:-9999px;width:1px;height:1px;opacity:0}
+.wl-note{font-size:14px;margin:10px 0 0;opacity:.85}
+.wl-note a{color:inherit;font-weight:600}
+.wl-msg{margin:10px 0 0;font-weight:700;min-height:0}
+.wl-msg:empty{display:none}
+.wl[data-state=bad] .wl-msg,.wl[data-state=err] .wl-msg{color:#8a1c14}
+.wl-done .wl-row,.wl-done .wl-l{display:none}
+@media (max-width:460px){.wl-row button{flex:1 1 100%}}
+.gcta-wl{grid-template-columns:auto 1fr!important}
+.gcta-wl .wl{grid-column:1 / -1;margin:0;max-width:none}

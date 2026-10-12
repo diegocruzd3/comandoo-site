@@ -27,7 +27,7 @@ import guides_content as C  # noqa: E402
 ROOT = B.ROOT
 SITE = B.SITE
 UPDATED = '2026-10-12'
-APP_VERSION = '1.24.2'
+APP_VERSION = '1.24.6'
 RELEASES = Path('/home/claude/diegocruzd3/controley-releases')
 RAW = 'https://raw.githubusercontent.com/diegocruzd3/controley-releases/main/'
 LI = {'pt': 0, 'en': 1, 'es': 2}
@@ -78,6 +78,7 @@ def url(aid, lang, absolute=False):
 
 
 def links(s, lang):
+    s = s.replace('{KB}', C.KEYBOARD_TAB[lang])
     for aid in C.SLUGS:
         s = s.replace('{' + aid + '}', url(aid, lang))
     return s
@@ -114,6 +115,8 @@ def norm_steps(raw, lang):
             h, b = C.OPEN_PICK[lang]; out.append((h, b, None))
         else:
             h, b, sh = s
+            h = links(h, lang)
+            sh = tuple(links(x, lang) for x in sh) if sh else None
             out.append((h, links(b.replace('PAIR', pair_table(lang)), lang), sh))
     return out
 
@@ -136,7 +139,7 @@ def article(aid, lang):
     if aid in C.ARTICLES:
         A = C.ARTICLES[aid]; t = A[lang]
         return dict(id=aid, read=A['read'], howto=A.get('howto'), time=A.get('time'), related=A['related'],
-                    seo_title=t['seo_title'], desc=t['desc'], h1=t['h1'], answer=t['answer'], banner=None,
+                    seo_title=t['seo_title'], desc=links(t['desc'], lang), h1=links(t['h1'], lang), answer=links(t['answer'], lang), banner=None,
                     need=[links(n, lang) for n in (t['need'] or [])], steps=norm_steps(t['steps'], lang),
                     sections=[(h, links(b, lang)) for h, b in t['sections']],
                     problems=norm_qa(t['problems'], lang), faq=norm_qa(t['faq'], lang))

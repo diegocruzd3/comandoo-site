@@ -346,7 +346,7 @@ def page(lang):
         f'<a href="{T[l]["path"]}" hreflang="{l}" lang="{l}" title="{T[l]["label"]}" data-nav'
         + (' aria-current="page"' if l == lang else '') + f'>{T[l]["short"]}</a>' for l in T)
     ld = {"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "Comandoo",
-          "operatingSystem": "Android", "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "Android 8.0+", "applicationCategory": "UtilitiesApplication",
           "inLanguage": ["pt-BR", "en", "es"], "description": t['desc'], "url": url,
           "image": f"{SITE}/assets/icone-512.png",
           "offers": {"@type": "Offer", "price": "0", "priceCurrency": "BRL"},
